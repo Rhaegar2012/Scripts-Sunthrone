@@ -8,9 +8,9 @@ public class TilemapGridNode
     private int yPosition;
     private Vector2 gridPosition;
     public Vector2 GridPosition {get{return gridPosition;}}
-    private List<TilemapGridNode> nodeNeighbourList;
     private TilemapGridType nodeType;
     public  TilemapGridType NodeType{get{return nodeType;}}
+    private List<TilemapGridNode> nodeNeighbourList=new List<TilemapGridNode>();
 
 
     public TilemapGridNode(Vector2 gridPosition,TilemapGridType nodeType)
@@ -27,11 +27,9 @@ public class TilemapGridNode
         return nodeNeighbourList;
     }
 
-
-
-    public void SetNodeNeighbourList(List<TilemapGridNode> nodeNeighbourList)
+    public void AddNeighbourToList(TilemapGridNode neighbour)
     {
-        this.nodeNeighbourList=nodeNeighbourList;
+        nodeNeighbourList.Add(neighbour);
     }
 
 

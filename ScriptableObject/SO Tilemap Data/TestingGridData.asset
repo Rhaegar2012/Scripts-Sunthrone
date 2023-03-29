@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0abd06aa8594e7449d6903d5f4cb8d8, type: 3}
   m_Name: TestingGridData
   m_EditorClassIdentifier: 
-  gridWidth: 0
-  gridHeight: 0
+  gridWidth: 21
+  gridHeight: 21
+  originX: -10
+  originY: -10
+  sceneName: Testing
