@@ -6,8 +6,8 @@ public class TilemapGridNode
 {
     private int xPosition;
     private int yPosition;
-    private Vector2 gridPosition;
-    public Vector2 GridPosition {get{return gridPosition;}}
+    private Vector2 nodePosition;
+    public Vector2 NodePosition {get{return nodePosition;}}
     private TilemapGridType nodeType;
     public  TilemapGridType NodeType{get{return nodeType;}}
     private List<TilemapGridNode> nodeNeighbourList=new List<TilemapGridNode>();
@@ -15,10 +15,10 @@ public class TilemapGridNode
 
     public TilemapGridNode(Vector2 gridPosition,TilemapGridType nodeType)
     {
-        this.gridPosition=gridPosition;
+        this.nodePosition=gridPosition;
         this.nodeType=nodeType;
-        xPosition=(int)this.gridPosition.x;
-        yPosition=(int)this.gridPosition.y;
+        xPosition=(int)nodePosition.x;
+        yPosition=(int)nodePosition.y;
 
     }
 

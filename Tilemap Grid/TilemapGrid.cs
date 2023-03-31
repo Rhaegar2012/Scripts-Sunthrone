@@ -12,8 +12,8 @@ public class TilemapGrid
     public int  TilemapOriginX{get{return tilemapOriginX;}}
     private int tilemapOriginY;
     public int  TilemapOriginY{get{return tilemapOriginY;}}
-    private TilemapGridNode [,] tilemapGridNodeArray;
-    private Dictionary<Vector2, TilemapGridType> tilemapNodeDictionary;
+    private Dictionary<Vector2, TilemapGridNode> tilemapGridNodes;
+    private List<NodeProperty> nodePropertyList;
 
     public TilemapGrid(SO_TilemapGridData gridData)
     {
@@ -21,61 +21,63 @@ public class TilemapGrid
         tilemapHeight=gridData.gridHeight;
         tilemapOriginX=gridData.originX;
         tilemapOriginY=gridData.originY;
-        tilemapNodeDictionary=gridData.gridNodeTypes;
-        tilemapGridNodeArray= new TilemapGridNode[tilemapWidth,tilemapHeight];
-        InitialiseTilemapNodes(tilemapNodeDictionary);
+        nodePropertyList=gridData.nodeProperties;
+        tilemapGridNodes= new Dictionary<Vector2,TilemapGridNode>();
+        InitialiseTilemapNodes(nodePropertyList);
         CreateNodeNeighbors();
     }
 
-    private void InitialiseTilemapNodes(Dictionary<Vector2,TilemapGridType> nodeDictionary)
+   
+
+    private void InitialiseTilemapNodes(List<NodeProperty> nodePropertyList)
     {
-        foreach(KeyValuePair<Vector2,TilemapGridType> node in nodeDictionary)
+        foreach(NodeProperty  nodeProperty in nodePropertyList)
         {
-            TilemapGridNode newNode= new TilemapGridNode(node.Key,node.Value);
-            tilemapGridNodeArray[(int)node.Key.x,(int)node.Key.y]=newNode;
+            TilemapGridNode newNode= new TilemapGridNode(nodeProperty.NodePosition,nodeProperty.NodeType);
+            tilemapGridNodes.Add(nodeProperty.NodePosition,newNode);
         }
                 
     }
 
-    public TilemapGridNode GetNodeAtGridPosition(Vector2 position)
+    public TilemapGridNode GetNodeAtWorldPosition(Vector2 position)
     {
-        return tilemapGridNodeArray[(int)position.x,(int)position.y];
+        return tilemapGridNodes[position];
     }
 
-    public TilemapGridType GetNodeTypeAtGridPosition(Vector2 position)
-    {
-        return tilemapGridNodeArray[(int)position.x,(int)position.y].NodeType;
-    }
+    
 
     public bool IsPositionValid(Vector2 position)
     {
         int x= (int)position.x;
         int y= (int)position.y;
-        return (x>=tilemapOriginX && x<=tilemapOriginX+tilemapWidth && y>=tilemapOriginY&&y<=tilemapOriginY+tilemapHeight);
+        return (x>=tilemapOriginX && x<tilemapOriginX+tilemapWidth && y>=tilemapOriginY&&y<tilemapOriginY+tilemapHeight);
     }
 
     private void CreateNodeNeighbors()
     {
         Vector2[] neighborDirections={new Vector2(1,0),new Vector2(-1,0),
                                       new Vector2(0,1),new Vector2(0,-1)};
-        for(int x=tilemapOriginX;x<=tilemapWidth;x++)
+        for(int x=tilemapOriginX;x<=tilemapWidth+tilemapOriginX-1;x++)
         {
-            for(int y=tilemapOriginY;y<=tilemapHeight;y++)
+            for(int y=tilemapOriginY;y<tilemapHeight+tilemapOriginY-1;y++)
             {
-                Debug.Log($"{x}{y}");
-                TilemapGridNode currentNode=GetNodeAtGridPosition(new Vector2(x,y));
+                Vector2 currentPosition=new Vector2(x,y);
+                TilemapGridNode currentNode=GetNodeAtWorldPosition(currentPosition);
                 foreach(Vector2 direction in neighborDirections)
                 {
-                    Vector2 testPosition=new Vector2(x,y)+direction;
-                    if(IsPositionValid(testPosition))
-                    {
-                        TilemapGridNode neighborNode=GetNodeAtGridPosition(testPosition);
-                        currentNode.AddNeighbourToList(neighborNode);
+                    Vector2 offsetPosition=currentPosition+direction;
+                    if(IsPositionValid(offsetPosition))
+                    {   
+                        Debug.Log("Found neighbour");
+                        TilemapGridNode neighbourNode= GetNodeAtWorldPosition(offsetPosition);
+                        currentNode.AddNeighbourToList(neighbourNode);
                     }
+
                 }
 
             }
         }
+       
     }
 
 

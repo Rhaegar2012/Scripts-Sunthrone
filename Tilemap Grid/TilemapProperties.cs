@@ -11,12 +11,21 @@ public class TilemapProperties : MonoBehaviour
    [SerializeField] private Tilemap tilemap;
    [SerializeField] private TilemapGridType tilemapType;
    [SerializeField] private SO_TilemapGridData tilemapGridData;
+   private void OnEnable()
+   {
+        if(tilemapGridData.nodeProperties!=null)
+        {
+            tilemapGridData.nodeProperties.Clear();
+            return;
+        }
+        //tilemapGridData.nodeProperties=new List<NodeProperty>();
+        
+   }
    //Populates tilemap properties dictionary in designated Scriptable object
    private void OnDisable()
    {
         
         Debug.Log("Method called");
-
         if(!Application.IsPlaying(gameObject))
         {
             UpdateTilemapProperties();
@@ -36,7 +45,9 @@ public class TilemapProperties : MonoBehaviour
                 TileBase tile = tilemap.GetTile(new Vector3Int(x,y,0));
                 if(tile!=null)
                 {
-                    tilemapGridData.gridNodeTypes.Add(new Vector2(x,y),tilemapType);
+                    
+                    NodeProperty nodeProperty =new NodeProperty(new Vector2(x,y),tilemapType);
+                    tilemapGridData.nodeProperties.Add(nodeProperty);
                     
                 }
             }
