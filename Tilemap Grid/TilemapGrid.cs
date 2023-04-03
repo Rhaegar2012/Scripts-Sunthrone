@@ -44,6 +44,11 @@ public class TilemapGrid
         return tilemapGridNodes[position];
     }
 
+    public Dictionary<Vector2,TilemapGridNode> GetNodeDictionary()
+    {
+        return tilemapGridNodes;
+    }
+
     
 
     public bool IsPositionValid(Vector2 position)
@@ -68,12 +73,12 @@ public class TilemapGrid
                     Vector2 offsetPosition=currentPosition+direction;
                     if(IsPositionValid(offsetPosition))
                     {   
-                        Debug.Log("Found neighbour");
                         TilemapGridNode neighbourNode= GetNodeAtWorldPosition(offsetPosition);
                         currentNode.AddNeighbourToList(neighbourNode);
                     }
 
                 }
+            
 
             }
         }

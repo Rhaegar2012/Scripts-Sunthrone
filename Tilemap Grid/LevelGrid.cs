@@ -26,6 +26,31 @@ public class LevelGrid : SingletonMonobehaviour<LevelGrid>
     return new Vector2(levelGrid.TilemapOriginX,levelGrid.TilemapOriginY);
   }
 
+  public Dictionary<Vector2, TilemapGridNode> GetNodeDictionary()
+  {
+    return levelGrid.GetNodeDictionary();
+  }
+
+  public TilemapGridNode GetNodeAtPosition(Vector2 position)
+  {
+    return levelGrid.GetNodeAtWorldPosition(position);
+  }
+
+  public bool CheckPositionValid(Vector2 position)
+  {
+    return levelGrid.IsPositionValid(position);
+  }
+
+  public List<TilemapGridNode> GetNodeNeighborsAtPosition(Vector2 position)
+  {
+    if(levelGrid.IsPositionValid(position))
+    {
+      TilemapGridNode node=levelGrid.GetNodeAtWorldPosition(position);
+      return node.GetNodeNeighbourList();
+    }
+    return null;
+  }
+
 
 
 
