@@ -25,9 +25,10 @@ public class TilemapProperties : MonoBehaviour
    private void OnDisable()
    {
         
-        Debug.Log("Method called");
+        
         if(!Application.IsPlaying(gameObject))
         {
+            
             UpdateTilemapProperties();
             
         }
@@ -36,6 +37,7 @@ public class TilemapProperties : MonoBehaviour
 
    private void UpdateTilemapProperties()
    {
+       Debug.Log("Call to Update Tilemap Properties Method");
        Vector3 startCellPosition=tilemap.cellBounds.min;
        Vector3 endCellPosition=tilemap.cellBounds.max;
        for(int x=(int)startCellPosition.x;x<(int)endCellPosition.x;x++)
@@ -45,7 +47,7 @@ public class TilemapProperties : MonoBehaviour
                 TileBase tile = tilemap.GetTile(new Vector3Int(x,y,0));
                 if(tile!=null)
                 {
-                    
+        
                     NodeProperty nodeProperty =new NodeProperty(new Vector2(x,y),tilemapType);
                     tilemapGridData.nodeProperties.Add(nodeProperty);
                     
