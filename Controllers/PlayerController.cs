@@ -3,24 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem; 
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : SingletonMonobehaviour<PlayerController>
 {
+
+    //Member Variables
     private Rigidbody2D playerRigidBody;
-    //Instance of player input action class, generate from input action asset before calling
-    private InputActions playerInputActions;
     private Animator playerAnimator;
     private Sprite playerSprite;
     private bool isPlayerMoving;
     [SerializeField] private float speed;
+    //Instance of player input action class, generate from input action asset before calling
+    private InputActions playerInputActions;
+    //Active Construction sign
+    private BuildingSystem activeConstructionSign;
+    public  BuildingSystem ActiveConstructionSign{get{return activeConstructionSign;}set{activeConstructionSign=value;}}
 
-    void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         playerRigidBody= GetComponent<Rigidbody2D>();
         playerAnimator=GetComponent<Animator>();
         playerSprite=GetComponent<SpriteRenderer>().sprite;
         playerInputActions= new InputActions();
         //Enable Player_Base action map
         playerInputActions.Player_Base.Enable();
+        //Subscribe to action event
+        playerInputActions.Player_Base.Action.performed+=Action_Performed;
         
     }
     void Update()
@@ -87,6 +95,14 @@ public class PlayerController : MonoBehaviour
             playerAnimator.SetBool(animationParameter,isMoving);
         }
         
+    }
+
+    void Action_Performed(InputAction.CallbackContext context)
+    {
+        if(activeConstructionSign!=null)
+        {
+            activeConstructionSign.ConstructNewBuilding();
+        }
     }
   
 
