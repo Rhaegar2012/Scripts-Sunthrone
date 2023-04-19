@@ -104,6 +104,8 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
             activeConstructionSign.ConstructNewBuilding();
         }
     }
+
+    
   
 
 
