@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
     //Active Construction sign
     private BuildingSystem activeConstructionSign;
     public  BuildingSystem ActiveConstructionSign{get{return activeConstructionSign;}set{activeConstructionSign=value;}}
+    //Events
+    public  event EventHandler<BuildingSystem> onPopupCalled;
 
     protected override void Awake()
     {
@@ -101,7 +104,7 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
     {
         if(activeConstructionSign!=null)
         {
-            activeConstructionSign.ConstructNewBuilding();
+            onPopupCalled?.Invoke(this,activeConstructionSign);
         }
     }
 

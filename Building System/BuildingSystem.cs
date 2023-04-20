@@ -7,6 +7,10 @@ public class BuildingSystem : MonoBehaviour
 {
     [SerializeField] private GameObject constructionYard;
     [SerializeField] private GameObject newBuilding;
+    [SerializeField] private string buildingName;
+    [SerializeField] private int buildingCost;
+    public string BuildingName {get{return buildingName;}}
+    public int BuildingCost {get{return buildingCost;}}
 
     
 
