@@ -12,6 +12,7 @@ public class BuildingSystem : MonoBehaviour
     public string BuildingName {get{return buildingName;}}
     public int BuildingCost {get{return buildingCost;}}
 
+
     
 
     public void ConstructNewBuilding()

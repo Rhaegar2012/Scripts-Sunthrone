@@ -103,7 +103,7 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
     void Action_Performed(InputAction.CallbackContext context)
     {
         if(activeConstructionSign!=null)
-        {
+        {   
             onPopupCalled?.Invoke(this,activeConstructionSign);
         }
     }
