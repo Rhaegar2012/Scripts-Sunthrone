@@ -12,6 +12,8 @@ public class InputController : MonoBehaviour
     private InputActions UIInputActions;
     private EventSystem eventSystem;
     [SerializeField] Button firstSelectedButton;
+    //Events
+    public static event EventHandler onMenuClosed;
 
     void Awake()
     {
@@ -42,6 +44,7 @@ public class InputController : MonoBehaviour
     {
         Debug.Log("Action Called");
         firstSelectedButton.onClick.Invoke();
+        onMenuClosed?.Invoke(this, EventArgs.Empty);
         
     }
 }
