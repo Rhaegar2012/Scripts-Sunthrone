@@ -12,3 +12,9 @@ public enum TilemapGridType
         Base
 }
 
+public enum Buildings
+{
+        Barracks,
+        Headquarters
+}
+
