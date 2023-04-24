@@ -40,6 +40,7 @@ public class BaseManager : SingletonMonobehaviour<BaseManager>
 
     public void BuildingEntrance_InstantiatePlayerAtPosition(object sender, Vector3 exitPosition)
     {
+        Debug.Log($"Player instantiate position {exitPosition}");
         InstantiatePlayerAtPosition(exitPosition);
     }
 

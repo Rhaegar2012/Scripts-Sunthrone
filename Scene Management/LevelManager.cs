@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : SingletonMonobehaviour<LevelManager>
 {
+    protected override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(gameObject);
+    }
 
     // Start is called before the first frame update
     void Start()
