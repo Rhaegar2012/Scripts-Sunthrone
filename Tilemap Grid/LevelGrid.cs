@@ -5,10 +5,14 @@ using UnityEngine;
 public class LevelGrid : SingletonMonobehaviour<LevelGrid>
 {
   [SerializeField] SO_TilemapGridData tilemapData;
+  [SerializeField] private TilemapProperties tilemapProperties;
   private TilemapGrid levelGrid;
   protected override void Awake()
   {
     base.Awake();
+    className="Level Grid";
+    //Initialize Tilemap Node Property list on Awake to prevent null reference exception
+    tilemapProperties.UpdateTilemapProperties();
     levelGrid= new TilemapGrid(tilemapData);
   }
 

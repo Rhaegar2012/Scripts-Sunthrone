@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class BaseManager : SingletonMonobehaviour<BaseManager>
 {
@@ -10,6 +11,7 @@ public class BaseManager : SingletonMonobehaviour<BaseManager>
     [SerializeField] private int influence;
     [SerializeField] private int supplies;
     [SerializeField] private PlayerController playerPrefab;
+    [SerializeField] private CinemachineVirtualCamera sceneCamera;
     public int Credits  {get{return credits;}set{credits=value;}}
     public int Influence {get{return influence;}set{influence=value;}}
     public int Supplies {get{return supplies;} set{supplies=value;}}
@@ -19,7 +21,9 @@ public class BaseManager : SingletonMonobehaviour<BaseManager>
     protected override void Awake()
     {
         base.Awake();
+        className="Base Manager";
         DontDestroyOnLoad(this.gameObject);
+        sceneCamera.m_Follow=InstantiatePlayerAtPosition(new Vector3(2f,-3f,0f)).transform;
         
     }
 
@@ -41,11 +45,15 @@ public class BaseManager : SingletonMonobehaviour<BaseManager>
     public void BuildingEntrance_InstantiatePlayerAtPosition(object sender, Vector3 exitPosition)
     {
         Debug.Log($"Player instantiate position {exitPosition}");
-        InstantiatePlayerAtPosition(exitPosition);
+        PlayerController.Instance.transform.position=exitPosition;
+        sceneCamera=FindObjectOfType<CinemachineVirtualCamera>();
+        sceneCamera.m_Follow=PlayerController.Instance.transform;
+        
     }
 
-    private void InstantiatePlayerAtPosition(Vector3 playerSpawnPosition)
+    private PlayerController InstantiatePlayerAtPosition(Vector3 playerSpawnPosition)
     {
-        Instantiate(playerPrefab,playerSpawnPosition, Quaternion.identity);
+        PlayerController playerClone=Instantiate(playerPrefab,playerSpawnPosition, Quaternion.identity);
+        return playerClone;
     }
 }

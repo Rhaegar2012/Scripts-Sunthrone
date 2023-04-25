@@ -25,6 +25,7 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
     protected override void Awake()
     {
         base.Awake();
+        className="Player Controller";
         playerRigidBody= GetComponent<Rigidbody2D>();
         playerAnimator=GetComponent<Animator>();
         playerSprite=GetComponent<SpriteRenderer>().sprite;
@@ -34,6 +35,7 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
         //Subscribe to action event
         playerInputActions.Player_Base.Action.performed+=Action_Performed;
         InputController.onMenuClosed+=InputController_OnMenuClosed;
+        DontDestroyOnLoad(gameObject);
         
     }
     void Update()

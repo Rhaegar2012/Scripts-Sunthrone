@@ -5,9 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : SingletonMonobehaviour<LevelManager>
 {
+    
     protected override void Awake()
     {
         base.Awake();
+        className="Level Manager";
         DontDestroyOnLoad(gameObject);
     }
 

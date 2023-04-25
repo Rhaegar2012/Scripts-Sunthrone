@@ -15,7 +15,6 @@ public class TilemapProperties : MonoBehaviour
    {
         if(tilemapGridData.nodeProperties!=null)
         {
-            tilemapGridData.nodeProperties.Clear();
             return;
         }
         //tilemapGridData.nodeProperties=new List<NodeProperty>();
@@ -35,9 +34,14 @@ public class TilemapProperties : MonoBehaviour
 
    }
 
-   private void UpdateTilemapProperties()
+   public void UpdateTilemapProperties()
    {
        Debug.Log("Call to Update Tilemap Properties Method");
+       //Clear list
+       if(tilemapGridData.nodeProperties!=null)
+       {
+            tilemapGridData.nodeProperties.Clear();
+       }
        Vector3 startCellPosition=tilemap.cellBounds.min;
        Vector3 endCellPosition=tilemap.cellBounds.max;
        for(int x=(int)startCellPosition.x;x<(int)endCellPosition.x;x++)
