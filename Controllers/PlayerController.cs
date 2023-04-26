@@ -36,7 +36,7 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
         playerInputActions.Player_Base.Action.performed+=Action_Performed;
         InputController.onMenuClosed+=InputController_OnMenuClosed;
         DontDestroyOnLoad(gameObject);
-        
+    
     }
     void Update()
     {
