@@ -36,7 +36,7 @@ public class TilemapProperties : MonoBehaviour
 
    public void UpdateTilemapProperties()
    {
-       Debug.Log("Call to Update Tilemap Properties Method");
+       //Debug.Log("Call to Update Tilemap Properties Method");
        //Clear list
        if(tilemapGridData.nodeProperties!=null)
        {

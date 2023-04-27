@@ -11,7 +11,7 @@ public class BuildingEntrance : MonoBehaviour
     public static event EventHandler<Vector3> onEntranceTriggered;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log($"Building Entrance activated {buildingEntranceName}");
+        //Debug.Log($"Building Entrance activated {buildingEntranceName}");
         onEntranceTriggered?.Invoke(this,entranceExitPosition);
         LevelManager.Instance.LoadScene(buildingEntranceName);
         

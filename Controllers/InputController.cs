@@ -42,7 +42,7 @@ public class InputController : MonoBehaviour
 
     public void Action_Performed(InputAction.CallbackContext context)
     {
-        Debug.Log("Action Called");
+        //Debug.Log("UI Action Called");
         onMenuClosed?.Invoke(this, EventArgs.Empty);
         firstSelectedButton.onClick.Invoke();
         

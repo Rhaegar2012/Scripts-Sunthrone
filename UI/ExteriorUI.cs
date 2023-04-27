@@ -12,13 +12,11 @@ public class ExteriorUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI supplyText,creditsText,influenceText;
     //Events
     public static event EventHandler onPopUpMessageCalled;
-    void Awake()
-    {
-        
-    }
+    
     // Start is called before the first frame update
     void Start()
     {
+        UpdateResourceDisplay();
         PlayerController.Instance.onPopupCalled+=PlayerController_DisplayConstructionMessage;
         BaseManager.Instance.onBaseStatsUpdated+=BaseManager_UpdateBaseStats;
     }

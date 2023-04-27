@@ -48,12 +48,11 @@ public class BaseManager : SingletonMonobehaviour<BaseManager>
     public void BuildingEntrance_InstantiatePlayerAtPosition(object sender, Vector3 exitPosition)
     {
         PlayerController.Instance.transform.position=exitPosition;
-        //InstantiatePlayerAtPosition(exitPosition);
     }
 
     private PlayerController InstantiatePlayerAtPosition(Vector3 playerSpawnPosition)
     {
-        Debug.Log("Method Called");
+        //Debug.Log("Method Called");
         PlayerController playerClone=Instantiate(playerPrefab,playerSpawnPosition, Quaternion.identity).GetComponent<PlayerController>();
         return playerClone;
     }
