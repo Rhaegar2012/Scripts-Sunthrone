@@ -18,3 +18,12 @@ public enum Buildings
         Headquarters
 }
 
+public enum UnitLevel
+{
+        Rookie=1,
+        Seasoned=2,
+        Veteran=3,
+        Elite
+}
+
+
