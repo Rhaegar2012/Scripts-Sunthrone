@@ -10,7 +10,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private int baseMovementRange;
     [SerializeField] private UnitLevel unitLevel;
     [SerializeField] private Sprite unitSprite;
-    [SerializeField] private List<TilemapGridType> walkableTiles
+    [SerializeField] private List<TilemapGridType> walkableTiles;
     [SerializeField] private int unitCreditCost;
     [SerializeField] private int unitSupplyCost;
     private bool isEnemy;

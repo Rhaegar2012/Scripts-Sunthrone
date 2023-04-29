@@ -18,7 +18,7 @@ public class ExteriorUI : MonoBehaviour
     {
         UpdateResourceDisplay();
         PlayerController.Instance.onPopupCalled+=PlayerController_DisplayConstructionMessage;
-        BaseManager.Instance.onBaseStatsUpdated+=BaseManager_UpdateBaseStats;
+        GameManager.Instance.onGameStatsUpdated+=GameManager_UpdateGameStats;
     }
 
     // Update is called once per frame
@@ -28,9 +28,9 @@ public class ExteriorUI : MonoBehaviour
     }
     public void UpdateResourceDisplay()
     {
-        supplyText.text=BaseManager.Instance.Supplies.ToString();
-        creditsText.text=BaseManager.Instance.Credits.ToString();
-        influenceText.text=BaseManager.Instance.Influence.ToString();
+        supplyText.text=GameManager.Instance.Supplies.ToString();
+        creditsText.text=GameManager.Instance.Credits.ToString();
+        influenceText.text=GameManager.Instance.Influence.ToString();
     }
 
     public void PlayerController_DisplayConstructionMessage(object sender, BuildingSystem buildingSign)
@@ -40,20 +40,18 @@ public class ExteriorUI : MonoBehaviour
         messageText.text=$"Construct {buildingSign.BuildingName} for {buildingSign.BuildingCost} credits";
     }
 
-    public void BaseManager_UpdateBaseStats(object sender, EventArgs empty)
+    public void GameManager_UpdateGameStats(object sender, EventArgs empty)
     {
-        supplyText.text=BaseManager.Instance.Supplies.ToString();
-        creditsText.text=BaseManager.Instance.Credits.ToString();
-        influenceText.text=BaseManager.Instance.Influence.ToString();
+        UpdateResourceDisplay();
     }
 
     public void ConstructBuilding()
     {
         int buildingCost= PlayerController.Instance.ActiveConstructionSign.BuildingCost;
-        if(BaseManager.Instance.Credits>=buildingCost)
+        if(GameManager.Instance.Credits>=buildingCost)
         {
             PlayerController.Instance.ActiveConstructionSign.ConstructNewBuilding();
-            BaseManager.Instance.Credits-=buildingCost;
+            GameManager.Instance.Credits-=buildingCost;
             UpdateResourceDisplay();
         }
         popUpMessage.SetActive(false);

@@ -11,12 +11,18 @@ public class ArmyManager : MonoBehaviour
 
     public void PurchaseUnit(Unit unit)
     {
-        //TODO
+        if(GameManager.Instance.Credits>=unit.unitCreditCost)
+        {
+            armyUnitsList.Add(unit);
+        }
     }
 
     public void DeployUnit(Unit unit)
     {
-        //TODO
+        if(GameManager.Instance.Supplies>=unit.unitSupplyCost)
+        {
+            deployedUnitsList.Add(unit);
+        }
     }
 
     public void DestroyUnit (Unit unit)
