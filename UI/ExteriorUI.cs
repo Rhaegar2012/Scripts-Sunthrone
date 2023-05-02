@@ -18,6 +18,7 @@ public class ExteriorUI : MonoBehaviour
     {
         UpdateResourceDisplay();
         PlayerController.Instance.onPopupCalled+=PlayerController_DisplayConstructionMessage;
+        PlayerController.Instance.onShopMenuCalled+=PlayerController_DisplayShopMenu;
         GameManager.Instance.onGameStatsUpdated+=GameManager_UpdateGameStats;
     }
 
@@ -38,6 +39,12 @@ public class ExteriorUI : MonoBehaviour
         popUpMessage.SetActive(true);
         onPopUpMessageCalled?.Invoke(this,EventArgs.Empty);
         messageText.text=$"Construct {buildingSign.BuildingName} for {buildingSign.BuildingCost} credits";
+    }
+
+    public void PlayerController_DisplayShopMenu(object sender, ShopNPC shopNPC)
+    {
+        shopNPC.OpenShopMenu();
+        shopNPC.DisplayAvailableUnitList();
     }
 
     public void GameManager_UpdateGameStats(object sender, EventArgs empty)

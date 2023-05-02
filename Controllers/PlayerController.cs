@@ -19,8 +19,12 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
     //Active Construction sign
     private BuildingSystem activeConstructionSign;
     public  BuildingSystem ActiveConstructionSign{get{return activeConstructionSign;}set{activeConstructionSign=value;}}
+    //Active Shop Reference
+    private ShopNPC activeShopNPC;
+    public  ShopNPC ActiveShopNPC {get{return activeShopNPC;} set{activeShopNPC=value;}}
     //Events
     public  event EventHandler<BuildingSystem> onPopupCalled;
+    public  event EventHandler<ShopNPC> onShopMenuCalled;
 
     protected override void Awake()
     {
@@ -114,6 +118,13 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
         {   
             onPopupCalled?.Invoke(this,activeConstructionSign);
             playerControlsEnabled=false;
+        }
+
+        if(activeShopNPC!=null)
+        {
+            onShopMenuCalled?.Invoke(this,activeShopNPC);
+            playerControlsEnabled=false;
+
         }
     }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,19 +8,37 @@ public class ShopNPC : MonoBehaviour
 {
     [SerializeField] private List<Unit> availableUnitList;
     [SerializeField] private Transform shopScrollViewContent;
-    [SerializeField] private ShopItem shopPrefab;
+    [SerializeField] private ShopItem shopItemPrefab;
+    [SerializeField] private GameObject shopMenu;
     private Unit unitSelectedForPurchase;
-    private void AvailableDisplayUnitList()
+
+
+    public void OpenShopMenu()
+    {
+        shopMenu.SetActive(true);
+    }
+
+    public void DisplayAvailableUnitList()
     {
         foreach(Unit unit in availableUnitList)
         {
-            shopPrefab.UpdateShopItemValues(unit.UnitSprite,unit.UnitName,unit.UnitCreditCost);
-            Instantiate(shopPrefab,shopScrollViewContent);
+            shopItemPrefab.UpdateShopItemValues(unit.UnitSprite,unit.UnitName,unit.UnitCreditCost);
+            Instantiate(shopItemPrefab,shopScrollViewContent);
         }
     }
 
-    private void PurchaseUnit()
+    public void PurchaseUnit()
     {
         ArmyManager.Instance.PurchaseUnit(unitSelectedForPurchase);
+    }
+
+    public void OnTriggerEnter2D (Collider2D other)
+    {
+        PlayerController.Instance.ActiveShopNPC=this;
+    }
+
+    public void OnTriggerExit2D (Collider2D other)
+    {
+        PlayerController.Instance.ActiveShopNPC=null;
     }
 }
