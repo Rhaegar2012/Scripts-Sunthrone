@@ -8,11 +8,10 @@ public class ShopNPC : MonoBehaviour
 {
     [SerializeField] private List<Unit> availableUnitList;
     [SerializeField] private Transform shopScrollViewContent;
-    [SerializeField] private ShopItem shopItemPrefab;
     [SerializeField] private GameObject shopMenu;
+    [SerializeField] private ShopItem shopItem;
     private Unit unitSelectedForPurchase;
-
-
+    
     public void OpenShopMenu()
     {
         shopMenu.SetActive(true);
@@ -22,8 +21,8 @@ public class ShopNPC : MonoBehaviour
     {
         foreach(Unit unit in availableUnitList)
         {
-            shopItemPrefab.UpdateShopItemValues(unit.UnitSprite,unit.UnitName,unit.UnitCreditCost);
-            Instantiate(shopItemPrefab,shopScrollViewContent);
+            shopItem.UpdateShopItem(unit.UnitSprite,unit.UnitName,unit.UnitCreditCost);
+            Instantiate(shopItem,shopScrollViewContent);
         }
     }
 
