@@ -89,4 +89,9 @@ public class ShopNPC : MonoBehaviour
     {
         PlayerController.Instance.ActiveShopNPC=null;
     }
+
+    public void TestClick()
+    {
+        Debug.Log("UI Called click");
+    }
 }

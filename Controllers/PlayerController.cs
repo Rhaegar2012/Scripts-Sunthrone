@@ -44,6 +44,7 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
     }
     void Update()
     {
+        //Debug.Log($"Player control enabled {playerControlsEnabled}");
         if(!playerControlsEnabled)
         {
             return;
@@ -116,23 +117,31 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
     {
         if(activeConstructionSign!=null)
         {   
-            onPopupCalled?.Invoke(this,activeConstructionSign);
             playerControlsEnabled=false;
+            onPopupCalled?.Invoke(this,activeConstructionSign);
+            
         }
 
         if(activeShopNPC!=null)
         {
-            onShopMenuCalled?.Invoke(this,activeShopNPC);
             playerControlsEnabled=false;
-
+            onShopMenuCalled?.Invoke(this,activeShopNPC);
         }
     }
 
+    public void DisablePlayerControls()
+    {
+        playerInputActions.Player_Base.Disable();
+    }
+
+    public void EnablePlayerControls()
+    {
+        playerInputActions.Player_Base.Enable();
+    }
     void InputController_OnMenuClosed(object sender, EventArgs empty)
     {
         playerControlsEnabled=true;
     }
-
     
   
 
