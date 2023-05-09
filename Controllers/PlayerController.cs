@@ -128,10 +128,7 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
     {
         playerInputActions.Player_Base.Enable();
     }
-    void InputController_OnMenuClosed(object sender, EventArgs empty)
-    {
-        playerControlsEnabled=true;
-    }
+    
     
   
 
