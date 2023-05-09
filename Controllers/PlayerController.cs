@@ -12,7 +12,6 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
     private Animator playerAnimator;
     private Sprite playerSprite;
     private bool isPlayerMoving;
-    private bool playerControlsEnabled=true;
     [SerializeField] private float speed;
     //Instance of player input action class, generate from input action asset before calling
     private InputActions playerInputActions;
@@ -38,17 +37,11 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
         playerInputActions.Player_Base.Enable();
         //Subscribe to action event
         playerInputActions.Player_Base.Action.performed+=Action_Performed;
-        InputController.onMenuClosed+=InputController_OnMenuClosed;
         DontDestroyOnLoad(gameObject);
     
     }
     void Update()
     {
-        //Debug.Log($"Player control enabled {playerControlsEnabled}");
-        if(!playerControlsEnabled)
-        {
-            return;
-        }
         
         Vector2 movementDirection=playerInputActions.Player_Base.Movement.ReadValue<Vector2>();
         if(movementDirection!=Vector2.zero)
@@ -117,14 +110,11 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
     {
         if(activeConstructionSign!=null)
         {   
-            playerControlsEnabled=false;
             onPopupCalled?.Invoke(this,activeConstructionSign);
-            
         }
 
         if(activeShopNPC!=null)
         {
-            playerControlsEnabled=false;
             onShopMenuCalled?.Invoke(this,activeShopNPC);
         }
     }

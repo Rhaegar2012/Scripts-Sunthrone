@@ -14,7 +14,7 @@ public class InputController : MonoBehaviour
     [SerializeField] Button firstSelectedButton;
     private GameObject currentSelected;
     //Events
-    public static event EventHandler onMenuClosed;
+
 
     void Awake()
     {
@@ -22,15 +22,15 @@ public class InputController : MonoBehaviour
         UIInputActions.UI_Base.Enable();
         PlayerController.Instance.DisablePlayerControls();
         eventSystem=EventSystem.current;
-        UIInputActions.UI_Base.Action.performed+=Action_Performed;
-            
+        UIInputActions.UI_Base.Action.performed+=Action_Performed;      
     }
     // Start is called before the first frame update
     void Start()
     {
         //ExteriorUI.onPopUpMessageCalled+=ExteriorUI_OnMenuCalled;
         eventSystem.firstSelectedGameObject=firstSelectedButton.gameObject;
-        eventSystem.SetSelectedGameObject(firstSelectedButton.gameObject);    
+        eventSystem.SetSelectedGameObject(firstSelectedButton.gameObject);
+        ShopNPC.OnMenuClosed+=ShopNPC_OnMenuClosed;    
     }
 
     // Update is called once per frame
@@ -47,13 +47,18 @@ public class InputController : MonoBehaviour
     public void Action_Performed(InputAction.CallbackContext context)
     {
         //Debug.Log("UI Action Called");
-        onMenuClosed?.Invoke(this, EventArgs.Empty);
         currentSelected=eventSystem.currentSelectedGameObject;
         if(currentSelected!=null)
         {
             Button currentButton=currentSelected.GetComponent<Button>();
             currentButton.onClick.Invoke();
-            PlayerController.Instance.EnablePlayerControls();
         }    
     }
+
+    public void ShopNPC_OnMenuClosed(object sender, EventArgs empty)
+    {
+        UIInputActions.UI_Base.Disable();
+    }
+
+
 }

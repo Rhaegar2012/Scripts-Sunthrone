@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ArmyManager : SingletonMonobehaviour<ArmyManager>
 {
-    private List<Unit> armyUnitsList;
-    private List<Unit> deployedUnitsList;
+    private List<Unit> armyUnitsList=new List<Unit>();
+    private List<Unit> deployedUnitsList=new List<Unit>();
     [SerializeField] private int armySupplyLimit;
     public int ArmySupplyLimit {get{return armySupplyLimit;} set{armySupplyLimit=value;}}
     
@@ -14,12 +14,9 @@ public class ArmyManager : SingletonMonobehaviour<ArmyManager>
         base.Awake();
         DontDestroyOnLoad(gameObject);
     }
-    public void PurchaseUnit(Unit unit)
+    public void AddUnitToArmyList(Unit unit)
     {
-        if(GameManager.Instance.Credits>=unit.UnitCreditCost)
-        {
-            armyUnitsList.Add(unit);
-        }
+        armyUnitsList.Add(unit);   
     }
 
     public void DeployUnit(Unit unit)

@@ -62,6 +62,7 @@ public class ExteriorUI : MonoBehaviour
             UpdateResourceDisplay();
         }
         popUpMessage.SetActive(false);
+        PlayerController.Instance.EnablePlayerControls();
 
     }
 }
