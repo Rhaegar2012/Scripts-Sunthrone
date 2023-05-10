@@ -19,7 +19,7 @@ public class BuildingSystem : MonoBehaviour
     {
         constructionYard.SetActive(false);
         newBuilding.SetActive(true);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     void OnTriggerEnter2D(Collider2D other)

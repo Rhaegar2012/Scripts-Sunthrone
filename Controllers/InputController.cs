@@ -19,7 +19,7 @@ public class InputController : MonoBehaviour
     void Awake()
     {
         UIInputActions= new InputActions();
-        UIInputActions.UI_Base.Enable();
+        
         PlayerController.Instance.DisablePlayerControls();
         eventSystem=EventSystem.current;
         UIInputActions.UI_Base.Action.performed+=Action_Performed;      
@@ -27,16 +27,15 @@ public class InputController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //ExteriorUI.onPopUpMessageCalled+=ExteriorUI_OnMenuCalled;
-        eventSystem.firstSelectedGameObject=firstSelectedButton.gameObject;
-        eventSystem.SetSelectedGameObject(firstSelectedButton.gameObject);
         ShopNPC.OnMenuClosed+=ShopNPC_OnMenuClosed;    
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnEnable()
     {
-        
+        eventSystem.firstSelectedGameObject=firstSelectedButton.gameObject;
+        eventSystem.SetSelectedGameObject(firstSelectedButton.gameObject);
+        PlayerController.Instance.DisablePlayerControls();
+        UIInputActions.UI_Base.Enable();
     }
 
     public void ExteriorUI_OnMenuCalled(object sender, EventArgs empty)
@@ -58,6 +57,7 @@ public class InputController : MonoBehaviour
     public void ShopNPC_OnMenuClosed(object sender, EventArgs empty)
     {
         UIInputActions.UI_Base.Disable();
+        PlayerController.Instance.EnablePlayerControls();
     }
 
 

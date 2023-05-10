@@ -13,8 +13,10 @@ public class ShopNPC : MonoBehaviour
     [SerializeField] private ShopItem shopItem;
     [SerializeField] private TextMeshProUGUI shopBalanceText;
     [SerializeField] private TextMeshProUGUI playerMessageText;
+    [SerializeField] private ExteriorUI exteriorUI;
     private int totalCost;
     private Dictionary<string,List<Unit>> unitShopCart= new Dictionary<string,List<Unit>>(); 
+    private List<ShopItem> shopItemList= new List<ShopItem>();
     private Unit unitSelectedForPurchase;
     //Events
     public static event EventHandler OnMenuClosed;
@@ -77,7 +79,8 @@ public class ShopNPC : MonoBehaviour
         foreach(Unit unit in availableUnitList)
         {
             shopItem.UpdateShopItem(unit.UnitSprite,unit.UnitName,unit.UnitCreditCost);
-            Instantiate(shopItem,shopScrollViewContent);
+            ShopItem shopItemInstance=Instantiate(shopItem,shopScrollViewContent);
+            shopItemList.Add(shopItemInstance.GetComponent<ShopItem>());
         }
     }
 
@@ -90,10 +93,12 @@ public class ShopNPC : MonoBehaviour
                 foreach(Unit unit in unitGroup.Value)
                 {
                     ArmyManager.Instance.AddUnitToArmyList(unit);
-                    playerMessageText.text="Units purchased!";
                 }
 
             }
+            playerMessageText.text="Units purchased!";
+            GameManager.Instance.Credits-=totalCost;
+            exteriorUI.UpdateResourceDisplay();
         }
         else
         {
@@ -117,6 +122,11 @@ public class ShopNPC : MonoBehaviour
         foreach(KeyValuePair<string,List<Unit>> unitGroup in unitShopCart)
         {
             unitGroup.Value.Clear();
+        }
+        foreach(ShopItem shopItem in shopItemList)
+        {
+            shopItem.ResetShopItemQuantityText();
+            shopItem.UnitShopQuantity=0;
         }
         playerMessageText.text="";
         shopBalanceText.text="Total: ";

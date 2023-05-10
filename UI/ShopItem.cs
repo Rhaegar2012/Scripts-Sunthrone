@@ -12,6 +12,7 @@ public class ShopItem:MonoBehaviour
     [SerializeField] private TextMeshProUGUI shopItemCostText;
     [SerializeField] private TextMeshProUGUI shopItemQuantityText;
     private int unitShopQuantity; 
+    public int UnitShopQuantity{get{return unitShopQuantity;}set{unitShopQuantity=value;}}
     //Events 
     public static event EventHandler<string> onUnitAdded;
     public static event EventHandler<string> onUnitRemoved;
@@ -22,6 +23,11 @@ public class ShopItem:MonoBehaviour
         shopItemNameText.text=nameText;
         unitShopQuantity=0;
         shopItemCostText.text=$"{costText.ToString()}$";
+    }
+
+    public void ResetShopItemQuantityText()
+    {
+        shopItemQuantityText.text="";
     }
 
     public void OnAddButtonPressed()
