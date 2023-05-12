@@ -14,7 +14,10 @@ public class Unit : MonoBehaviour
     [SerializeField] private List<TilemapGridType> walkableTiles;
     [SerializeField] private int unitCreditCost;
     [SerializeField] private int unitSupplyCost;
+    [SerializeField] private int unitUpgradeCost;
     private bool isEnemy;
+    private int unitExperience;
+    //Properties
     public string UnitName {get{return unitName;}set{unitName=value;}}
     public int HealthPoints {get{return healthPoints;}set{healthPoints=value;}}
     public int AttackPower  {get{return attackPower;}set{attackPower=value;}}
@@ -24,6 +27,9 @@ public class Unit : MonoBehaviour
     public int BaseMovementRange{get{return baseMovementRange;} set{baseMovementRange=value;}}
     public UnitLevel UnitLevel {get{return unitLevel;} set{unitLevel=value;}}
     public Sprite UnitSprite {get{return unitSprite;} set{unitSprite=value;}}
+    public int UnitUpgradeCost {get{return unitUpgradeCost;} set{unitUpgradeCost=value;}}
+    public int UnitExperience {get{return unitExperience;} set{unitExperience=value;}}
+
     
 
 }
