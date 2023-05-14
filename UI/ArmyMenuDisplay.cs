@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArmyMenuDisplay : MonoBehaviour
+public class ArmyMenuDisplay : MonoBehaviour,IPauseMenu
 {
     [SerializeField] private GameObject armyUnitMenuPrefab;
     [SerializeField] private Transform  armyScrollViewContent;
+    [SerializeField] private int menuIndex;
+    //Properties
+    public int MenuIndex{get{return menuIndex;} set{menuIndex=value;}}
     
     void OnEnable()
     {

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 
-public class ArmyUnitMenu : MonoBehaviour
+public class ArmyUnitMenu : MonoBehaviour,IPauseMenu
 {
     [SerializeField] private TextMeshProUGUI unitName;
     [SerializeField] private TextMeshProUGUI unitAttack;

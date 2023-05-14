@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class PlayerMenu : MonoBehaviour
+public class PlayerMenu : MonoBehaviour,IPauseMenu
 {
    [SerializeField] private TextMeshProUGUI playerNameText;
    [SerializeField] private TextMeshProUGUI playerRankText;
@@ -13,6 +13,9 @@ public class PlayerMenu : MonoBehaviour
    [SerializeField] private TextMeshProUGUI playerSupplyText;
    [SerializeField] private TextMeshProUGUI playerInfluenceText;
    [SerializeField] private Image playerImage;
+   [SerializeField] private int menuIndex;
+   //Properties
+   public int MenuIndex {get{return menuIndex;} set{menuIndex=value;}}
 
    void OnEnable()
    {
@@ -24,5 +27,7 @@ public class PlayerMenu : MonoBehaviour
         playerInfluenceText.text=$"x{GameManager.Instance.Influence.ToString()}";
         playerImage.sprite=GameManager.Instance.PlayerSprite;
    }
+
+   
 
 }
