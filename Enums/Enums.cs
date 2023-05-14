@@ -26,4 +26,13 @@ public enum UnitLevel
         Elite
 }
 
+public enum PlayerRank
+{
+        Lieutenant,
+        Captain,
+        Major,
+        Coronel,
+        General
+}
+
 

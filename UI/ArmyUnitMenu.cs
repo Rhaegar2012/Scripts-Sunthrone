@@ -16,10 +16,9 @@ public class ArmyUnitMenu : MonoBehaviour
     [SerializeField] private Image unitImage;
     private Unit unit;
     public Unit Unit {get{return unit;}set{unit=value;}}
-
   
 
-    private void DisplayUnitInfo()
+    public void DisplayUnitInfo()
     {
         unitName.text=unit.UnitName;
         unitAttack.text=unit.AttackPower.ToString();
