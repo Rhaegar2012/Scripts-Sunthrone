@@ -24,6 +24,7 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
     //Events
     public  event EventHandler<BuildingSystem> onPopupCalled;
     public  event EventHandler<ShopNPC> onShopMenuCalled;
+    public  event EventHandler onPauseMenuCalled;
 
     protected override void Awake()
     {
@@ -37,6 +38,7 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
         playerInputActions.Player_Base.Enable();
         //Subscribe to action event
         playerInputActions.Player_Base.Action.performed+=Action_Performed;
+        playerInputActions.Player_Base.Menu.performed+=Pause_Menu;
         DontDestroyOnLoad(gameObject);
     
     }
@@ -117,6 +119,12 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
         {
             onShopMenuCalled?.Invoke(this,activeShopNPC);
         }
+    }
+
+    void Pause_Menu(InputAction.CallbackContext context)
+    {
+        onPauseMenuCalled?.Invoke(this,EventArgs.Empty);
+        DisablePlayerControls();
     }
 
     public void DisablePlayerControls()

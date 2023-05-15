@@ -11,6 +11,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     [SerializeField] private Sprite playerSprite;
     [SerializeField] private string playerName;
     [SerializeField] private string playerCampaign;
+    [SerializeField] private GameObject pauseMenu;
     //Private
     private int playerExperience;
     private PlayerRank playerRank=PlayerRank.Lieutenant;
@@ -41,7 +42,17 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     void Start()
     {
         onGameStatsUpdated?.Invoke(this,EventArgs.Empty);
+        PlayerController.Instance.onPauseMenuCalled+=PlayerController_OpenPauseMenu;
     }
+
+    public void PlayerController_OpenPauseMenu(object sender, EventArgs empty)
+    {
+        pauseMenu.SetActive(true);
+    }
+
+
+
+
 
    
 }
