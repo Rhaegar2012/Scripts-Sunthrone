@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class PauseMenuController : MonoBehaviour
         currentMenu.ActivateMenu();
         menuCount=pauseMenuList.Count;
         menuNameText.text=currentMenu.MenuName;
+        InputController.onMenuClosed+=InputController_ClosePauseMenu;
     }
 
     void OnDisable()
@@ -55,5 +57,10 @@ public class PauseMenuController : MonoBehaviour
         currentMenu=pauseMenuList[menuIndex];
         currentMenu.ActivateMenu();
         menuNameText.text=currentMenu.MenuName;
+    }
+
+    public void InputController_ClosePauseMenu(object sender, EventArgs empty)
+    {
+        gameObject.SetActive(false);
     }
 }

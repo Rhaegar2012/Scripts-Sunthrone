@@ -37,24 +37,35 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         className="Game Manager";
         DontDestroyOnLoad(this.gameObject);
 
+
     }
     // Start is called before the first frame update
     void Start()
     {
         onGameStatsUpdated?.Invoke(this,EventArgs.Empty);
         PlayerController.Instance.onPauseMenuCalled+=PlayerController_OpenPauseMenu;
-        PlayerController.Instance.onPauseMenuClosed+=PlayerController_ClosePauseMenu;
+        LevelManager.Instance.onSceneLoaded+=LevelManager_OnSceneLoaded;
+    }
+
+    {
+        if(pauseMenu==null)
+        {
+            pauseMenu=FindObjectOfType<PauseMenuController>().gameObject;
+        }
+        
     }
 
     public void PlayerController_OpenPauseMenu(object sender, EventArgs empty)
     {
+        Debug.Log("Pause menu recieved");
+        if(!pauseMenu.activeInHierarchy)
+        {
+            Instantiate(pauseMenu,transform);
+        }
         pauseMenu.SetActive(true);
     }
 
-    public void PlayerController_ClosePauseMenu(object sender, EventArgs empty)
-    {
-        pauseMenu.SetActive(false);
-    }
+   
 
 
 

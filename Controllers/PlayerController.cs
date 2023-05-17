@@ -12,7 +12,6 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
     private Animator playerAnimator;
     private Sprite playerSprite;
     private bool isPlayerMoving;
-    private bool isPauseMenuActive=false;
     [SerializeField] private float speed;
     //Instance of player input action class, generate from input action asset before calling
     private InputActions playerInputActions;
@@ -26,8 +25,7 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
     public  event EventHandler<BuildingSystem> onPopupCalled;
     public  event EventHandler<ShopNPC> onShopMenuCalled;
     public  event EventHandler onPauseMenuCalled;
-    public  event EventHandler onPauseMenuClosed;
-
+    
     protected override void Awake()
     {
         base.Awake();
@@ -126,21 +124,8 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
     void Pause_Menu(InputAction.CallbackContext context)
     {
         Debug.Log("Pause menu called");
-        if(!isPauseMenuActive)
-        {
-            Debug.Log("Pause menu invoked");
-            
-            onPauseMenuCalled?.Invoke(this,EventArgs.Empty);
-            DisablePlayerControls();
-            isPauseMenuActive=true;
-        }
-        if(isPauseMenuActive)
-        {
-            onPauseMenuClosed?.Invoke(this,EventArgs.Empty);
-            EnablePlayerControls();
-            isPauseMenuActive=false;
-        }
-       
+        onPauseMenuCalled?.Invoke(this,EventArgs.Empty);
+        DisablePlayerControls();
     }
 
     public void DisablePlayerControls()
