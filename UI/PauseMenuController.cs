@@ -20,10 +20,15 @@ public class PauseMenuController : MonoBehaviour
         menuNameText.text=currentMenu.MenuName;
     }
 
+    void OnDisable()
+    {
+        currentMenuIndex=0;
+    }
+
     public void AdvanceMenu()
     {
-        currentMenuIndex= currentMenuIndex++;
-        if(currentMenuIndex>menuCount)
+        currentMenuIndex= currentMenuIndex+1;
+        if(currentMenuIndex>=menuCount)
         {
             currentMenuIndex=0;
         }
@@ -33,7 +38,7 @@ public class PauseMenuController : MonoBehaviour
 
     public void DecreaseMenu()
     {
-        currentMenuIndex=currentMenuIndex--;
+        currentMenuIndex=currentMenuIndex-1;
         if(currentMenuIndex<0)
         {
             currentMenuIndex=0;
@@ -50,6 +55,5 @@ public class PauseMenuController : MonoBehaviour
         currentMenu=pauseMenuList[menuIndex];
         currentMenu.ActivateMenu();
         menuNameText.text=currentMenu.MenuName;
-
     }
 }

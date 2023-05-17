@@ -43,11 +43,17 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         onGameStatsUpdated?.Invoke(this,EventArgs.Empty);
         PlayerController.Instance.onPauseMenuCalled+=PlayerController_OpenPauseMenu;
+        PlayerController.Instance.onPauseMenuClosed+=PlayerController_ClosePauseMenu;
     }
 
     public void PlayerController_OpenPauseMenu(object sender, EventArgs empty)
     {
         pauseMenu.SetActive(true);
+    }
+
+    public void PlayerController_ClosePauseMenu(object sender, EventArgs empty)
+    {
+        pauseMenu.SetActive(false);
     }
 
 
