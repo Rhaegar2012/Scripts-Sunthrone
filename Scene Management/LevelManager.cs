@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : SingletonMonobehaviour<LevelManager>
 {
+    private string currentSceneName;
+    private Scene currentScene;
+    public string SceneName{get{return currentSceneName;}set{currentSceneName=value;}}
     //Events
     public event EventHandler onSceneLoaded;
     protected override void Awake()
@@ -14,6 +17,7 @@ public class LevelManager : SingletonMonobehaviour<LevelManager>
         className="Level Manager";
         DontDestroyOnLoad(gameObject);
     }
+
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +34,8 @@ public class LevelManager : SingletonMonobehaviour<LevelManager>
     public void LoadScene(string sceneToLoad)
     {
         SceneManager.LoadScene(sceneToLoad);
+        currentScene=SceneManager.GetActiveScene();
+        currentSceneName=currentScene.name;
         onSceneLoaded?.Invoke(this,EventArgs.Empty);
     }
 

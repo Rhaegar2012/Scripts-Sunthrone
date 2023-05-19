@@ -47,6 +47,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         LevelManager.Instance.onSceneLoaded+=LevelManager_OnSceneLoaded;
     }
 
+    public void LevelManager_OnSceneLoaded(object sender, EventArgs empty)
     {
         if(pauseMenu==null)
         {
