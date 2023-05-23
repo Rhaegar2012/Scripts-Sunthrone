@@ -35,4 +35,10 @@ public enum PlayerRank
         General
 }
 
+public enum SceneTags
+{
+        ActiveInScene,
+        InactiveInScene
+}
+
 

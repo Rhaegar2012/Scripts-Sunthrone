@@ -5,13 +5,18 @@ using UnityEngine;
 
 public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
 {
-    [SerializeField] string baseScene;
-    private List<GameObject> objectsActiveInSceneList;
-    private List<GameObject> objectsInactiveInSceneList;
+    [SerializeField] private string baseScene;
+    [SerializeField] private float waitingTime;
+    private List<string> objectsActiveInSceneList= new List<string>();
+    private List<string> objectsInactiveInSceneList=new List<string>();
 
 
     protected override void Awake()
     {
+        if(Instance!=null)
+        {
+            return;
+        }
         base.Awake();
         DontDestroyOnLoad(gameObject);
     }
@@ -25,19 +30,23 @@ public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
 
     private void OnSceneLoaded_RestoreSceneState(object sender, EventArgs empty)
     {
+        Debug.Log("OnSceneLoaded_RestoreSceneState");
+        Debug.Log($"Scene name {LevelManager.Instance.SceneName}");
         if(LevelManager.Instance.SceneName==baseScene)
         {
-            foreach(GameObject gameObject in objectsActiveInSceneList)
+            Debug.Log("Accessed");
+            foreach(string objectName in objectsActiveInSceneList)
             {
-                gameObject.SetActive(true);
+                
             }
-            foreach(GameObject gameObject in objectsInactiveInSceneList)
+            foreach(string objectName in objectsInactiveInSceneList)
             {
-                gameObject.SetActive(false);
+                
             }
         }
-
     }
+
+    
 
     public void BuildingSystem_OnNewConstruction(object sender, EventArgs empty)
     {
@@ -48,8 +57,8 @@ public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
 
     public void UpdateObjectActivationLists (GameObject objectActivated, GameObject objectDeactivated)
     {
-        objectsActiveInSceneList.Add(objectActivated);
-        objectsInactiveInSceneList.Add(objectDeactivated);
+        objectsActiveInSceneList.Add(objectActivated.name);
+        objectsInactiveInSceneList.Add(objectDeactivated.name);
 
     }
 

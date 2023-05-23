@@ -24,10 +24,8 @@ public class BuildingSystem : MonoBehaviour
     {
         constructionYard.SetActive(false);
         newBuilding.SetActive(true);
-        onNewBuildingConstruction?.Invoke(this,EventArgs.Empty);
         gameObject.SetActive(false);
-        
-
+        onNewBuildingConstruction?.Invoke(this,EventArgs.Empty);   
     }
 
     void OnTriggerEnter2D(Collider2D other)

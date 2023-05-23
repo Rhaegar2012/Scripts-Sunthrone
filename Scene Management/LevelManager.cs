@@ -13,6 +13,10 @@ public class LevelManager : SingletonMonobehaviour<LevelManager>
     public event EventHandler onSceneLoaded;
     protected override void Awake()
     {
+        if(Instance!=null)
+        {
+            return;
+        }
         base.Awake();
         className="Level Manager";
         DontDestroyOnLoad(gameObject);
@@ -35,7 +39,7 @@ public class LevelManager : SingletonMonobehaviour<LevelManager>
     {
         SceneManager.LoadScene(sceneToLoad);
         currentScene=SceneManager.GetActiveScene();
-        currentSceneName=currentScene.name;
+        currentSceneName=sceneToLoad;
         onSceneLoaded?.Invoke(this,EventArgs.Empty);
     }
 

@@ -14,6 +14,10 @@ public class ArmyManager : SingletonMonobehaviour<ArmyManager>
     
     protected override void Awake()
     {
+        if(Instance!=null)
+        {
+            return;
+        }
         base.Awake();
         DontDestroyOnLoad(gameObject);
     }
