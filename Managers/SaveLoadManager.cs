@@ -7,8 +7,10 @@ public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
 {
     [SerializeField] private string baseScene;
     [SerializeField] private float waitingTime;
-    private List<string> objectsActiveInSceneList= new List<string>();
-    private List<string> objectsInactiveInSceneList=new List<string>();
+    private List<SceneItem> objectsActiveInSceneList= new List<SceneItem>();
+    private List<SceneItem> objectsInactiveInSceneList=new List<SceneItem>();
+    private SceneItem[] sceneItems;
+    private GameObject[] gameObjectList;
 
 
     protected override void Awake()
@@ -19,6 +21,7 @@ public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
         }
         base.Awake();
         DontDestroyOnLoad(gameObject);
+        gameObjectList = GameObject.FindObjectsOfType<GameObject>();
     }
 
     void Start()
@@ -32,14 +35,21 @@ public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
     {
         Debug.Log("OnSceneLoaded_RestoreSceneState");
         Debug.Log($"Scene name {LevelManager.Instance.SceneName}");
+        sceneItems=FindObjectsOfType<SceneItem>();
+        Transform testTransform=transform.Find("Barracks");
+        gameObjectList = GameObject.FindObjectsOfType<GameObject>();
+        
+        Debug.Log(testTransform);
+        
+
         if(LevelManager.Instance.SceneName==baseScene)
         {
             Debug.Log("Accessed");
-            foreach(string objectName in objectsActiveInSceneList)
+            foreach(SceneItem item in objectsActiveInSceneList)
             {
                 
             }
-            foreach(string objectName in objectsInactiveInSceneList)
+            foreach(SceneItem item in objectsInactiveInSceneList)
             {
                 
             }
@@ -55,10 +65,10 @@ public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
 
     }
 
-    public void UpdateObjectActivationLists (GameObject objectActivated, GameObject objectDeactivated)
+    public void UpdateObjectActivationLists (SceneItem objectActivated, SceneItem objectDeactivated)
     {
-        objectsActiveInSceneList.Add(objectActivated.name);
-        objectsInactiveInSceneList.Add(objectDeactivated.name);
+        objectsActiveInSceneList.Add(objectActivated);
+        objectsInactiveInSceneList.Add(objectDeactivated);
 
     }
 
