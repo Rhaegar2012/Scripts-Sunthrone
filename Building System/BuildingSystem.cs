@@ -6,12 +6,12 @@ using UnityEngine.Tilemaps;
 
 public class BuildingSystem : MonoBehaviour
 {
-    [SerializeField] private SceneItem constructionYard;
-    [SerializeField] private SceneItem newBuilding;
+    [SerializeField] private GameObject constructionYard;
+    [SerializeField] private GameObject newBuilding;
     [SerializeField] private string buildingName;
     [SerializeField] private int buildingCost;
-    public SceneItem ConstructionYard{get{return constructionYard;}}
-    public SceneItem NewBuilding {get{return newBuilding;}}
+    public GameObject ConstructionYard{get{return constructionYard;}}
+    public GameObject NewBuilding {get{return newBuilding;}}
     public string BuildingName {get{return buildingName;}}
     public int BuildingCost {get{return buildingCost;}}
     //Events
@@ -22,9 +22,11 @@ public class BuildingSystem : MonoBehaviour
 
     public void ConstructNewBuilding()
     {
-        constructionYard.SetActiveInScene(false);
-        newBuilding.SetActiveInScene(true);
-        gameObject.SetActive(false);
+        //constructionYard.SetActive(false);
+        Destroy(constructionYard.gameObject);
+        newBuilding.SetActive(true);
+        Destroy(gameObject);
+        //gameObject.SetActive(false);
         onNewBuildingConstruction?.Invoke(this,EventArgs.Empty);   
     }
 

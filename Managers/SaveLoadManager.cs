@@ -7,9 +7,8 @@ public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
 {
     [SerializeField] private string baseScene;
     [SerializeField] private float waitingTime;
-    private List<SceneItem> objectsActiveInSceneList= new List<SceneItem>();
-    private List<SceneItem> objectsInactiveInSceneList=new List<SceneItem>();
-    private SceneItem[] sceneItems;
+    private List<GameObject> objectsActiveInSceneList= new List<GameObject>();
+    private List<string> objectsInactiveInSceneList=new List<string>();
     private GameObject[] gameObjectList;
 
 
@@ -21,7 +20,7 @@ public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
         }
         base.Awake();
         DontDestroyOnLoad(gameObject);
-        gameObjectList = GameObject.FindObjectsOfType<GameObject>();
+        
     }
 
     void Start()
@@ -35,24 +34,9 @@ public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
     {
         Debug.Log("OnSceneLoaded_RestoreSceneState");
         Debug.Log($"Scene name {LevelManager.Instance.SceneName}");
-        sceneItems=FindObjectsOfType<SceneItem>();
-        Transform testTransform=transform.Find("Barracks");
-        gameObjectList = GameObject.FindObjectsOfType<GameObject>();
-        
-        Debug.Log(testTransform);
-        
-
         if(LevelManager.Instance.SceneName==baseScene)
         {
-            Debug.Log("Accessed");
-            foreach(SceneItem item in objectsActiveInSceneList)
-            {
-                
-            }
-            foreach(SceneItem item in objectsInactiveInSceneList)
-            {
-                
-            }
+            //SceneItemManager.Instance.FindObjectInHierarchy("Barracks");   
         }
     }
 
@@ -65,10 +49,10 @@ public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
 
     }
 
-    public void UpdateObjectActivationLists (SceneItem objectActivated, SceneItem objectDeactivated)
+    public void UpdateObjectActivationLists (GameObject objectActivated, GameObject objectDeactivated)
     {
-        objectsActiveInSceneList.Add(objectActivated);
-        objectsInactiveInSceneList.Add(objectDeactivated);
+        GameObject clone=Instantiate(objectActivated);
+        objectsActiveInSceneList.Add(clone);
 
     }
 
