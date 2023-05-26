@@ -32,29 +32,17 @@ public class SaveLoadManager : SingletonMonobehaviour<SaveLoadManager>
 
     private void OnSceneLoaded_RestoreSceneState(object sender, EventArgs empty)
     {
-        Debug.Log("OnSceneLoaded_RestoreSceneState");
-        Debug.Log($"Scene name {LevelManager.Instance.SceneName}");
-        if(LevelManager.Instance.SceneName==baseScene)
-        {
-            //SceneItemManager.Instance.FindObjectInHierarchy("Barracks");   
-        }
+        //TODO
     }
 
     
 
     public void BuildingSystem_OnNewConstruction(object sender, EventArgs empty)
     {
-        BuildingSystem constructionSign= (BuildingSystem) sender;
-        UpdateObjectActivationLists(constructionSign.NewBuilding,constructionSign.ConstructionYard);
-
+       //TODO
     }
 
-    public void UpdateObjectActivationLists (GameObject objectActivated, GameObject objectDeactivated)
-    {
-        GameObject clone=Instantiate(objectActivated);
-        objectsActiveInSceneList.Add(clone);
-
-    }
+    
 
     
 }

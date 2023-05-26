@@ -40,5 +40,10 @@ public enum SceneTags
         ActiveInScene,
         InactiveInScene
 }
+public enum SceneItemType
+{
+        Building,
+        Yard
+}
 
 
