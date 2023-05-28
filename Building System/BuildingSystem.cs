@@ -10,6 +10,7 @@ public class BuildingSystem : MonoBehaviour
     [SerializeField] private SceneItem newBuilding;
     [SerializeField] private string buildingName;
     [SerializeField] private int buildingCost;
+    [SerializeField] private Transform buildingParentTransform;
     public SceneItem ConstructionYard{get{return constructionYard;}}
     public SceneItem NewBuilding {get{return newBuilding;}}
     public string BuildingName {get{return buildingName;}}
@@ -22,9 +23,12 @@ public class BuildingSystem : MonoBehaviour
 
     public void ConstructNewBuilding()
     {
-        constructionYard.SetActiveInScene(false);
+        constructionYard.IsActiveInScene=false;
+        SceneItemManager.Instance.AddSceneItem(constructionYard);
+        SceneItemManager.Instance.AddSceneItem(newBuilding);
+        constructionYard.gameObject.SetActive(false);
+        newBuilding.ParentTransform=buildingParentTransform;
         newBuilding.SetActiveInScene(true);
-        Destroy(gameObject);
         gameObject.SetActive(false);
         onNewBuildingConstruction?.Invoke(this,EventArgs.Empty);   
     }
