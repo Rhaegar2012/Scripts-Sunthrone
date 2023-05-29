@@ -20,13 +20,8 @@ public class SceneItem : MonoBehaviour
     public void SetActiveInScene(bool isActive)
     {
 
-        if(IsActiveInScene)
-        {
-            Debug.Log("accessed to instation");
-
-            Instantiate(itemPrefab,parentTransform);
-            IsActiveInScene=isActive;
-        }
+        gameObject.SetActive(isActive);
+        IsActiveInScene=isActive;
         
     }
 

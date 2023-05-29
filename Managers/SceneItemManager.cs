@@ -5,26 +5,31 @@ using UnityEngine;
 
 public class SceneItemManager : SingletonMonobehaviour<SceneItemManager>,ISaveable
 {
+    [SerializeField] private string sceneName; 
+    [SerializeField] private bool gridActiveInScene;
+    [SerializeField] private GameObject sceneGrid;  
     private string iSaveableUniqueID;
     private GameObjectSave gameObjectSave;
-    [SerializeField] private List<SceneItem> itemsInScene;
-    [SerializeField] private string sceneName;
-    [SerializeField] Transform buildingTransform;
-   
+    private SceneItem[] itemsInScene;
+    private List<SceneItem> sceneItemsList;
+    
     //Properties
     public string ISaveableUniqueID{get{return iSaveableUniqueID;}set{iSaveableUniqueID=value;}}
     public GameObjectSave GameObjectSave {get{return gameObjectSave;}set{gameObjectSave=value;}}
-
-    
+    public SceneItem[] ItemsInScene {get{return itemsInScene;}set{itemsInScene=value;}}
+    public List<SceneItem> SceneItemsList {get{return sceneItemsList;}set{sceneItemsList=value;}}
+    public GameObject SceneGrid {get{return sceneGrid;}}
 
     protected override void Awake()
     {
         if(Instance!=null)
         {
+            Destroy(gameObject);
             return;
         }
         base.Awake();
         GameObjectSave= new GameObjectSave();
+        DontDestroyOnLoad(gameObject);
         
     }
 
@@ -32,6 +37,8 @@ public class SceneItemManager : SingletonMonobehaviour<SceneItemManager>,ISaveab
     {
         BuildingSystem.onNewBuildingConstruction+=OnNewBuildingConstruction_SaveSceneState;
         LevelManager.Instance.onSceneLoaded+=OnSceneLoaded_RestoreSceneState;
+        itemsInScene=GetComponentsInChildren<SceneItem>();
+        sceneItemsList=new List<SceneItem>(itemsInScene);
     }
 
     public void OnNewBuildingConstruction_SaveSceneState(object sender, EventArgs empty)
@@ -41,29 +48,20 @@ public class SceneItemManager : SingletonMonobehaviour<SceneItemManager>,ISaveab
 
     public void OnSceneLoaded_RestoreSceneState(object sender, EventArgs empty)
     {
-        
+        gridActiveInScene=!gridActiveInScene;
+        if(sceneGrid!=null)
+        {
+            sceneGrid.SetActive(gridActiveInScene);
+        }
         ISaveableRestoreSceneState();
-    }
-
-    public void AddSceneItem(SceneItem item)
-    {
-        itemsInScene.Add(item);
     }
 
     private void RestoreScene()
     {
-        
-        
         foreach(SceneItem item in itemsInScene)
         {
-            Debug.Log($"Item {item}");
-            if(item!=null)
-            {
-                Debug.Log("Accessed");
-                item.SetActiveInScene();
-            }
+            item.SetActiveInScene(item.IsActiveInScene);
         }
-
     }
     public void ISaveableRegister()
     {
@@ -81,14 +79,19 @@ public class SceneItemManager : SingletonMonobehaviour<SceneItemManager>,ISaveab
         //Creates a new save file for the scene
         SceneSave sceneSave= new SceneSave();
         //Stores list Item information
-        sceneSave.sceneItemList=itemsInScene;
+        sceneSave.sceneItemList=new List<SceneItem>(itemsInScene);
         //Adds save data to GameObjectSave
         GameObjectSave.sceneData.Add(sceneName,sceneSave);
 
     }
     public void ISaveableRestoreSceneState()
     {
+        
         if(LevelManager.Instance.SceneName!=sceneName)
+        {  
+            return;
+        }
+        if(GameObjectSave==null)
         {
             return;
         }
@@ -97,19 +100,11 @@ public class SceneItemManager : SingletonMonobehaviour<SceneItemManager>,ISaveab
         {
             if(sceneSave.sceneItemList!=null)
             {
-                Debug.Log(sceneSave.sceneItemList.Count);
-                List<SceneItem> itemsInScene=sceneSave.sceneItemList;
-                foreach(SceneItem item in itemsInScene)
-                {
-                    Debug.Log($"Scene Item name {item.ItemName}");
-                    Debug.Log($"Scene Item State {item.IsActiveInScene}");
-                    
-                    Debug.Log($"Scene Item parent {item.ParentTransform}");
-                    Instantiate(item.ItemPrefab,transform);
-                }
-                //RestoreScene();
+                sceneItemsList=sceneSave.sceneItemList;
+                
             }
         } 
+        RestoreScene();
     }
 
     

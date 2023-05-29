@@ -43,7 +43,8 @@ public enum SceneTags
 public enum SceneItemType
 {
         Building,
-        Yard
+        Yard,
+        Item
 }
 
 
