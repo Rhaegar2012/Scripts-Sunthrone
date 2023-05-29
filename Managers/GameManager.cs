@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameManager : SingletonMonobehaviour<GameManager>
 {
+    [Header("Player Info")]
     [SerializeField] private int credits;
     [SerializeField] private int influence;
     [SerializeField] private int supplies;
@@ -12,8 +13,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     [SerializeField] private string playerName;
     [SerializeField] private string playerCampaign;
     [SerializeField] private GameObject pauseMenu;
+    [Header("Game Systems")]
+
     //Private
     private int playerExperience;
+    private GameObject pauseMenuInstance;
     private PlayerRank playerRank=PlayerRank.Lieutenant;
 
     //Properties
@@ -29,15 +33,17 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public event EventHandler onGameStatsUpdated;
     protected override void Awake()
     {
+        DontDestroyOnLoad(this.gameObject);
         if(GameManager.Instance!=null)
         {
+            Destroy(gameObject);
             return;
         }
         base.Awake();
         className="Game Manager";
-        DontDestroyOnLoad(this.gameObject);
-
-
+        pauseMenuInstance=Instantiate(pauseMenu,transform);
+        pauseMenuInstance.SetActive(false);
+        PlayerController.Instance.EnablePlayerControls();
     }
     // Start is called before the first frame update
     void Start()
@@ -58,12 +64,16 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     public void PlayerController_OpenPauseMenu(object sender, EventArgs empty)
     {
-        Debug.Log("Pause menu recieved");
-        if(!pauseMenu.activeInHierarchy)
+        
+        if(pauseMenuInstance.activeInHierarchy)
         {
-            Instantiate(pauseMenu,transform);
+            pauseMenuInstance.SetActive(false);
         }
-        pauseMenu.SetActive(true);
+        else
+        {
+            pauseMenuInstance.SetActive(true);
+        }
+        
     }
 
    

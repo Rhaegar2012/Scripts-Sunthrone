@@ -22,11 +22,6 @@ public class ExteriorUI : MonoBehaviour
         GameManager.Instance.onGameStatsUpdated+=GameManager_UpdateGameStats;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void UpdateResourceDisplay()
     {
         supplyText.text=GameManager.Instance.Supplies.ToString();
@@ -54,6 +49,11 @@ public class ExteriorUI : MonoBehaviour
 
     public void ConstructBuilding()
     {
+        
+        if(PlayerController.Instance.ActiveConstructionSign==null)
+        {
+            return;
+        }
         int buildingCost= PlayerController.Instance.ActiveConstructionSign.BuildingCost;
         if(GameManager.Instance.Credits>=buildingCost)
         {
@@ -61,8 +61,9 @@ public class ExteriorUI : MonoBehaviour
             GameManager.Instance.Credits-=buildingCost;
             UpdateResourceDisplay();
         }
-        popUpMessage.SetActive(false);
         PlayerController.Instance.EnablePlayerControls();
+        popUpMessage.SetActive(false);
+        
 
     }
 }

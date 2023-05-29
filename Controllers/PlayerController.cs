@@ -123,7 +123,6 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
 
     void Pause_Menu(InputAction.CallbackContext context)
     {
-        Debug.Log("Pause menu called");
         onPauseMenuCalled?.Invoke(this,EventArgs.Empty);
         DisablePlayerControls();
     }

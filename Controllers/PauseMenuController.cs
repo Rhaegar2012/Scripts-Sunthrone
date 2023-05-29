@@ -12,7 +12,7 @@ public class PauseMenuController : MonoBehaviour
     private Menu currentMenu;
     private int menuCount;
     
-
+   
     void OnEnable()
     {
         currentMenu=pauseMenuList[currentMenuIndex];
