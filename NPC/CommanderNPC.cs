@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class CommanderNPC : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void OnTriggerEnter2D(Collider2D other)
     {
-        
+        PlayerController.Instance.ActiveCommanderNPC=this;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnTriggerExit2D(Collider2D other)
     {
-        
+        PlayerController.Instance.ActiveCommanderNPC=null;
     }
+
 }

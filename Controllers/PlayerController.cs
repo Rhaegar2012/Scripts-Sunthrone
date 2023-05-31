@@ -21,9 +21,13 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
     //Active Shop Reference
     private ShopNPC activeShopNPC;
     public  ShopNPC ActiveShopNPC {get{return activeShopNPC;} set{activeShopNPC=value;}}
+    //Active Commander Reference
+    private CommanderNPC activeCommanderNPC;
+    public CommanderNPC ActiveCommanderNPC {get{return activeCommanderNPC;}set{activeCommanderNPC=value;}}
     //Events
     public  event EventHandler<BuildingSystem> onPopupCalled;
     public  event EventHandler<ShopNPC> onShopMenuCalled;
+    public  event EventHandler onCommandMenuCalled;
     public  event EventHandler onPauseMenuCalled;
     
     protected override void Awake()
@@ -118,6 +122,11 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
         if(activeShopNPC!=null)
         {
             onShopMenuCalled?.Invoke(this,activeShopNPC);
+        }
+
+        if(activeCommanderNPC!=null)
+        {
+            onCommandMenuCalled?.Invoke(this, EventArgs.Empty);
         }
     }
 

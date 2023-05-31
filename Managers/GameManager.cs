@@ -13,7 +13,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     [SerializeField] private string playerName;
     [SerializeField] private string playerCampaign;
     [SerializeField] private GameObject pauseMenu;
-    [Header("Game Systems")]
+    [Header("Battle Info")]
+    [SerializeField] private List<SO_BattleInfo> battleInformation;
 
     //Private
     private int playerExperience;
@@ -28,6 +29,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public string PlayerName {get{return playerName;} set{playerName=value;}}
     public PlayerRank PlayerRank {get{return playerRank;}set{playerRank=value;}}
     public string PlayerCampaign {get{return playerCampaign;}set{playerCampaign=value;}}
+    public List<SO_BattleInfo> BattleInformation {get{return battleInformation;}}
     
     //Events
     public event EventHandler onGameStatsUpdated;
