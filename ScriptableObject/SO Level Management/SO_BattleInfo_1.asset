@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8302b142540c7d49a677e67cbf5e6c6, type: 3}
   m_Name: SO_BattleInfo_1
   m_EditorClassIdentifier: 
-  BattleName: 
+  BattleName: Testing Battle
   CreditReward: 0
   SupplyReward: 0
   InfluenceReward: 0
