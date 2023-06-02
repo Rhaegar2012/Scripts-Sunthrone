@@ -47,4 +47,12 @@ public enum SceneItemType
         Item
 }
 
+public enum BattleMedalAward
+{
+        None,
+        Bronze,
+        Silver,
+        Gold
+}
+
 

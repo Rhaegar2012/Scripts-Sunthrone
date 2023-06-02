@@ -10,6 +10,7 @@ public class SO_BattleInfo : ScriptableObject
     [SerializeField] public int InfluenceReward;
     [SerializeField] public int UnitSupplyLimitForBattle;
     [SerializeField] public bool IsBattleCompleted;
+    [SerializeField] public BattleMedalAward awardedMedal; 
     [SerializeField] List<Unit> EnemyUnits;
     [SerializeField] List<Vector3> EnemyUnitSpawnPosition;
 }
