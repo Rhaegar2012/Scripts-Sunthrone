@@ -6,8 +6,9 @@ using UnityEngine;
 public class CommanderNPC : MonoBehaviour
 {
     [SerializeField] private GameObject battleSelectionMenu;
+    [SerializeField] private GameObject battleInformationMenu;
     [SerializeField] private List<BattleSelectionMarker> mapUIMarkers;
-    private SO_BattleInfo selectedBattle;
+    private string selectedBattle;
     private List<SO_BattleInfo> battleInformation;
     private List<Unit> availableUnits;
 
@@ -22,10 +23,10 @@ public class CommanderNPC : MonoBehaviour
     private void PlayerController_OnCommandMenuCalled(object sender,EventArgs empty)
     {
         battleSelectionMenu.SetActive(true);
-        DisplayBattleInformationMenu();
+        UpdateBattleInformationMenu();
     }
 
-    private void DisplayBattleInformationMenu()
+    private void UpdateBattleInformationMenu()
     {
         battleSelectionMenu.SetActive(true);
         foreach(BattleSelectionMarker marker in mapUIMarkers)
@@ -34,11 +35,17 @@ public class CommanderNPC : MonoBehaviour
             marker.UpdateButtonIcon(battleData.awardedMedal);
         }
     }
-
-    //Shows battle information after marker selection
-    private void DisplayBattleInformation(string battleName)
+    public void ActivateBattleMenu(string battleName)
     {
-        //TODO
+        battleInformationMenu.SetActive(true);
+        battleSelectionMenu.SetActive(false);
+        DisplayBattleInformation(selectedBattle);
+    }
+    //Shows battle information after marker selection
+    private void DisplayBattleInformation(string selectedBattle)
+    {
+        SO_BattleInfo battleData=FindBattleData(selectedBattle);
+    
     }
 
     //Finds battle information from battle information list for an specific marker
