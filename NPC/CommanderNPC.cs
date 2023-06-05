@@ -8,8 +8,7 @@ public class CommanderNPC : MonoBehaviour
     [SerializeField] private GameObject battleSelectionMenu;
     [SerializeField] private GameObject battleInformationMenu;
     [SerializeField] private List<BattleSelectionMarker> mapUIMarkers;
-    private string selectedBattle;
-    private List<SO_BattleInfo> battleInformation;
+    [SerializeField] private List<SO_BattleInfo> battleInformation;
     private List<Unit> availableUnits;
 
     void Start()
@@ -35,17 +34,13 @@ public class CommanderNPC : MonoBehaviour
             marker.UpdateButtonIcon(battleData.awardedMedal);
         }
     }
-    public void ActivateBattleMenu(string battleName)
-    {
-        battleInformationMenu.SetActive(true);
-        battleSelectionMenu.SetActive(false);
-        DisplayBattleInformation(selectedBattle);
-    }
+    
     //Shows battle information after marker selection
     private void DisplayBattleInformation(string selectedBattle)
     {
+        BattleInformationMenu battleInformation=battleInformationMenu.GetComponent<BattleInformationMenu>();
         SO_BattleInfo battleData=FindBattleData(selectedBattle);
-    
+        battleInformation.UpdateBattleInformation(battleData);
     }
 
     //Finds battle information from battle information list for an specific marker
@@ -56,10 +51,28 @@ public class CommanderNPC : MonoBehaviour
 
     }
 
-    
+    //Menu Button methods 
+    public void ActivateBattleMenu(string battleName)
+    {
+        battleInformationMenu.SetActive(true);
+        battleSelectionMenu.SetActive(false);
+        DisplayBattleInformation(battleName);
+    }
+
+    public void CloseBattleInformationMenu()
+    {
+        battleInformationMenu.SetActive(false);
+        battleSelectionMenu.SetActive(true);
+    }
+
+    public void StartBattle()
+    {
+        //TODO
+    }
 
     public void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("Trigger activated");
         PlayerController.Instance.ActiveCommanderNPC=this;
     }
 
