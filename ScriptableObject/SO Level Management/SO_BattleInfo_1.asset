@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BattleName: Campaign Battle 1
   BattleEnvironmentSprite: {fileID: 0}
-  CreditReward: 0
-  SupplyReward: 0
-  InfluenceReward: 0
+  CreditReward: 100
+  SupplyReward: 100
+  InfluenceReward: 100
   awardedMedal: 0
   UnitSupplyLimitForBattle: 0
   IsBattleCompleted: 0

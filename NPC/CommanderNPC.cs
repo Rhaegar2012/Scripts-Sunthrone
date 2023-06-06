@@ -8,7 +8,7 @@ public class CommanderNPC : MonoBehaviour
     [SerializeField] private GameObject battleSelectionMenu;
     [SerializeField] private GameObject battleInformationMenu;
     [SerializeField] private List<BattleSelectionMarker> mapUIMarkers;
-    [SerializeField] private List<SO_BattleInfo> battleInformation;
+    private List<SO_BattleInfo> battleInformation;
     private List<Unit> availableUnits;
 
     void Start()
@@ -55,7 +55,6 @@ public class CommanderNPC : MonoBehaviour
     public void ActivateBattleMenu(string battleName)
     {
         battleInformationMenu.SetActive(true);
-        battleSelectionMenu.SetActive(false);
         DisplayBattleInformation(battleName);
     }
 
@@ -72,7 +71,6 @@ public class CommanderNPC : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Trigger activated");
         PlayerController.Instance.ActiveCommanderNPC=this;
     }
 

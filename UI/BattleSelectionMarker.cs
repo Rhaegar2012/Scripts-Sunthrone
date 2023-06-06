@@ -20,17 +20,17 @@ public class BattleSelectionMarker : MonoBehaviour
     {
         switch(award)
         {
-            case BattleMedalAward.None:
-                battleSelectionButton.image.sprite=noneMedalSprite;
+            case BattleMedalAward.NoMedal:
+                selectionIconImage.sprite=noneMedalSprite;
                 break;
             case BattleMedalAward.Bronze:
-                battleSelectionButton.image.sprite=bronzeMedalSprite;
+                selectionIconImage.sprite=bronzeMedalSprite;
                 break;
             case BattleMedalAward.Silver:
-                battleSelectionButton.image.sprite=silverMedalSprite;
+                selectionIconImage.sprite=silverMedalSprite;
                 break;
             case BattleMedalAward.Gold:
-                battleSelectionButton.image.sprite=goldMedalSprite;
+                selectionIconImage.sprite=goldMedalSprite;
                 break;
         }
     }

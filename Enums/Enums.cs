@@ -49,7 +49,7 @@ public enum SceneItemType
 
 public enum BattleMedalAward
 {
-        None,
+        NoMedal,
         Bronze,
         Silver,
         Gold
