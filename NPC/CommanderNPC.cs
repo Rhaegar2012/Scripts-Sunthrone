@@ -10,6 +10,8 @@ public class CommanderNPC : MonoBehaviour
     [SerializeField] private List<BattleSelectionMarker> mapUIMarkers;
     private List<SO_BattleInfo> battleInformation;
     private List<Unit> availableUnits;
+    //Events
+
 
     void Start()
     {
@@ -17,6 +19,7 @@ public class CommanderNPC : MonoBehaviour
         availableUnits=ArmyManager.Instance.ArmyUnitsList;
         //Event subscription
         PlayerController.Instance.onCommandMenuCalled+=PlayerController_OnCommandMenuCalled;
+        InputController.onMenuClosed+=InputController_CloseMenu;
     }
 
     private void PlayerController_OnCommandMenuCalled(object sender,EventArgs empty)
@@ -62,6 +65,15 @@ public class CommanderNPC : MonoBehaviour
     {
         battleInformationMenu.SetActive(false);
         battleSelectionMenu.SetActive(true);
+    }
+    //External events
+    public void InputController_CloseMenu(object sender, EventArgs empty)
+    {
+        if(battleSelectionMenu!=null)
+        {
+            battleSelectionMenu.SetActive(false);
+        }
+        
     }
 
     public void StartBattle()

@@ -24,7 +24,7 @@ public class InputController : MonoBehaviour
         PlayerController.Instance.DisablePlayerControls();
         eventSystem=EventSystem.current;
         UIInputActions.UI_Base.Action.performed+=Action_Performed; 
-        UIInputActions.UI_Base.CloseMenu.performed+=PauseMenu_Closed;     
+        UIInputActions.UI_Base.CloseMenu.performed+=PauseMenu_Closed;    
     }
     // Start is called before the first frame update
     void Start()
