@@ -29,7 +29,8 @@ public class InputController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ShopNPC.OnMenuClosed+=ShopNPC_OnMenuClosed;    
+        ShopNPC.OnMenuClosed+=ShopNPC_OnMenuClosed;
+        CommanderNPC.OnMenuClosed+=CommanderNPC_OnMenuClosed;    
     }
 
     void OnEnable()
@@ -64,6 +65,12 @@ public class InputController : MonoBehaviour
     }
 
     public void ShopNPC_OnMenuClosed(object sender, EventArgs empty)
+    {
+        UIInputActions.UI_Base.Disable();
+        PlayerController.Instance.EnablePlayerControls();
+    }
+
+    public void CommanderNPC_OnMenuClosed (object sender , EventArgs empty)
     {
         UIInputActions.UI_Base.Disable();
         PlayerController.Instance.EnablePlayerControls();

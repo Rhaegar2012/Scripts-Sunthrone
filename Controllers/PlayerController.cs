@@ -27,7 +27,7 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
     //Events
     public  event EventHandler<BuildingSystem> onPopupCalled;
     public  event EventHandler<ShopNPC> onShopMenuCalled;
-    public  event EventHandler onCommandMenuCalled;
+    public  event EventHandler<CommanderNPC> onCommandMenuCalled;
     public  event EventHandler onPauseMenuCalled;
     
     protected override void Awake()
@@ -126,7 +126,7 @@ public class PlayerController : SingletonMonobehaviour<PlayerController>
 
         if(activeCommanderNPC!=null)
         {
-            onCommandMenuCalled?.Invoke(this, EventArgs.Empty);
+            onCommandMenuCalled?.Invoke(this, activeCommanderNPC);
         }
     }
 

@@ -19,6 +19,7 @@ public class ExteriorUI : MonoBehaviour
         UpdateResourceDisplay();
         PlayerController.Instance.onPopupCalled+=PlayerController_DisplayConstructionMessage;
         PlayerController.Instance.onShopMenuCalled+=PlayerController_DisplayShopMenu;
+        PlayerController.Instance.onCommandMenuCalled+=PlayerController_DisplayCommandMenu;
         GameManager.Instance.onGameStatsUpdated+=GameManager_UpdateGameStats;
     }
 
@@ -40,6 +41,12 @@ public class ExteriorUI : MonoBehaviour
     {
         shopNPC.OpenShopMenu();
         shopNPC.DisplayAvailableUnitList();
+    }
+
+    public void PlayerController_DisplayCommandMenu(object sender, CommanderNPC commanderNPC)
+    {
+        commanderNPC.OpenCommandMenu();
+        commanderNPC.UpdateBattleInformationMenu();
     }
 
     public void GameManager_UpdateGameStats(object sender, EventArgs empty)

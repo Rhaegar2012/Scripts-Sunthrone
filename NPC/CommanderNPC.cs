@@ -11,24 +11,21 @@ public class CommanderNPC : MonoBehaviour
     private List<SO_BattleInfo> battleInformation;
     private List<Unit> availableUnits;
     //Events
+    public static event EventHandler OnMenuClosed;
 
 
     void Start()
     {
         battleInformation=GameManager.Instance.BattleInformation;
         availableUnits=ArmyManager.Instance.ArmyUnitsList;
-        //Event subscription
-        PlayerController.Instance.onCommandMenuCalled+=PlayerController_OnCommandMenuCalled;
-        InputController.onMenuClosed+=InputController_CloseMenu;
     }
 
-    private void PlayerController_OnCommandMenuCalled(object sender,EventArgs empty)
+    public void OpenCommandMenu()
     {
         battleSelectionMenu.SetActive(true);
-        UpdateBattleInformationMenu();
     }
 
-    private void UpdateBattleInformationMenu()
+    public void UpdateBattleInformationMenu()
     {
         battleSelectionMenu.SetActive(true);
         foreach(BattleSelectionMarker marker in mapUIMarkers)
@@ -67,13 +64,10 @@ public class CommanderNPC : MonoBehaviour
         battleSelectionMenu.SetActive(true);
     }
     //External events
-    public void InputController_CloseMenu(object sender, EventArgs empty)
+    public void CloseMenu()
     {
-        if(battleSelectionMenu!=null)
-        {
-            battleSelectionMenu.SetActive(false);
-        }
-        
+        battleSelectionMenu.SetActive(false);
+        OnMenuClosed?.Invoke(this, EventArgs.Empty);
     }
 
     public void StartBattle()
