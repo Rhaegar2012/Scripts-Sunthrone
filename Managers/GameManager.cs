@@ -78,6 +78,15 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         
     }
 
+    public void DisableBaseManagementFeatures()
+    {
+        //TODO
+    }
+    public void EnableBaseManagementFeatures()
+    {
+        
+    }
+
    
 
 
