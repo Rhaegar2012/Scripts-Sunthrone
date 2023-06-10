@@ -13,13 +13,13 @@ public class MoveAction : BaseAction
     private Vector2 currentGridPosition;
     private Vector2 targetPosition;
     private int currentIndex;
-    private List<GridNode> pathList;
+    private List<TilemapGridNode> pathList;
     private float distanceToTargetNode;
     // Start is called before the first frame update
     void Start()
     {
         currentGridPosition=unit.GetUnitPosition();
-        pathList=new List<GridNode>();
+        pathList=new List<TilemapGridNode>();
     }
 
     // Update is called once per frame
@@ -63,7 +63,7 @@ public class MoveAction : BaseAction
         List<Vector2> validGridPositionList= new List<Vector2>();
         foreach(Vector2 position in unit.GetValidMovementPositionList())
         {
-            GridNode testNode= LevelGrid.Instance.GetNodeAtPosition(position);
+            TilemapGridNode testNode= LevelGrid.Instance.GetNodeAtPosition(position);
             NodeType testNodeType= testNode.GetNodeType();
             List<NodeType> walkableNodeTypes=unit.GetWalkableNodeTypeList();
             if(!walkableNodeTypes.Contains(testNodeType))
@@ -86,7 +86,7 @@ public class MoveAction : BaseAction
         {
             targetPosition=validGridPositions.Find(position=>Vector2.Distance(position,gridPosition)>=unit.GetMovementRange());
         }
-        GridNode targetNode=LevelGrid.Instance.GetNodeAtPosition(targetPosition);
+        TilemapGridNode targetNode=LevelGrid.Instance.GetNodeAtPosition(targetPosition);
         pathList= Pathfinding.Instance.FindPath(unit,GetValidGridPositionList(),targetNode);
         OnAnyUnitMoved?.Invoke(this,EventArgs.Empty);
         ActionStart(onActionComplete);

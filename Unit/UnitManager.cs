@@ -12,7 +12,7 @@ public class UnitManager : MonoBehaviour
     //Fields
     [SerializeField] Transform unitPrefab;
     [SerializeField] Transform targetPrefab;
-    [SerializeField] BattleSceneSO battleSO;
+    [SerializeField] SO_BattleInfo battleSO;
     [Header("Unit Sprites-Player")]
     [SerializeField] Sprite playerInfantrySprite;
     [SerializeField] Sprite playerLightArmorSprite;
@@ -51,7 +51,7 @@ public class UnitManager : MonoBehaviour
         List<Vector2> playerTargetPositionList=new List<Vector2>();
 
 
-        //Read battle subscriptable object
+        /*//Read battle subscriptable object
         battleSO.GetBattleUnits(out playerUnitTypeList, out enemyUnitTypeList);
         battleSO.GetBattleStartingPositions(out playerUnitPositions, out enemyUnitPositions);
         playerTargetList=battleSO.GetTargetList();
@@ -65,9 +65,9 @@ public class UnitManager : MonoBehaviour
         GameObject targetParent= new GameObject("Targets");
         Transform playerUnitParentTransform=playerUnitParent.transform;
         Transform enemyUnitParentTransform=enemyUnitParent.transform;
-        Transform targetParentTransform=targetParent.transform;
+        Transform targetParentTransform=targetParent.transform;*/
         //Place Player Units
-        if(playerUnitTypeList.Count>0 && playerUnitPositions.Count>0 &&playerUnitTypeList.Count==playerUnitPositions.Count)
+        /*if(playerUnitTypeList.Count>0 && playerUnitPositions.Count>0 &&playerUnitTypeList.Count==playerUnitPositions.Count)
             {
                 for(int i=0;i<playerUnitTypeList.Count;i++)
                 {
@@ -136,7 +136,7 @@ public class UnitManager : MonoBehaviour
                 LevelGrid.Instance.SetTargetAtGridNode(targetLocation,targetScript);
             }
 
-        }
+        }*/
     }
 
     // Update is called once per frame
@@ -168,7 +168,7 @@ public class UnitManager : MonoBehaviour
     private void SwitchTurn()
     {
         
-        TurnSystem.Instance.NextTurn();
+        //TurnSystem.Instance.NextTurn();
     }
     public List<Unit> GetEnemyUnitList()
     {

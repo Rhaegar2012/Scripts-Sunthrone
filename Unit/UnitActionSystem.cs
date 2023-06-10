@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UnitActionSystem : MonoBehaviour
+public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
 {
-    //Singleton 
-    public static UnitActionSystem Instance {get; private set;}
+   
     //Events
     public event EventHandler OnSelectedUnitChanged;
     public event EventHandler OnDeselectedUnit;
@@ -17,7 +16,7 @@ public class UnitActionSystem : MonoBehaviour
     private BaseAction baseAction=null;
     Vector2 actionPosition;
     private bool isBusy;
-    private void Awake()
+    protected override void Awake()
     {
         if(Instance!=null)
         {
@@ -26,24 +25,18 @@ public class UnitActionSystem : MonoBehaviour
             return;
 
         }
-        Instance=this;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!UnitSelector.Instance.MakeSelection())
+        if(!UnitSelectorController.Instance.SelectionAttempt)
         {
             return;
         }
         if(TryHandleUnitSelection())
         {
-            UnitSelector.Instance.SwitchSelectorStatus();
             return;
         }
         if(TryHandleUnitActionMenu())
@@ -56,7 +49,7 @@ public class UnitActionSystem : MonoBehaviour
  
     private bool TryHandleUnitSelection()
     {
-        GridNode selectorCurrentNode=UnitSelector.Instance.GetCurrentNode();      
+        TilemapGridNode selectorCurrentNode=UnitSelectorController.Instance.GetCurrentNode();      
         if(selectorCurrentNode.HasAnyUnit())
         {
             Unit nodeUnit=selectorCurrentNode.GetUnit();
@@ -78,6 +71,7 @@ public class UnitActionSystem : MonoBehaviour
                 return false;
             }
             SetSelectedUnit(nodeUnit);
+            UnitSelectorController.Instance.SwitchSelectorStatus();
             return true;
 
         }
@@ -85,6 +79,7 @@ public class UnitActionSystem : MonoBehaviour
         if(selectedUnit!=null && !baseAction.IsValidGridPositionList(unitSelectorActionNodePosition))
         {
             DeselectUnit();
+            UnitSelectorController.Instance.SwitchSelectorStatus();
         }
       
        return false;

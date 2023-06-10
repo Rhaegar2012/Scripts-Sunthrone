@@ -15,6 +15,18 @@ public class SO_BattleInfo : ScriptableObject
     [Header("Battle Configuration")]
     [SerializeField] public int UnitSupplyLimitForBattle;
     [SerializeField] public bool IsBattleCompleted;
+    [SerializeField] List<Unit> PlayerUnits;
     [SerializeField] List<Unit> EnemyUnits;
     [SerializeField] List<Vector3> EnemyUnitSpawnPosition;
+
+    public void GetBattleUnits(out List<Unit> playerUnitList, out List<Unit> enemy)
+    {
+        playerUnitList=PlayerUnits;
+        enemyUnitList=EnemyUnits;
+    }
+
+    public List<Vector2> GetEnemySpawnPositions()
+    {
+        //TODO
+    }
 }

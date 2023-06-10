@@ -56,3 +56,12 @@ public enum BattleMedalAward
 }
 
 
+public enum UnitType
+{
+    //TODO    
+}
+
+public enum NodeType
+{
+   //TODO
+}

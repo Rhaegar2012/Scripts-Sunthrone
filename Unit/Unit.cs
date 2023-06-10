@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +31,102 @@ public class Unit : MonoBehaviour
     public int UnitUpgradeCost {get{return unitUpgradeCost;} set{unitUpgradeCost=value;}}
     public int UnitExperience {get{return unitExperience;} set{unitExperience=value;}}
 
-    
+    public bool IsEnemy()
+    {
+        throw new NotImplementedException();
+    }
 
+
+    public TilemapGridNode GetUnidNode()
+    {
+        throw new NotImplementedException();
+    }
+    
+    public void SetUnitNode(TilemapGridNode gridNode)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Vector2 GetUnitPosition()
+    {
+        throw new NotImplementedException();
+    }
+
+    public UnitType GetUnitType()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int GetMovementRange()
+    {
+        throw new NotImplementedException();
+    }
+
+
+    public List<Vector2> GetValidMovementPositionList()
+    {
+        throw new NotImplementedException();
+    }
+    
+    public BaseAction GetAction()
+    {
+        throw new NotImplementedException();
+    }
+
+    public BaseAction[] GetActionArray()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetWalkableNodeTypes()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Damage(float damageAmount)
+    {
+        throw new NotImplementedException();
+    }
+
+
+    public List<NodeType> GetWalkableNodeTypeList()
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool UnitCompletedAction()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetCompletedAction(bool completedAction)
+    {
+       throw new NotImplementedException();
+    }
+
+    public void TurnSystem_OnTurnChanged()
+    {
+       throw new NotImplementedException();
+    }
+
+    public float GetDefenseRating()
+    {
+       throw new NotImplementedException();
+    }
+
+    public float GetAttackRating()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int GetHealth()
+    {
+        throw new NotImplementedException();
+    }
+
+
+
+
+    
 }
+    
