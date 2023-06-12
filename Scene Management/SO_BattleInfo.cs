@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +20,7 @@ public class SO_BattleInfo : ScriptableObject
     [SerializeField] List<Unit> EnemyUnits;
     [SerializeField] List<Vector3> EnemyUnitSpawnPosition;
 
-    public void GetBattleUnits(out List<Unit> playerUnitList, out List<Unit> enemy)
+    public void GetBattleUnits(out List<Unit> playerUnitList, out List<Unit> enemyUnitList)
     {
         playerUnitList=PlayerUnits;
         enemyUnitList=EnemyUnits;
@@ -27,6 +28,6 @@ public class SO_BattleInfo : ScriptableObject
 
     public List<Vector2> GetEnemySpawnPositions()
     {
-        //TODO
+        throw new NotImplementedException();
     }
 }

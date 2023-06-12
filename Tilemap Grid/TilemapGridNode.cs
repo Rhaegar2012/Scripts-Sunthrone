@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -48,6 +49,66 @@ public class TilemapGridNode
     public Unit GetUnit()
     {
         return Unit;
+    }
+
+    public Vector2 GetGridPosition()
+    {
+        throw new NotImplementedException();
+    }
+
+    public NodeType GetNodeType()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int GetGCost()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int GetFCost()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetGCost(int gCost)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetHCost(int hCost)
+    {
+        throw new NotImplementedException();
+    } 
+
+    public int CalculateFCost()
+    {
+        throw new NotImplementedException();
+    }
+
+    public TilemapGridNode GetPreviousNode()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetPreviousNode(TilemapGridNode previousNode)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ResetPreviousNode()
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool IsAttackNode()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetAttackNode(bool isAttackNode)
+    {
+        throw new NotImplementedException();
     }
 
 

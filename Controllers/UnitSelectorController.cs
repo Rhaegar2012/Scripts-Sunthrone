@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,7 +29,7 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
     public void MoveSelector(InputAction.CallbackContext context)
     {
         movementDirection=unitSelectorInputActions.UnitSelector_Base.UnitSelectorMovement.ReadValue<Vector2>();
-        Vector2 selectorOffset=transform.position+movementDirection;
+        Vector2 selectorOffset=new Vector2(transform.position.x,transform.position.y)+movementDirection;
         if(LevelGrid.Instance.CheckPositionValid(selectorOffset))
         {
             transform.position=selectorOffset;
@@ -51,13 +52,29 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
 
     public TilemapGridNode GetCurrentNode()
     {
-        return LevelGrid.Instance.GetNodeAtPsotion(transform.Position);
+        return LevelGrid.Instance.GetNodeAtPosition(transform.position);
     }
 
     public void SwitchSelectorStatus()
     {
         selectionAttempt=!selectionAttempt;
     }
+
+    public void SetSelectorActive(bool active)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Vector2 GetGridPosition()
+    {
+        throw new NotImplementedException();
+    }
+
+    public Vector2 MakeSelection()
+    {
+        throw new NotImplementedException();
+    }
+    
 
 
 

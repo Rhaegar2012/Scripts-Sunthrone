@@ -35,4 +35,9 @@ public class CameraController : SingletonMonobehaviour<CameraController>
 
     }
 
+    public void UpdateFollowingUnit(Transform transform)
+    {
+        throw new NotImplementedException();
+    }
+
 }

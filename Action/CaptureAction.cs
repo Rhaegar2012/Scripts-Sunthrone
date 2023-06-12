@@ -45,7 +45,7 @@ public class CaptureAction : BaseAction
             {
                 Vector2 offsetPosition= new Vector2(x,y);
                 Vector2 testPosition=unit.GetUnitPosition()+offsetPosition;
-                if(!LevelGrid.Instance.IsValidGridPosition(testPosition))
+                if(!LevelGrid.Instance.CheckPositionValid(testPosition))
                 {
                     continue;
                 } 

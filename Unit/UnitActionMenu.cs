@@ -41,7 +41,7 @@ public class UnitActionMenu : MonoBehaviour
     {
         isActive=!isActive;
         actionMenu.gameObject.SetActive(isActive);
-        UnitSelector.Instance.SetSelectorActive(true);
+        UnitSelectorController.Instance.SetSelectorActive(true);
     }
 
     public Transform GetDefaultButton()

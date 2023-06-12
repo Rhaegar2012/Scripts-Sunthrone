@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,10 +56,64 @@ public class LevelGrid : SingletonMonobehaviour<LevelGrid>
     return null;
   }
 
-  
+  public float GetCellSize()
+  {
+     throw new NotImplementedException();
+  }
 
+  public void SetUnitAtGridNode()
+  {
+    throw new NotImplementedException();
+  }
 
+  public void SetTargetAtGridNode()
+  {
+    throw new NotImplementedException();
+  }
 
+  public Unit GetUnitAtGridNode(Vector2 gridPosition)
+  {
+    throw new NotImplementedException();
+  }
+  public Target GetTargetAtGridNode(Vector2 gridPosition)
+  {
+    throw new NotImplementedException();
+  }
+
+  public bool HasAnyUnitAtGridNode(Vector2 gridPosition)
+  {
+    throw new NotImplementedException();
+  }
+
+  public bool HasAnyTargetAtGridNode(Vector2 gridPosition)
+  {
+    throw new NotImplementedException();
+  }
+
+  public void RemoveUnitAtGridNode()
+  {
+    throw new NotImplementedException();
+  }
+
+  public void RemoveTargetAtGridNode()
+  {
+    throw new NotImplementedException();
+  }
+
+  public void MoveUnitGridPosition()
+  {
+    throw new NotImplementedException();
+  }
+
+  public NodeType GetNodeType()
+  {
+    throw new NotImplementedException();
+  }
+
+  public void UnitHealthSystem_OnUnitDestroyed()
+  {
+    throw new NotImplementedException();
+  }
 
 
 }

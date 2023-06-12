@@ -75,7 +75,7 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
             return true;
 
         }
-        Vector2 unitSelectorActionNodePosition= UnitSelector.Instance.GetGridPosition();
+        Vector2 unitSelectorActionNodePosition= UnitSelectorController.Instance.GetGridPosition();
         if(selectedUnit!=null && !baseAction.IsValidGridPositionList(unitSelectorActionNodePosition))
         {
             DeselectUnit();
@@ -89,25 +89,25 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
     {
         //verify if node is outside of unit movement range
         //verify if unit selector is active if so , activate unit action menu
-        if(selectedUnit!=null)
+        /*if(selectedUnit!=null)
         {
-            actionPosition=UnitSelector.Instance.GetGridPosition();
-            if(actionPosition!=selectedUnit.GetUnitPosition()&&UnitSelector.Instance.MakeSelection())
+            actionPosition=UnitSelectorController.Instance.GetGridPosition();
+            if((actionPosition!=selectedUnit.GetUnitPosition())&&(UnitSelectorController.Instance.MakeSelection()))
             {
 
                  OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
-                 UnitSelector.Instance.SetSelectorActive(false);
+                 UnitSelectorController.Instance.SetSelectorActive(false);
                  return true;
             }
-            if(actionPosition==selectedUnit.GetUnitPosition()&&UnitSelector.Instance.MakeSelection())
+            if(actionPosition==selectedUnit.GetUnitPosition()&&UnitSelectorController.Instance.MakeSelection())
             {
             
                 OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
-                UnitSelector.Instance.SetSelectorActive(false);
+                UnitSelectorController.Instance.SetSelectorActive(false);
                 return true;
             }
             int testDistance= Mathf.Abs((int)actionPosition.x)+Mathf.Abs((int)actionPosition.y);
-            if(testDistance>selectedUnit.GetMovementRange()&&UnitSelector.Instance.MakeSelection())
+            if(testDistance>selectedUnit.GetMovementRange()&&UnitSelectorController.Instance.MakeSelection())
             {
                 DeselectUnit();
                 return true;
@@ -116,14 +116,15 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
 
            
         }
-        return false; 
+        return false;*/ 
+        throw new NotImplementedException();
 
     }
 
     public void TryHandleSelectedAction(Button button)
     {
         SetAction(button.name);
-        Vector2 unitSelectorActionNodePosition = UnitSelector.Instance.GetGridPosition();
+        Vector2 unitSelectorActionNodePosition = UnitSelectorController.Instance.GetGridPosition();
         if(selectedUnit!=null)
         {
          
@@ -132,7 +133,7 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
                 
                 baseAction.TakeAction(unitSelectorActionNodePosition,ClearBusy);
                 OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
-                UnitSelector.Instance.SetSelectorActive(true);
+                UnitSelectorController.Instance.SetSelectorActive(true);
                 SetSelectedUnit(null);
             }
         }

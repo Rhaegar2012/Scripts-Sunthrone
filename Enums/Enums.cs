@@ -58,6 +58,7 @@ public enum BattleMedalAward
 
 public enum UnitType
 {
+    Infantry
     //TODO    
 }
 

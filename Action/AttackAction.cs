@@ -63,7 +63,7 @@ public class AttackAction : BaseAction
             {
                 Vector2 offsetPosition= new Vector2(x,y);
                 Vector2 testPosition= unitGridPosition+offsetPosition;
-                if(!LevelGrid.Instance.IsValidGridPosition(testPosition))
+                if(!LevelGrid.Instance.CheckPositionValid(testPosition))
                 {
                     continue;
                 }
@@ -85,7 +85,7 @@ public class AttackAction : BaseAction
                 foreach(Vector2 direction in attackDirections)
                 {
                     Vector2 attackPosition=testPosition+direction;
-                    if(!LevelGrid.Instance.IsValidGridPosition(attackPosition))
+                    if(!LevelGrid.Instance.CheckPositionValid(attackPosition))
                     {
                         continue;
                     }
@@ -125,7 +125,7 @@ public class AttackAction : BaseAction
         foreach(Vector2 direction in attackDirections)
         {
             Vector2 testPosition=gridPosition+direction;
-            if(!LevelGrid.Instance.IsValidGridPosition(testPosition))
+            if(!LevelGrid.Instance.CheckPositionValid(testPosition))
             {
                 continue;
             }
