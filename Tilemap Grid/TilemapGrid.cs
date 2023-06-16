@@ -34,6 +34,7 @@ public class TilemapGrid
         foreach(NodeProperty  nodeProperty in nodePropertyList)
         {
             TilemapGridNode newNode= new TilemapGridNode(nodeProperty.NodePosition,nodeProperty.NodeType);
+            Debug.Log($"New node {newNode}");
             tilemapGridNodes.Add(nodeProperty.NodePosition,newNode);
         }
                 

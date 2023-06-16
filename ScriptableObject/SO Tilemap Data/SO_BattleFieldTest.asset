@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SO_BattleFieldTest
   m_EditorClassIdentifier: 
   gridWidth: 21
-  gridHeight: 20
+  gridHeight: 21
   originX: -10
   originY: -10
   sceneName: Battlefield Test
