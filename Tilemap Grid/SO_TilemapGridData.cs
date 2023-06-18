@@ -12,5 +12,6 @@ public class SO_TilemapGridData : ScriptableObject
     public string sceneName;
     [SerializeField] public List<NodeProperty> nodeProperties; 
 
+
   
 }

@@ -28,19 +28,19 @@ public class TilemapProperties : MonoBehaviour
         if(!Application.IsPlaying(gameObject))
         {
             
-            UpdateTilemapProperties();
+            UpdateTilemapProperties(0);
             
         }
 
    }
 
-   public void UpdateTilemapProperties()
+   public void UpdateTilemapProperties(int numberOfTilemaps)
    {
        //Debug.Log("Call to Update Tilemap Properties Method");
        //Clear list
-       if(tilemapGridData.nodeProperties!=null)
+       if(tilemapGridData.nodeProperties.Count>0 && numberOfTilemaps==1)
        {
-            tilemapGridData.nodeProperties.Clear();
+            return;
        }
        Vector3 startCellPosition=tilemap.cellBounds.min;
        Vector3 endCellPosition=tilemap.cellBounds.max;

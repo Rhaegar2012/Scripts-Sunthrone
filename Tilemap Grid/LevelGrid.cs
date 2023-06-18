@@ -8,6 +8,7 @@ public class LevelGrid : SingletonMonobehaviour<LevelGrid>
   [SerializeField] SO_TilemapGridData tilemapData;
   [SerializeField] private List<TilemapProperties> tilemapProperties;
   private TilemapGrid levelGrid;
+  public List<TilemapProperties> TilemapProperties {get{return tilemapProperties;}} 
   protected override void Awake()
   {
     base.Awake();
@@ -15,9 +16,10 @@ public class LevelGrid : SingletonMonobehaviour<LevelGrid>
     //Initialize Tilemap Node Property list on Awake to prevent null reference exception
     foreach(TilemapProperties tilemap in tilemapProperties)
     {
-      tilemap.UpdateTilemapProperties();
+      tilemap.UpdateTilemapProperties(tilemapProperties.Count);
     }
     levelGrid= new TilemapGrid(tilemapData);
+  
   }
 
   public int GetTilemapHeight()
@@ -28,6 +30,11 @@ public class LevelGrid : SingletonMonobehaviour<LevelGrid>
   public int GetTilemapWidth()
   {
     return levelGrid.TilemapWidth;
+  }
+
+  public int GetTilemapSize()
+  {
+    return levelGrid.TilemapHeight*levelGrid.TilemapWidth;
   }
   public Vector2 GetTilemapOrigin()
   {

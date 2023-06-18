@@ -17,6 +17,7 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
     {
         base.Awake();
         unitSelectorInputActions=new InputActions();
+        unitSelectorInputActions.UnitSelector_Base.Enable();
         unitSelectorInputActions.UnitSelector_Base.UnitSelectorMovement.performed+=MoveSelector;
         unitSelectorInputActions.UnitSelector_Base.UnitSelectorMovement.performed+=SelectUnit;
         unitSelectorInputActions.UnitSelector_Base.UnitSelectorMovement.performed+=OpenPauseMenu;
@@ -28,7 +29,9 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
 
     public void MoveSelector(InputAction.CallbackContext context)
     {
+        Debug.Log("Movement event");
         movementDirection=unitSelectorInputActions.UnitSelector_Base.UnitSelectorMovement.ReadValue<Vector2>();
+        Debug.Log(movementDirection);
         Vector2 selectorOffset=new Vector2(transform.position.x,transform.position.y)+movementDirection;
         if(LevelGrid.Instance.CheckPositionValid(selectorOffset))
         {
@@ -47,7 +50,7 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
 
     public void OpenPauseMenu(InputAction.CallbackContext context)
     {
-        //TODO
+        Debug.Log("Called pause menu");
     }
 
     public TilemapGridNode GetCurrentNode()
