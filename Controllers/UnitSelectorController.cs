@@ -19,19 +19,16 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
         unitSelectorInputActions=new InputActions();
         unitSelectorInputActions.UnitSelector_Base.Enable();
         unitSelectorInputActions.UnitSelector_Base.UnitSelectorMovement.performed+=MoveSelector;
-        unitSelectorInputActions.UnitSelector_Base.UnitSelectorMovement.performed+=SelectUnit;
-        unitSelectorInputActions.UnitSelector_Base.UnitSelectorMovement.performed+=OpenPauseMenu;
+        unitSelectorInputActions.UnitSelector_Base.UnitSelection.performed+=SelectUnit;
+        unitSelectorInputActions.UnitSelector_Base.Menu.performed+=OpenPauseMenu;
 
     }
 
-   
-
+    
 
     public void MoveSelector(InputAction.CallbackContext context)
     {
-        Debug.Log("Movement event");
         movementDirection=unitSelectorInputActions.UnitSelector_Base.UnitSelectorMovement.ReadValue<Vector2>();
-        Debug.Log(movementDirection);
         Vector2 selectorOffset=new Vector2(transform.position.x,transform.position.y)+movementDirection;
         if(LevelGrid.Instance.CheckPositionValid(selectorOffset))
         {

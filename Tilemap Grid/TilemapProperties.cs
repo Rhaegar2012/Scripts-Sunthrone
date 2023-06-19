@@ -37,10 +37,19 @@ public class TilemapProperties : MonoBehaviour
    public void UpdateTilemapProperties(int numberOfTilemaps)
    {
        //Debug.Log("Call to Update Tilemap Properties Method");
-       //Clear list
+       //Verifies if the nodeProperties list has already been populated for single layer tilemaps
        if(tilemapGridData.nodeProperties.Count>0 && numberOfTilemaps==1)
        {
             return;
+       }
+       //Verifies if the nodePropertiesList has already been populated for multiple layer tilemaps
+       if(numberOfTilemaps>1)
+       {
+         int tilemapSize= tilemapGridData.gridWidth*tilemapGridData.gridHeight;
+         if(tilemapGridData.nodeProperties.Count>= tilemapSize)
+         {
+            return;
+         }
        }
        Vector3 startCellPosition=tilemap.cellBounds.min;
        Vector3 endCellPosition=tilemap.cellBounds.max;

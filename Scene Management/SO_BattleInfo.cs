@@ -18,7 +18,8 @@ public class SO_BattleInfo : ScriptableObject
     [SerializeField] public bool IsBattleCompleted;
     [SerializeField] List<Unit> PlayerUnits;
     [SerializeField] List<Unit> EnemyUnits;
-    [SerializeField] List<Vector3> EnemyUnitSpawnPosition;
+    public int TotalDeploymentCost=0;
+    
 
     public void GetBattleUnits(out List<Unit> playerUnitList, out List<Unit> enemyUnitList)
     {
@@ -26,8 +27,19 @@ public class SO_BattleInfo : ScriptableObject
         enemyUnitList=EnemyUnits;
     }
 
-    public List<Vector2> GetEnemySpawnPositions()
+    public int GetNumberOfPlayerUnits()
     {
-        throw new NotImplementedException();
+        return PlayerUnits.Count;
+    }
+
+    public void DeployUnitToBattle()
+    {
+        Unit selectedUnit= ArmyManager.Instance.SelectedUnit;
+        TotalDeploymentCost+=selectedUnit.UnitSupplyCost;
+        if(TotalDeploymentCost<UnitSupplyLimitForBattle)
+        {
+            PlayerUnits.Add(selectedUnit);
+        }
+
     }
 }
