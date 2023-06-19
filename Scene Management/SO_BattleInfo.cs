@@ -17,14 +17,12 @@ public class SO_BattleInfo : ScriptableObject
     [SerializeField] public int UnitSupplyLimitForBattle;
     [SerializeField] public bool IsBattleCompleted;
     [SerializeField] List<Unit> PlayerUnits;
-    [SerializeField] List<Unit> EnemyUnits;
     public int TotalDeploymentCost=0;
     
 
-    public void GetBattleUnits(out List<Unit> playerUnitList, out List<Unit> enemyUnitList)
+    public List<Unit> GetPlayerUnitList()
     {
-        playerUnitList=PlayerUnits;
-        enemyUnitList=EnemyUnits;
+        return PlayerUnits;
     }
 
     public int GetNumberOfPlayerUnits()

@@ -120,6 +120,28 @@ public class LevelGrid : SingletonMonobehaviour<LevelGrid>
     throw new NotImplementedException();
   }
 
+  public Vector2 FindValidPosition(Vector2 originPosition)
+  {
+    Vector2[] searchDirections={new Vector2(1f,1f), new Vector2(1f,0f),
+                                new Vector2(1f,-1f), new Vector2(0f,-1f),
+                                new Vector2(-1f,-1f),new Vector2(-1f,0f),
+                                new Vector2(-1f,1f), new Vector2(0f,1f)};
+    foreach(Vector2 direction in searchDirections)
+    {
+        Vector2 offsetPosition=originPosition+direction;
+        if(!CheckPositionValid(offsetPosition))
+        {
+           continue;
+        }
+        if(HasAnyUnitAtGridNode(offsetPosition))
+        {
+           continue;
+        }
+        return offsetPosition;
+    }
+    return new Vector2(0f,0f);
+  }
+
   public void UnitHealthSystem_OnUnitDestroyed()
   {
     throw new NotImplementedException();
