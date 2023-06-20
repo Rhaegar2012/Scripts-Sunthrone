@@ -6,6 +6,7 @@ public class BattleManager : MonoBehaviour
 {
     [SerializeField] private SO_BattleInfo battleInformation;
     [SerializeField] private List<Unit> enemyUnitList;
+    [SerializeField] private List<Vector2> enemyUnitPositionList;
     [SerializeField] private List<Vector2> playerUnitSpawnPointList;
     private int numberOfPlayerUnits;
     private List<Unit> playerUnitList;
@@ -30,12 +31,21 @@ public class BattleManager : MonoBehaviour
             int difference=playerUnitList.Count-playerUnitSpawnPointList.Count;
             CreateNewPlayerSpawnPoints(difference);
         }
-        //Instantiates Player Units
+        //Instantiates Player Units and stores them in the level grid
         for(int i=0; i<playerUnitList.Count;i++)
         {
             Instantiate(playerUnitList[i],playerUnitSpawnPointList[i],Quaternion.identity);
+            LevelGrid.Instance.SetUnitAtGridNode(playerUnitSpawnPointList[i],playerUnitList[i]);
         }
 
+    }
+
+    public void PlaceEnemyUnits()
+    {
+        for(int i=0; i<enemyUnitList.Count;i++)
+        {
+            LevelGrid.Instance.SetUnitAtGridNode(enemyUnitPositionList[i],enemyUnitList[i]);
+        }
     }
 
     public void CreateNewPlayerSpawnPoints(int numberOfPositionsRequired)

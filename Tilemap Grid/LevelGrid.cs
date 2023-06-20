@@ -71,9 +71,13 @@ public class LevelGrid : SingletonMonobehaviour<LevelGrid>
      throw new NotImplementedException();
   }
 
-  public void SetUnitAtGridNode()
+  public void SetUnitAtGridNode(Vector2 position,Unit unit)
   {
-    throw new NotImplementedException();
+     if(levelGrid.IsPositionValid(position))
+     {
+        TilemapGridNode node= levelGrid.GetNodeAtWorldPosition(position);
+        node.Unit=unit;
+     }
   }
 
   public void SetTargetAtGridNode()
