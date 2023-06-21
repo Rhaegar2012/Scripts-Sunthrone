@@ -15,6 +15,8 @@ public class BattleManager : MonoBehaviour
     {
         numberOfPlayerUnits=battleInformation.GetNumberOfPlayerUnits();
         playerUnitList=battleInformation.GetPlayerUnitList();
+        PlacePlayerUnits();
+        PlaceEnemyUnits();
         
     }
 

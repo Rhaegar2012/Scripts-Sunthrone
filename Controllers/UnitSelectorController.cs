@@ -8,6 +8,7 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
 {
     private InputActions unitSelectorInputActions;
     private Vector2 movementDirection;
+    private Vector2 selectorGridPosition;
     private bool selectionAttempt=false;
 
     //Properties
@@ -38,21 +39,31 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
 
     }
 
+    public Vector2 GetUnitSelectorGridPosition()
+    {
+        int tilemapCellSize= LevelGrid.Instance.GetTilemapCellSize();
+        Debug.Log($"Tilemap cell size {tilemapCellSize}");
+        Vector2 gridPosition= new Vector2(transform.position.x-(float)tilemapCellSize/2,
+                                          transform.position.y-(float)tilemapCellSize/2);
+        return gridPosition;
+    }
+
 
     public void SelectUnit (InputAction.CallbackContext context)
     {
-        SwitchSelectorStatus();
+        SwitchSelectorStatus();   
     }
 
 
     public void OpenPauseMenu(InputAction.CallbackContext context)
     {
-        Debug.Log("Called pause menu");
+        //TODO
     }
 
     public TilemapGridNode GetCurrentNode()
     {
-        return LevelGrid.Instance.GetNodeAtPosition(transform.position);
+        Vector2 gridPosition=GetUnitSelectorGridPosition();
+        return LevelGrid.Instance.GetNodeAtPosition(gridPosition);
     }
 
     public void SwitchSelectorStatus()

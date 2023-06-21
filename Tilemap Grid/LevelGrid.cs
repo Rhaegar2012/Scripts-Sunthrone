@@ -32,6 +32,11 @@ public class LevelGrid : SingletonMonobehaviour<LevelGrid>
     return levelGrid.TilemapWidth;
   }
 
+  public int GetTilemapCellSize()
+  {
+    return levelGrid.CellSize;
+  }
+
   public int GetTilemapSize()
   {
     return levelGrid.TilemapHeight*levelGrid.TilemapWidth;

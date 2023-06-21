@@ -5,15 +5,19 @@ using UnityEngine;
 public class TilemapGrid
 {
     private int tilemapWidth;
-    public  int TilemapWidth{get{return tilemapWidth;}}
     private int tilemapHeight;
-    public  int TilemapHeight{get{return tilemapHeight;}}
     private int tilemapOriginX;
-    public int  TilemapOriginX{get{return tilemapOriginX;}}
     private int tilemapOriginY;
-    public int  TilemapOriginY{get{return tilemapOriginY;}}
+    private int cellSize=1;
     private Dictionary<Vector2, TilemapGridNode> tilemapGridNodes;
     private List<NodeProperty> nodePropertyList;
+    //Properties
+    public int TilemapWidth{get{return tilemapWidth;}}
+    public int TilemapHeight{get{return tilemapHeight;}}
+    public int TilemapOriginX{get{return tilemapOriginX;}}
+    public int TilemapOriginY{get{return tilemapOriginY;}}
+    public int CellSize{get{return cellSize;}}
+
 
     public TilemapGrid(SO_TilemapGridData gridData)
     {

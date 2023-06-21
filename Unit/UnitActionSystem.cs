@@ -18,14 +18,7 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
     private bool isBusy;
     protected override void Awake()
     {
-        if(Instance!=null)
-        {
-            Debug.LogWarning("UnitActionSystem Singleton already exists");
-            Destroy(gameObject);
-            return;
-
-        }
-        
+        base.Awake();
     }
 
     // Update is called once per frame
@@ -53,7 +46,7 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
         if(selectorCurrentNode.HasAnyUnit())
         {
             Unit nodeUnit=selectorCurrentNode.GetUnit();
-            //Debug.Log($"Unit in node {nodeUnit.GetUnitType()}");
+            Debug.Log($"Unit in node {nodeUnit.UnitName}");
                 
             //Unit already selected
             if(selectedUnit==nodeUnit)

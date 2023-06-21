@@ -18,6 +18,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private int unitUpgradeCost;
     private bool isEnemy;
     private int unitExperience;
+    private bool unitCompletedAction;
     //Properties
     public string UnitName {get{return unitName;}set{unitName=value;}}
     public int HealthPoints {get{return healthPoints;}set{healthPoints=value;}}
@@ -33,9 +34,8 @@ public class Unit : MonoBehaviour
 
     public bool IsEnemy()
     {
-        throw new NotImplementedException();
+        return isEnemy;
     }
-
 
     public TilemapGridNode GetUnidNode()
     {
@@ -96,12 +96,12 @@ public class Unit : MonoBehaviour
 
     public bool UnitCompletedAction()
     {
-        throw new NotImplementedException();
+        return unitCompletedAction;
     }
 
     public void SetCompletedAction(bool completedAction)
     {
-       throw new NotImplementedException();
+       unitCompletedAction=completedAction;
     }
 
     public void TurnSystem_OnTurnChanged()
