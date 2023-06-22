@@ -32,9 +32,9 @@ public class LevelGrid : SingletonMonobehaviour<LevelGrid>
     return levelGrid.TilemapWidth;
   }
 
-  public int GetTilemapCellSize()
+  public float GetTilemapCellSize()
   {
-    return levelGrid.CellSize;
+    return (float)levelGrid.CellSize;
   }
 
   public int GetTilemapSize()
@@ -69,6 +69,13 @@ public class LevelGrid : SingletonMonobehaviour<LevelGrid>
       return node.GetNodeNeighbourList();
     }
     return null;
+  }
+
+  public Vector2 GetGridPositionFromWorldPosition(Vector2 worldPosition)
+  {
+    Vector2 gridPosition= new Vector2(worldPosition.x-GetTilemapCellSize()/2,
+                                      worldPosition.y-GetTilemapCellSize()/2);
+    return gridPosition;
   }
 
   public float GetCellSize()

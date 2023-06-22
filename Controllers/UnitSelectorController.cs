@@ -41,10 +41,8 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
 
     public Vector2 GetUnitSelectorGridPosition()
     {
-        int tilemapCellSize= LevelGrid.Instance.GetTilemapCellSize();
-        Debug.Log($"Tilemap cell size {tilemapCellSize}");
-        Vector2 gridPosition= new Vector2(transform.position.x-(float)tilemapCellSize/2,
-                                          transform.position.y-(float)tilemapCellSize/2);
+        Vector2 worldPosition=new Vector2(transform.position.x,transform.position.y);
+        Vector2 gridPosition= LevelGrid.Instance.GetGridPositionFromWorldPosition(worldPosition);
         return gridPosition;
     }
 

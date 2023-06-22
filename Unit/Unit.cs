@@ -19,6 +19,10 @@ public class Unit : MonoBehaviour
     private bool isEnemy;
     private int unitExperience;
     private bool unitCompletedAction;
+    private BaseAction[] actionList;
+    private TilemapGridNode currentNode;
+    private Vector2 worldPosition;
+    private Vector2 gridPosition;
     //Properties
     public string UnitName {get{return unitName;}set{unitName=value;}}
     public int HealthPoints {get{return healthPoints;}set{healthPoints=value;}}
@@ -32,6 +36,18 @@ public class Unit : MonoBehaviour
     public int UnitUpgradeCost {get{return unitUpgradeCost;} set{unitUpgradeCost=value;}}
     public int UnitExperience {get{return unitExperience;} set{unitExperience=value;}}
 
+    void Awake()
+    {
+        worldPosition=new Vector2(transform.position.x,transform.position.y);
+        gridPosition=LevelGrid.Instance.GetGridPositionFromWorldPosition(worldPosition);
+        
+    }
+    void Start()
+    {
+        actionList=GetComponents<BaseAction>();
+        currentNode=LevelGrid.Instance.GetNodeAtPosition(gridPosition);
+
+    }
     public bool IsEnemy()
     {
         return isEnemy;
@@ -39,12 +55,12 @@ public class Unit : MonoBehaviour
 
     public TilemapGridNode GetUnidNode()
     {
-        throw new NotImplementedException();
+        return currentNode;
     }
     
     public void SetUnitNode(TilemapGridNode gridNode)
     {
-        throw new NotImplementedException();
+        currentNode=gridNode;
     }
 
     public Vector2 GetUnitPosition()
@@ -68,9 +84,10 @@ public class Unit : MonoBehaviour
         throw new NotImplementedException();
     }
     
-    public BaseAction GetAction(string action)
+    public BaseAction GetAction(string actionName)
     {
-        throw new NotImplementedException();
+        BaseAction selectedAction=Array.Find(actionList,action=>action.GetActionName()==actionName);
+        return selectedAction;
     }
 
     public BaseAction[] GetActionArray()

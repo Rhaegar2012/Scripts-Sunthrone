@@ -138,7 +138,6 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
         {
             SetAction("Move");
         }
-        
         OnSelectedUnitChanged?.Invoke(this,EventArgs.Empty);
     }
     private void SetAction(string actionName)
