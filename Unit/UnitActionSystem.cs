@@ -46,7 +46,7 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
         if(selectorCurrentNode.HasAnyUnit())
         {
             Unit nodeUnit=selectorCurrentNode.GetUnit();
-            Debug.Log($"Unit in node {nodeUnit.UnitName}");
+            
                 
             //Unit already selected
             if(selectedUnit==nodeUnit)
@@ -81,36 +81,24 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
     private bool TryHandleUnitActionMenu()
     {
         //verify if node is outside of unit movement range
-        //verify if unit selector is active if so , activate unit action menu
-        /*if(selectedUnit!=null)
+        //if in range , then invoke OnActionPositionSelected to open player menu
+        if(selectedUnit!=null)
         {
             actionPosition=UnitSelectorController.Instance.GetGridPosition();
-            if((actionPosition!=selectedUnit.GetUnitPosition())&&(UnitSelectorController.Instance.MakeSelection()))
-            {
-
-                 OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
-                 UnitSelectorController.Instance.SetSelectorActive(false);
-                 return true;
-            }
-            if(actionPosition==selectedUnit.GetUnitPosition()&&UnitSelectorController.Instance.MakeSelection())
-            {
-            
-                OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
-                UnitSelectorController.Instance.SetSelectorActive(false);
-                return true;
-            }
             int testDistance= Mathf.Abs((int)actionPosition.x)+Mathf.Abs((int)actionPosition.y);
-            if(testDistance>selectedUnit.GetMovementRange()&&UnitSelectorController.Instance.MakeSelection())
+            if(testDistance>selectedUnit.GetMovementRange())
             {
                 DeselectUnit();
                 return true;
             }
-           
+            OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
+            UnitSelectorController.Instance.SetSelectorActive(false);
+            return true;
+        
+        
 
-           
         }
-        return false;*/ 
-        throw new NotImplementedException();
+        return false; 
 
     }
 
@@ -133,6 +121,7 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
     }
     private void SetSelectedUnit(Unit unit)
     {
+        Debug.Log("unit selected");
         selectedUnit=unit;
         if(selectedUnit!=null)
         {

@@ -16,7 +16,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private int unitCreditCost;
     [SerializeField] private int unitSupplyCost;
     [SerializeField] private int unitUpgradeCost;
-    private bool isEnemy;
+    [SerializeField] private bool isEnemy;
     private int unitExperience;
     private bool unitCompletedAction;
     private BaseAction[] actionList;
@@ -38,9 +38,7 @@ public class Unit : MonoBehaviour
 
     void Awake()
     {
-        worldPosition=new Vector2(transform.position.x,transform.position.y);
-        gridPosition=LevelGrid.Instance.GetGridPositionFromWorldPosition(worldPosition);
-        
+        gridPosition=new Vector2(transform.position.x,transform.position.y);   
     }
     void Start()
     {
@@ -65,7 +63,7 @@ public class Unit : MonoBehaviour
 
     public Vector2 GetUnitPosition()
     {
-        throw new NotImplementedException();
+        return gridPosition;
     }
 
     public UnitType GetUnitType()
@@ -75,7 +73,7 @@ public class Unit : MonoBehaviour
 
     public int GetMovementRange()
     {
-        throw new NotImplementedException();
+        return baseMovementRange;
     }
 
 
