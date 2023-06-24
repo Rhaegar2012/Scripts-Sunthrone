@@ -101,7 +101,7 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
         return false; 
 
     }
-
+    //TODO Refactor this to recieve the action name instead of the button? is cleaner but is not very readable
     public void TryHandleSelectedAction(Button button)
     {
         SetAction(button.name);
