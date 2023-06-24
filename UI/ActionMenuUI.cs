@@ -16,6 +16,12 @@ public class ActionMenuUI : MonoBehaviour
     public void UnitActionSystem_DisplayActionMenu(object sender, EventArgs empty)
     {
         actionMenuButtonPanel.SetActive(false);
+        PositionActionMenuInWorldSpace();
+    }
+
+    public void PositionActionMenuInWorldSpace()
+    {
+        //TODO
     }
 
 
