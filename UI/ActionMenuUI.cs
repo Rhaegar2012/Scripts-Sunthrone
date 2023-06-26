@@ -7,21 +7,25 @@ using UnityEngine.UI;
 public class ActionMenuUI : MonoBehaviour
 {
     [SerializeField] GameObject actionMenuButtonPanel;
+    [SerializeField] Vector2 menuOffset;
 
     void Start()
     {
         UnitActionSystem.Instance.OnActionPositionSelected+=UnitActionSystem_DisplayActionMenu;
     }
 
-    public void UnitActionSystem_DisplayActionMenu(object sender, EventArgs empty)
+    public void UnitActionSystem_DisplayActionMenu(object sender,EventArgs empty)
     {
-        actionMenuButtonPanel.SetActive(false);
+        actionMenuButtonPanel.SetActive(true);
         PositionActionMenuInWorldSpace();
     }
 
     public void PositionActionMenuInWorldSpace()
     {
-        //TODO
+        Unit selectedUnit=UnitActionSystem.Instance.GetSelectedUnit();
+        Vector2 selectedUnitPosition=selectedUnit.GetUnitPosition();
+        Vector2 menuPosition= selectedUnitPosition+menuOffset;
+        transform.position=menuPosition;
     }
 
 

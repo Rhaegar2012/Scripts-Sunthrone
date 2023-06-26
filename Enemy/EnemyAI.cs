@@ -23,7 +23,7 @@ public class EnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        unitList=UnitManager.Instance.GetEnemyUnitList();
+        unitList=BattleManager.Instance.GetEnemyUnitList();
         TurnSystem.Instance.OnTurnChanged+=TurnSystem_OnTurnChanged;
     }
 

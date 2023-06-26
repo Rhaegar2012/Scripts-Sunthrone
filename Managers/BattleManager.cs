@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleManager : MonoBehaviour
+public class BattleManager : SingletonMonobehaviour<BattleManager>
 {
     [SerializeField] private SO_BattleInfo battleInformation;
     [SerializeField] private List<Unit> enemyUnitList;
@@ -10,20 +10,30 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private List<Vector2> playerUnitSpawnPointList;
     private int numberOfPlayerUnits;
     private List<Unit> playerUnitList;
+    private List<Unit> currentArmyList;
     // Start is called before the first frame update
     void Start()
     {
         numberOfPlayerUnits=battleInformation.GetNumberOfPlayerUnits();
         playerUnitList=battleInformation.GetPlayerUnitList();
+        currentArmyList=playerUnitList;
         PlacePlayerUnits();
         PlaceEnemyUnits();
         
+        
     }
 
-    // Update is called once per frame
+    // Switch turn if all the units in the current army have completed their actions
     void Update()
     {
-        
+        foreach(Unit unit in currentArmyList)
+        {
+            if(!unit.UnitCompletedAction())
+            {
+                return;
+            }
+        }
+        SwitchTurn();
     }
 
     public void PlacePlayerUnits()
@@ -76,6 +86,29 @@ public class BattleManager : MonoBehaviour
             lastSpawnPointInList=offsetPosition;
 
         }
+    }
+
+    public void SwitchTurn()
+    {
+        TurnSystem.Instance.NextTurn();
+        SetCurrentArmy();
+    }
+
+    public void SetCurrentArmy()
+    {
+        if(TurnSystem.Instance.IsPlayerTurn())
+        {
+            currentArmyList=playerUnitList;
+        }
+        else
+        {
+            currentArmyList=enemyUnitList;
+        }
+    }
+
+    public List<Unit> GetEnemyUnitList()
+    {
+        return enemyUnitList;
     }
 
 
