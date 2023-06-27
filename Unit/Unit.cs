@@ -23,6 +23,8 @@ public class Unit : MonoBehaviour
     private TilemapGridNode currentNode;
     private Vector2 worldPosition;
     private Vector2 gridPosition;
+    private AttackAction attackAction;
+    private CaptureAction captureAction;
     //Properties
     public string UnitName {get{return unitName;}set{unitName=value;}}
     public int HealthPoints {get{return healthPoints;}set{healthPoints=value;}}
@@ -43,6 +45,8 @@ public class Unit : MonoBehaviour
     void Start()
     {
         actionList=GetComponents<BaseAction>();
+        attackAction=Array.Find(actionList,action=>action.GetActionName("Attack"));
+        captureAction=Array.Find(actionList,action=>action.GetActionName("Capture"));
         currentNode=LevelGrid.Instance.GetNodeAtPosition(gridPosition);
 
     }
@@ -79,7 +83,32 @@ public class Unit : MonoBehaviour
 
     public List<Vector2> GetValidMovementPositionList()
     {
-        throw new NotImplementedException();
+        Vector2[] movementDirections={new Vector2(-1f,0f), new Vector2(-1f,1f),
+                                      new Vector2(0f,1f),  new Vector2(1f,1f),
+                                      new Vector2(1f,0f), new Vector2(1f,-1f),
+                                      new Vector2(0f,-1f), new Vector2(-1f,-1f)};
+        List<int> directionMovementRangeList=new List<int>();
+        //Calculates movement range based on terrain features
+        int totalMovementCost=0;
+        foreach(Vector2 direction in movementDirections)
+        {
+            for(int i=0;i<baseMovementRange;i++)
+            {
+                Vector2 offsetPosition=GetUnitPosition()+direction;
+                
+            }
+        }
+        return null;
+    }
+
+    public List<Vector2> GetValidAttackPositionList()
+    {
+        return attackAction.GetValidGridPositionList(GetUnitPosition());
+    }
+
+    public List<Vector2> GetValidCapturePositionList()
+    {
+        return captureAction.GetValidGridPositionList(GetUnitPosition());
     }
     
     public BaseAction GetAction(string actionName)

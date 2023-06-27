@@ -9,6 +9,7 @@ public class TilemapGridNode
     private int yPosition;
     private Vector2 nodePosition;
     private TilemapGridType nodeType;
+    private NodeType gridNodeType;
     private List<TilemapGridNode> nodeNeighbourList=new List<TilemapGridNode>();
     private Unit unit;
     //Properties
@@ -58,7 +59,7 @@ public class TilemapGridNode
 
     public NodeType GetNodeType()
     {
-        throw new NotImplementedException();
+        return gridNodeType;
     }
 
     public int GetGCost()

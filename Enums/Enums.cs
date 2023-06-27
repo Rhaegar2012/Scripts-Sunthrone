@@ -64,5 +64,10 @@ public enum UnitType
 
 public enum NodeType
 {
-   //TODO
+   Grassland,
+   Forest,
+   Mountain,
+   River,
+   Road,
+   Base
 }
