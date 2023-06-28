@@ -1,12 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DisplayActionPosition : MonoBehaviour
 {
-    [SerializeField] private GameObject validMovementPositionTile;
-    [SerializeField] private GameObject validAttackPositionTile;
-    [SerializeField] private GameObject validCapturePositionTile;
+    [SerializeField] private GameObject validMovementPositionTilePrefab;
+    [SerializeField] private GameObject validAttackPositionTilePrefab;
+    [SerializeField] private GameObject validCapturePositionTilePrefab;
     List<GameObject> activePositionTilesList;
     // Start is called before the first frame update
     void Start()
@@ -15,10 +16,12 @@ public class DisplayActionPosition : MonoBehaviour
         activePositionTilesList=new List<GameObject>();
     }
 
-    private void DisplayValidActionPositions()
+    public void DisplayValidActionPositions(object sender , EventArgs empty)
     {
         Unit selectedUnit= UnitActionSystem.Instance.GetSelectedUnit();
-        List<Vector2> validActionPositionList= new List<Vector2>();
+        List<Vector2> validMovementPositionList=selectedUnit.GetValidMovementPositionList();
+        List<Vector2> validAttackPositionList= selectedUnit.GetValidAttackPositionList();
+        List<Vector2> validCapturePositionList= selectedUnit.GetValidCapturePositionList();
         //Clears active position tiles when unit is changed
         if(activePositionTilesList.Count>0)
         {
@@ -28,7 +31,25 @@ public class DisplayActionPosition : MonoBehaviour
             }
             activePositionTilesList.Clear();
         }
-        validActionPositionList=selectedUnit.GetValidMovementPositionList();
+        foreach(Vector2 position in validMovementPositionList)
+        {
+            GameObject movementTile=Instantiate(validMovementPositionTilePrefab,new Vector3(position.x,position.y,0f), Quaternion.identity);
+            activePositionTilesList.Add(movementTile);
+        }
+
+        foreach(Vector2 position in validAttackPositionList)
+        {
+            GameObject attackTile=Instantiate(validAttackPositionTilePrefab,new Vector3(position.x,position.y,0f), Quaternion.identity);
+            activePositionTilesList.Add(attackTile);
+        }
+
+        foreach(Vector2 position in validCapturePositionList)
+        {
+            GameObject captureTile=Instantiate(validCapturePositionTilePrefab,new Vector3(position.x,position.y,0f), Quaternion.identity);
+            activePositionTilesList.Add(captureTile);
+        }
+
+
 
 
     }

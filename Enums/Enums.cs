@@ -2,16 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
-public enum TilemapGridType
-{
-        Grassland,
-        Forest,
-        Mountain,
-        River,
-        Road,
-        Base
-}
-
 public enum Buildings
 {
         Barracks,
@@ -64,10 +54,10 @@ public enum UnitType
 
 public enum NodeType
 {
-   Grassland,
-   Forest,
-   Mountain,
-   River,
-   Road,
-   Base
+   Grassland=1,
+   Forest=2,
+   Mountain=3,
+   River=2,
+   Road=0,
+   Base=1
 }

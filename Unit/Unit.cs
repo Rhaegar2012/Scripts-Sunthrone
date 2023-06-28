@@ -12,7 +12,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private int baseMovementRange;
     [SerializeField] private UnitLevel unitLevel;
     [SerializeField] private Sprite unitSprite;
-    [SerializeField] private List<TilemapGridType> walkableTiles;
+    [SerializeField] private List<NodeType> walkableTiles;
     [SerializeField] private int unitCreditCost;
     [SerializeField] private int unitSupplyCost;
     [SerializeField] private int unitUpgradeCost;
@@ -45,8 +45,8 @@ public class Unit : MonoBehaviour
     void Start()
     {
         actionList=GetComponents<BaseAction>();
-        attackAction=Array.Find(actionList,action=>action.GetActionName("Attack"));
-        captureAction=Array.Find(actionList,action=>action.GetActionName("Capture"));
+        attackAction=(AttackAction)Array.Find(actionList,action=>action.GetActionName()=="Attack");
+        captureAction=(CaptureAction)Array.Find(actionList,action=>action.GetActionName()=="Capture");
         currentNode=LevelGrid.Instance.GetNodeAtPosition(gridPosition);
 
     }
@@ -83,23 +83,42 @@ public class Unit : MonoBehaviour
 
     public List<Vector2> GetValidMovementPositionList()
     {
-        Vector2[] movementDirections={new Vector2(-1f,0f), new Vector2(-1f,1f),
-                                      new Vector2(0f,1f),  new Vector2(1f,1f),
-                                      new Vector2(1f,0f), new Vector2(1f,-1f),
-                                      new Vector2(0f,-1f), new Vector2(-1f,-1f)};
-        List<int> directionMovementRangeList=new List<int>();
-        //Calculates movement range based on terrain features
-        int totalMovementCost=0;
-        foreach(Vector2 direction in movementDirections)
+        List<Vector2> reachablePositions= new List<Vector2>();
+        Queue<Vector2> queue=new Queue<Vector2>();
+        bool[,] visited= new bool[LevelGrid.Instance.GetTilemapWidth(),LevelGrid.Instance.GetTilemapHeight()];
+        int maximumMovementRange=baseMovementRange;
+        queue.Enqueue(gridPosition);
+        visited[(int)gridPosition.x,(int)gridPosition.y]=true;
+        while (queue.Count>0)
         {
-            for(int i=0;i<baseMovementRange;i++)
+            Vector2 currentPosition= queue.Dequeue();
+            TilemapGridNode currentNode= LevelGrid.Instance.GetNodeAtPosition(currentPosition);
+            reachablePositions.Add(currentPosition); 
+            if(maximumMovementRange>0)
             {
-                Vector2 offsetPosition=GetUnitPosition()+direction;
-                
+                List<TilemapGridNode> currentNodeNeighbors=currentNode.GetNodeNeighbourList();
+                foreach(TilemapGridNode neighbour in currentNodeNeighbors)
+                {
+                    Vector2 neighbourPosition=neighbour.GetGridPosition();
+                    NodeType neighbourNodeType= neighbour.GetNodeType();
+                    if(!visited[(int)neighbourPosition.x,(int)neighbourPosition.y] && walkableTiles.Contains(neighbourNodeType))
+                    {
+                        queue.Enqueue(neighbourPosition);
+                        visited[(int)neighbourPosition.x,(int)neighbourPosition.y]=true;
+                        //Update movement range
+                        int updatedMovementRange=maximumMovementRange-(int)neighbourNodeType;
+                    
+                    }
+
+                }
+
             }
         }
-        return null;
+        return reachablePositions; 
+
+       
     }
+
 
     public List<Vector2> GetValidAttackPositionList()
     {
@@ -108,7 +127,7 @@ public class Unit : MonoBehaviour
 
     public List<Vector2> GetValidCapturePositionList()
     {
-        return captureAction.GetValidGridPositionList(GetUnitPosition());
+        return captureAction.GetValidGridPositionList();
     }
     
     public BaseAction GetAction(string actionName)

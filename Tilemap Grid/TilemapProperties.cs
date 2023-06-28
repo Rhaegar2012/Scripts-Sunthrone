@@ -9,7 +9,7 @@ public class TilemapProperties : MonoBehaviour
 {
 #if UNITY_EDITOR
    [SerializeField] private Tilemap tilemap;
-   [SerializeField] private TilemapGridType tilemapType;
+   [SerializeField] private NodeType tilemapType;
    [SerializeField] private SO_TilemapGridData tilemapGridData;
    private void OnEnable()
    {

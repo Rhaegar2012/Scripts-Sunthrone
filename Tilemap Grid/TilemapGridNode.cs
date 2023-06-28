@@ -8,18 +8,17 @@ public class TilemapGridNode
     private int xPosition;
     private int yPosition;
     private Vector2 nodePosition;
-    private TilemapGridType nodeType;
-    private NodeType gridNodeType;
+    private NodeType nodeType;
     private List<TilemapGridNode> nodeNeighbourList=new List<TilemapGridNode>();
     private Unit unit;
     //Properties
     public Vector2 NodePosition {get{return nodePosition;}}
-    public  TilemapGridType NodeType{get{return nodeType;}}
+    public NodeType NodeType{get{return nodeType;}}
     public Unit Unit {get{return unit;}set{unit=value;}}
 
 
 
-    public TilemapGridNode(Vector2 gridPosition,TilemapGridType nodeType)
+    public TilemapGridNode(Vector2 gridPosition,NodeType nodeType)
     {
         this.nodePosition=gridPosition;
         this.nodeType=nodeType;
@@ -54,12 +53,12 @@ public class TilemapGridNode
 
     public Vector2 GetGridPosition()
     {
-        throw new NotImplementedException();
+        return nodePosition;
     }
 
     public NodeType GetNodeType()
     {
-        return gridNodeType;
+        return nodeType;
     }
 
     public int GetGCost()
