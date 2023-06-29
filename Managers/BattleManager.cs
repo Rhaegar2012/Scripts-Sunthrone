@@ -46,7 +46,8 @@ public class BattleManager : SingletonMonobehaviour<BattleManager>
         //Instantiates Player Units and stores them in the level grid
         for(int i=0; i<playerUnitList.Count;i++)
         {
-            Instantiate(playerUnitList[i],playerUnitSpawnPointList[i],Quaternion.identity);
+            Unit newUnit =Instantiate(playerUnitList[i],playerUnitSpawnPointList[i],Quaternion.identity);
+            newUnit.GridPosition=playerUnitSpawnPointList[i];
             LevelGrid.Instance.SetUnitAtGridNode(playerUnitSpawnPointList[i],playerUnitList[i]);
         }
 

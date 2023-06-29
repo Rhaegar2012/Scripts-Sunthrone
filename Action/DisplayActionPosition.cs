@@ -18,10 +18,14 @@ public class DisplayActionPosition : MonoBehaviour
 
     public void DisplayValidActionPositions(object sender , EventArgs empty)
     {
+        Debug.Log("Called display action");
         Unit selectedUnit= UnitActionSystem.Instance.GetSelectedUnit();
         List<Vector2> validMovementPositionList=selectedUnit.GetValidMovementPositionList();
+        Debug.Log($"Movement list {validMovementPositionList.Count}");
         List<Vector2> validAttackPositionList= selectedUnit.GetValidAttackPositionList();
+        Debug.Log($"Movement list {validAttackPositionList.Count}");
         List<Vector2> validCapturePositionList= selectedUnit.GetValidCapturePositionList();
+        Debug.Log($"Movement list {validCapturePositionList.Count}");
         //Clears active position tiles when unit is changed
         if(activePositionTilesList.Count>0)
         {

@@ -27,6 +27,7 @@ public class Unit : MonoBehaviour
     private CaptureAction captureAction;
     //Properties
     public string UnitName {get{return unitName;}set{unitName=value;}}
+    public Vector2 GridPosition {get{return gridPosition;} set{gridPosition=value;}}
     public int HealthPoints {get{return healthPoints;}set{healthPoints=value;}}
     public int AttackPower  {get{return attackPower;}set{attackPower=value;}}
     public int Defense {get{return defense;}set{defense=value;}}
@@ -40,13 +41,11 @@ public class Unit : MonoBehaviour
 
     void Awake()
     {
-        gridPosition=new Vector2(transform.position.x,transform.position.y);   
+          
     }
     void Start()
     {
         actionList=GetComponents<BaseAction>();
-        attackAction=(AttackAction)Array.Find(actionList,action=>action.GetActionName()=="Attack");
-        captureAction=(CaptureAction)Array.Find(actionList,action=>action.GetActionName()=="Capture");
         currentNode=LevelGrid.Instance.GetNodeAtPosition(gridPosition);
 
     }
@@ -81,12 +80,11 @@ public class Unit : MonoBehaviour
     }
 
 
-    public List<Vector2> GetValidMovementPositionList()
+    public List<Vector2> GetValidMovementPositionList(Vector2 position,int movementRange, List<Vector2> reachablePositions)
     {
-        List<Vector2> reachablePositions= new List<Vector2>();
+        
         Queue<Vector2> queue=new Queue<Vector2>();
         bool[,] visited= new bool[LevelGrid.Instance.GetTilemapWidth(),LevelGrid.Instance.GetTilemapHeight()];
-        int maximumMovementRange=baseMovementRange;
         queue.Enqueue(gridPosition);
         visited[(int)gridPosition.x,(int)gridPosition.y]=true;
         while (queue.Count>0)
@@ -94,7 +92,7 @@ public class Unit : MonoBehaviour
             Vector2 currentPosition= queue.Dequeue();
             TilemapGridNode currentNode= LevelGrid.Instance.GetNodeAtPosition(currentPosition);
             reachablePositions.Add(currentPosition); 
-            if(maximumMovementRange>0)
+            if(movementRange>0)
             {
                 List<TilemapGridNode> currentNodeNeighbors=currentNode.GetNodeNeighbourList();
                 foreach(TilemapGridNode neighbour in currentNodeNeighbors)
@@ -106,7 +104,9 @@ public class Unit : MonoBehaviour
                         queue.Enqueue(neighbourPosition);
                         visited[(int)neighbourPosition.x,(int)neighbourPosition.y]=true;
                         //Update movement range
-                        int updatedMovementRange=maximumMovementRange-(int)neighbourNodeType;
+                        int updatedMovementRange=movementRange-(int)neighbourNodeType;
+                        //Recursive call
+                        GetValidMovementPositionList(neighbourPosition,updatedMovementRange,reachablePositions);
                     
                     }
 
@@ -119,14 +119,23 @@ public class Unit : MonoBehaviour
        
     }
 
+    public List<Vector2> GetValidMovementPositionList()
+    {
+        Debug.Log(gridPosition);
+        return GetValidMovementPositionList(gridPosition,baseMovementRange, new List<Vector2>());
+    }
+
 
     public List<Vector2> GetValidAttackPositionList()
     {
+       
+        attackAction=GetComponent<AttackAction>();
         return attackAction.GetValidGridPositionList(GetUnitPosition());
     }
 
     public List<Vector2> GetValidCapturePositionList()
     {
+        captureAction=GetComponent<CaptureAction>();
         return captureAction.GetValidGridPositionList();
     }
     

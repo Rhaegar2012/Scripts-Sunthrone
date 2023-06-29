@@ -8,9 +8,11 @@ public class CaptureAction : BaseAction
 {
     private Target target;
     private BaseAction moveAction;
+    private int movementRange;
     protected override void Awake()
     {
         base.Awake();
+        movementRange=unit.GetMovementRange();
         moveAction=GetComponent<MoveAction>();
         
     }
@@ -38,7 +40,6 @@ public class CaptureAction : BaseAction
     public override List<Vector2> GetValidGridPositionList()
     {
         List<Vector2> validGridPositionList= new List<Vector2>();
-        int movementRange=unit.GetMovementRange();
         for(int x=-movementRange;x<movementRange;x++)
         {
             for(int y=-movementRange;y<movementRange;y++)
