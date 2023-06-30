@@ -21,7 +21,6 @@ public class Unit : MonoBehaviour
     private bool unitCompletedAction;
     private BaseAction[] actionList;
     private TilemapGridNode currentNode;
-    private Vector2 worldPosition;
     private Vector2 gridPosition;
     private AttackAction attackAction;
     private CaptureAction captureAction;
@@ -47,7 +46,6 @@ public class Unit : MonoBehaviour
     {
         actionList=GetComponents<BaseAction>();
         currentNode=LevelGrid.Instance.GetNodeAtPosition(gridPosition);
-
     }
     public bool IsEnemy()
     {
@@ -80,13 +78,17 @@ public class Unit : MonoBehaviour
     }
 
 
-    public List<Vector2> GetValidMovementPositionList(Vector2 position,int movementRange, List<Vector2> reachablePositions)
+    public List<Vector2> GetValidMovementPositionList(Vector2 position,int movementRange)
     {
         
         Queue<Vector2> queue=new Queue<Vector2>();
-        bool[,] visited= new bool[LevelGrid.Instance.GetTilemapWidth(),LevelGrid.Instance.GetTilemapHeight()];
-        queue.Enqueue(gridPosition);
-        visited[(int)gridPosition.x,(int)gridPosition.y]=true;
+        List<Vector2> visited=new List<Vector2>(); 
+        List<Vector2> reachablePositions=new List<Vector2>();
+        queue.Enqueue(position);
+        Debug.Log($"Grid position x {position.x}");
+        Debug.Log($"Grid position y {position.y}");
+        visited.Add(position);
+        Debug.Log("Breakpoint before while loop");
         while (queue.Count>0)
         {
             Vector2 currentPosition= queue.Dequeue();
@@ -94,19 +96,32 @@ public class Unit : MonoBehaviour
             reachablePositions.Add(currentPosition); 
             if(movementRange>0)
             {
+                Debug.Log($"Movement Range {movementRange}");
+                Debug.Log("Accessed movement range conditions");
                 List<TilemapGridNode> currentNodeNeighbors=currentNode.GetNodeNeighbourList();
+                Debug.Log($"Neighbour node list {currentNodeNeighbors.Count}");
                 foreach(TilemapGridNode neighbour in currentNodeNeighbors)
                 {
                     Vector2 neighbourPosition=neighbour.GetGridPosition();
                     NodeType neighbourNodeType= neighbour.GetNodeType();
-                    if(!visited[(int)neighbourPosition.x,(int)neighbourPosition.y] && walkableTiles.Contains(neighbourNodeType))
+                    
+                    if(!visited.Contains(neighbourPosition) && walkableTiles.Contains(neighbourNodeType))
                     {
+                        Debug.Log($"Neighbour Position x {neighbourPosition.x}");
+                        Debug.Log($"Neighbour Position y {neighbourPosition.y}");
                         queue.Enqueue(neighbourPosition);
-                        visited[(int)neighbourPosition.x,(int)neighbourPosition.y]=true;
+                        visited.Add(neighbourPosition);
                         //Update movement range
-                        int updatedMovementRange=movementRange-(int)neighbourNodeType;
+                        int penalty= (int) neighbourNodeType;
+                        Debug.Log($"penalty {penalty}");
+                        movementRange=movementRange-penalty;
+                        if(movementRange<0)
+                        {
+                            movementRange=0;
+                        }
+                        Debug.Log($"updatedMovementRange {movementRange}");
                         //Recursive call
-                        GetValidMovementPositionList(neighbourPosition,updatedMovementRange,reachablePositions);
+                        //GetValidMovementPositionList(neighbourPosition,movementRange);
                     
                     }
 
@@ -121,8 +136,11 @@ public class Unit : MonoBehaviour
 
     public List<Vector2> GetValidMovementPositionList()
     {
+        gridPosition=new Vector2(transform.position.x,transform.position.y);
         Debug.Log(gridPosition);
-        return GetValidMovementPositionList(gridPosition,baseMovementRange, new List<Vector2>());
+        Debug.Log(UnitName);
+        Debug.Log(currentNode.GetGridPosition());
+        return GetValidMovementPositionList(gridPosition,baseMovementRange);
     }
 
 

@@ -10,6 +10,8 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
     private Vector2 movementDirection;
     private Vector2 selectorGridPosition;
     private bool selectionAttempt=false;
+    private TilemapGridNode currentNode;
+    private Vector2 gridPosition;
 
     //Properties
     public bool SelectionAttempt{get{return selectionAttempt;} set{selectionAttempt=value;}}
@@ -17,6 +19,7 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
     protected override void Awake()
     {
         base.Awake();
+        gridPosition= new Vector2(transform.position.x,transform.position.y);
         unitSelectorInputActions=new InputActions();
         unitSelectorInputActions.UnitSelector_Base.Enable();
         unitSelectorInputActions.UnitSelector_Base.UnitSelectorMovement.performed+=MoveSelector;
@@ -34,6 +37,8 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
         if(LevelGrid.Instance.CheckPositionValid(selectorOffset))
         {
             transform.position=selectorOffset;
+            gridPosition= new Vector2(transform.position.x, transform.position.y);
+
         }
 
 
@@ -61,6 +66,7 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
     public TilemapGridNode GetCurrentNode()
     {
         Vector2 gridPosition=GetUnitSelectorGridPosition();
+        TilemapGridNode currentNode=LevelGrid.Instance.GetNodeAtPosition(gridPosition);
         return LevelGrid.Instance.GetNodeAtPosition(gridPosition);
     }
 

@@ -42,12 +42,10 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
  
     private bool TryHandleUnitSelection()
     {
-        TilemapGridNode selectorCurrentNode=UnitSelectorController.Instance.GetCurrentNode();      
+        TilemapGridNode selectorCurrentNode=UnitSelectorController.Instance.GetCurrentNode();     
         if(selectorCurrentNode.HasAnyUnit())
         {
-            Unit nodeUnit=selectorCurrentNode.GetUnit();
-            
-                
+            Unit nodeUnit=selectorCurrentNode.GetUnit();        
             //Unit already selected
             if(selectedUnit==nodeUnit)
             {
@@ -123,6 +121,7 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
     {
         Debug.Log("unit selected");
         selectedUnit=unit;
+        Debug.Log(selectedUnit.GetUnitPosition());
         if(selectedUnit!=null)
         {
             SetAction("Move");
