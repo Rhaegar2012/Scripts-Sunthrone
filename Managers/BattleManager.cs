@@ -48,8 +48,9 @@ public class BattleManager : SingletonMonobehaviour<BattleManager>
         {
             Unit newUnit =Instantiate(playerUnitList[i],playerUnitSpawnPointList[i],Quaternion.identity);
             TilemapGridNode unitNode=LevelGrid.Instance.GetNodeAtPosition(playerUnitSpawnPointList[i]);
-            newUnit.SetUnitNode(unitNode);
-            LevelGrid.Instance.SetUnitAtGridNode(playerUnitSpawnPointList[i],playerUnitList[i]);
+            newUnit.CurrentNode=unitNode;
+            newUnit.GridPosition=newUnit.CurrentNode.GetGridPosition();
+            LevelGrid.Instance.SetUnitAtGridNode(playerUnitSpawnPointList[i],newUnit);
         }
 
     }

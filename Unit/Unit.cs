@@ -27,6 +27,7 @@ public class Unit : MonoBehaviour
     //Properties
     public string UnitName {get{return unitName;}set{unitName=value;}}
     public Vector2 GridPosition {get{return gridPosition;} set{gridPosition=value;}}
+    public TilemapGridNode CurrentNode {get{return currentNode;} set{currentNode=value;}}
     public int HealthPoints {get{return healthPoints;}set{healthPoints=value;}}
     public int AttackPower  {get{return attackPower;}set{attackPower=value;}}
     public int Defense {get{return defense;}set{defense=value;}}
@@ -45,7 +46,6 @@ public class Unit : MonoBehaviour
     void Start()
     {
         actionList=GetComponents<BaseAction>();
-        currentNode=LevelGrid.Instance.GetNodeAtPosition(gridPosition);
     }
     public bool IsEnemy()
     {
@@ -59,6 +59,7 @@ public class Unit : MonoBehaviour
     
     public void SetUnitNode(TilemapGridNode gridNode)
     {
+        Debug.Log(gridNode.GetGridPosition());
         currentNode=gridNode;
     }
 
@@ -121,7 +122,7 @@ public class Unit : MonoBehaviour
                         }
                         Debug.Log($"updatedMovementRange {movementRange}");
                         //Recursive call
-                        //GetValidMovementPositionList(neighbourPosition,movementRange);
+                        GetValidMovementPositionList(neighbourPosition,movementRange);
                     
                     }
 
@@ -148,7 +149,7 @@ public class Unit : MonoBehaviour
     {
        
         attackAction=GetComponent<AttackAction>();
-        return attackAction.GetValidGridPositionList(GetUnitPosition());
+        return attackAction.GetValidGridPositionList();
     }
 
     public List<Vector2> GetValidCapturePositionList()

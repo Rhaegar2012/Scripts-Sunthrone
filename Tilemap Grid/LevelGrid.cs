@@ -97,19 +97,28 @@ public class LevelGrid : SingletonMonobehaviour<LevelGrid>
     throw new NotImplementedException();
   }
 
+  public bool HasAnyUnitAtGridNode(Vector2 gridPosition)
+  {
+     Unit unitAtNode=GetUnitAtGridNode(gridPosition);
+     if(unitAtNode!=null)
+     {
+       return true;
+     }
+     return false;
+  }
+
   public Unit GetUnitAtGridNode(Vector2 gridPosition)
   {
-    throw new NotImplementedException();
+    TilemapGridNode currentNode= GetNodeAtPosition(gridPosition);
+    Unit unitAtNode= currentNode.GetUnit();
+    return unitAtNode;
   }
   public Target GetTargetAtGridNode(Vector2 gridPosition)
   {
     throw new NotImplementedException();
   }
 
-  public bool HasAnyUnitAtGridNode(Vector2 gridPosition)
-  {
-    throw new NotImplementedException();
-  }
+  
 
   public bool HasAnyTargetAtGridNode(Vector2 gridPosition)
   {

@@ -52,6 +52,7 @@ public class AttackAction : BaseAction
     }
     public  List<Vector2> GetValidGridPositionList(Vector2 unitGridPosition)
     {
+        Debug.Log("Accessed attack action");
         List<Vector2> validGridPositionList=new List<Vector2>();
         List<Vector2> attackDirections= new List<Vector2>{new Vector2(1,0f),
                                                           new Vector2(-1,0f),

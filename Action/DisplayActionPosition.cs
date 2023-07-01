@@ -24,8 +24,9 @@ public class DisplayActionPosition : MonoBehaviour
         Debug.Log($"Movement list {validMovementPositionList.Count}");
         List<Vector2> validAttackPositionList= selectedUnit.GetValidAttackPositionList();
         Debug.Log($"Movement list {validAttackPositionList.Count}");
-        List<Vector2> validCapturePositionList= selectedUnit.GetValidCapturePositionList();
-        Debug.Log($"Movement list {validCapturePositionList.Count}");
+        //TODO Hydrate capture position display when the target class is implemented
+        //List<Vector2> validCapturePositionList= selectedUnit.GetValidCapturePositionList();
+        //Debug.Log($"Movement list {validCapturePositionList.Count}");
         //Clears active position tiles when unit is changed
         if(activePositionTilesList.Count>0)
         {
@@ -46,12 +47,12 @@ public class DisplayActionPosition : MonoBehaviour
             GameObject attackTile=Instantiate(validAttackPositionTilePrefab,new Vector3(position.x,position.y,0f), Quaternion.identity);
             activePositionTilesList.Add(attackTile);
         }
-
-        foreach(Vector2 position in validCapturePositionList)
+        //TODO Hydreate capture position display when the target class is implemented 
+        /*foreach(Vector2 position in validCapturePositionList)
         {
             GameObject captureTile=Instantiate(validCapturePositionTilePrefab,new Vector3(position.x,position.y,0f), Quaternion.identity);
             activePositionTilesList.Add(captureTile);
-        }
+        }*/
 
 
 
