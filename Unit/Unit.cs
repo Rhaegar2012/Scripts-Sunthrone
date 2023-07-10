@@ -24,6 +24,7 @@ public class Unit : MonoBehaviour
     private Vector2 gridPosition;
     private AttackAction attackAction;
     private CaptureAction captureAction;
+    private List<Vector2> validMovementPositions= new List<Vector2>();
     //Properties
     public string UnitName {get{return unitName;}set{unitName=value;}}
     public Vector2 GridPosition {get{return gridPosition;} set{gridPosition=value;}}
@@ -81,26 +82,19 @@ public class Unit : MonoBehaviour
 
     public List<Vector2> GetValidMovementPositionList(Vector2 position,int movementRange)
     {
-        
+        Debug.Log("Recursive Call");
         Queue<Vector2> queue=new Queue<Vector2>();
         List<Vector2> visited=new List<Vector2>(); 
-        List<Vector2> reachablePositions=new List<Vector2>();
         queue.Enqueue(position);
-        Debug.Log($"Grid position x {position.x}");
-        Debug.Log($"Grid position y {position.y}");
-        visited.Add(position);
-        Debug.Log("Breakpoint before while loop");
-        while (queue.Count>0)
+        while (queue.Count>0 && movementRange>0)
         {
             Vector2 currentPosition= queue.Dequeue();
             TilemapGridNode currentNode= LevelGrid.Instance.GetNodeAtPosition(currentPosition);
-            reachablePositions.Add(currentPosition); 
+            validMovementPositions.Add(currentPosition); 
             if(movementRange>0)
             {
                 Debug.Log($"Movement Range {movementRange}");
-                Debug.Log("Accessed movement range conditions");
                 List<TilemapGridNode> currentNodeNeighbors=currentNode.GetNodeNeighbourList();
-                Debug.Log($"Neighbour node list {currentNodeNeighbors.Count}");
                 foreach(TilemapGridNode neighbour in currentNodeNeighbors)
                 {
                     Vector2 neighbourPosition=neighbour.GetGridPosition();
@@ -114,15 +108,15 @@ public class Unit : MonoBehaviour
                         visited.Add(neighbourPosition);
                         //Update movement range
                         int penalty= (int) neighbourNodeType;
-                        Debug.Log($"penalty {penalty}");
                         movementRange=movementRange-penalty;
                         if(movementRange<0)
                         {
                             movementRange=0;
+                            return validMovementPositions;
                         }
                         Debug.Log($"updatedMovementRange {movementRange}");
                         //Recursive call
-                        GetValidMovementPositionList(neighbourPosition,movementRange);
+                        //GetValidMovementPositionList(neighbourPosition,movementRange);
                     
                     }
 
@@ -130,7 +124,8 @@ public class Unit : MonoBehaviour
 
             }
         }
-        return reachablePositions; 
+        return validMovementPositions; 
+
 
        
     }
@@ -138,9 +133,6 @@ public class Unit : MonoBehaviour
     public List<Vector2> GetValidMovementPositionList()
     {
         gridPosition=new Vector2(transform.position.x,transform.position.y);
-        Debug.Log(gridPosition);
-        Debug.Log(UnitName);
-        Debug.Log(currentNode.GetGridPosition());
         return GetValidMovementPositionList(gridPosition,baseMovementRange);
     }
 
