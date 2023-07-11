@@ -82,49 +82,41 @@ public class Unit : MonoBehaviour
 
     public List<Vector2> GetValidMovementPositionList(Vector2 position,int movementRange)
     {
-        Debug.Log("Recursive Call");
-        Queue<Vector2> queue=new Queue<Vector2>();
-        List<Vector2> visited=new List<Vector2>(); 
-        queue.Enqueue(position);
-        while (queue.Count>0 && movementRange>0)
+        Vector2[] movementDirections ={new Vector2(-1,1),new Vector2(0,1), 
+                                       new Vector2(1,1), new Vector2(-1,0),
+                                       new Vector2(1,0), new Vector2(-1,-1),
+                                       new Vector2(0,-1),new Vector2(1,-1)}
+        List<Vector2> validMovementPositions=new List<Vector2>();
+        int actualMovementRange=baseMovementRange;
+        for(int x=(int) gridPosition.x;x<baseMovementRange;x++)
         {
-            Vector2 currentPosition= queue.Dequeue();
-            TilemapGridNode currentNode= LevelGrid.Instance.GetNodeAtPosition(currentPosition);
-            validMovementPositions.Add(currentPosition); 
-            if(movementRange>0)
+            for(int y=(int) gridPosition.y;y<baseMovementRange;y++)
             {
-                Debug.Log($"Movement Range {movementRange}");
-                List<TilemapGridNode> currentNodeNeighbors=currentNode.GetNodeNeighbourList();
-                foreach(TilemapGridNode neighbour in currentNodeNeighbors)
+                
+                Vector2 offsetPosition= new Vector2(x,y);
+                Vector2 testGridPosition= gridPosition+offsetPosition;
+                NodeType nodeTypeAtPosition= LevelGrid.Instance.GetNodeTypeAtPosition(testGridPosition);
+                int movementPenalty=(int)nodeTypeAtPosition;
+                actualMovementRange-=movementPenalty;
+                /*if(actualMovementRange<=0)
                 {
-                    Vector2 neighbourPosition=neighbour.GetGridPosition();
-                    NodeType neighbourNodeType= neighbour.GetNodeType();
-                    
-                    if(!visited.Contains(neighbourPosition) && walkableTiles.Contains(neighbourNodeType))
-                    {
-                        Debug.Log($"Neighbour Position x {neighbourPosition.x}");
-                        Debug.Log($"Neighbour Position y {neighbourPosition.y}");
-                        queue.Enqueue(neighbourPosition);
-                        visited.Add(neighbourPosition);
-                        //Update movement range
-                        int penalty= (int) neighbourNodeType;
-                        movementRange=movementRange-penalty;
-                        if(movementRange<0)
-                        {
-                            movementRange=0;
-                            return validMovementPositions;
-                        }
-                        Debug.Log($"updatedMovementRange {movementRange}");
-                        //Recursive call
-                        //GetValidMovementPositionList(neighbourPosition,movementRange);
-                    
-                    }
-
+                    continue;
+                }*/
+                if(!LevelGrid.Instance.CheckPositionValid(testGridPosition))
+                {
+                    continue;
+                }
+                if(LevelGrid.Instance.HasAnyUnitAtGridNode(testGridPosition))
+                {
+                    continue;
                 }
 
+                validMovementPositions.Add(testGridPosition);
+
+            
             }
         }
-        return validMovementPositions; 
+        return validMovementPositions;
 
 
        
