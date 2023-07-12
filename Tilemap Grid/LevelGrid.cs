@@ -62,6 +62,13 @@ public class LevelGrid : SingletonMonobehaviour<LevelGrid>
     return node.NodeType;
   }
 
+  public int GetNodeMovementCostAtPosition(Vector2 position)
+  {
+    TilemapGridNode node=GetNodeAtPosition(position);
+    int penalty= (int) node.NodeType;
+    return penalty;
+  }
+
   public bool CheckPositionValid(Vector2 position)
   {
     return levelGrid.IsPositionValid(position);

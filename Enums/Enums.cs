@@ -58,6 +58,6 @@ public enum NodeType
    Forest=2,
    Mountain=3,
    River=2,
-   Road=0,
+   Road=1,
    Base=1
 }

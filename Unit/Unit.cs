@@ -10,6 +10,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private int attackPower;
     [SerializeField] private int defense;
     [SerializeField] private int baseMovementRange;
+    [SerializeField] private int diagonalMovementRange;
     [SerializeField] private UnitLevel unitLevel;
     [SerializeField] private Sprite unitSprite;
     [SerializeField] private List<NodeType> walkableTiles;
@@ -35,6 +36,7 @@ public class Unit : MonoBehaviour
     public int UnitCreditCost {get{return unitCreditCost;}set{unitCreditCost=value;}}
     public int UnitSupplyCost {get{return unitSupplyCost;}set{unitSupplyCost=value;}}
     public int BaseMovementRange{get{return baseMovementRange;} set{baseMovementRange=value;}}
+    public int DiagonalMovementRange{get{return diagonalMovementRange;} set{diagonalMovementRange=value;}}
     public UnitLevel UnitLevel {get{return unitLevel;} set{unitLevel=value;}}
     public Sprite UnitSprite {get{return unitSprite;} set{unitSprite=value;}}
     public int UnitUpgradeCost {get{return unitUpgradeCost;} set{unitUpgradeCost=value;}}
@@ -80,40 +82,35 @@ public class Unit : MonoBehaviour
     }
 
 
-    public List<Vector2> GetValidMovementPositionList(Vector2 position,int movementRange)
+    public List<Vector2> GetValidMovementPositionList(Vector2 position)
     {
-        Vector2[] movementDirections ={new Vector2(-1,1),new Vector2(0,1), 
-                                       new Vector2(1,1), new Vector2(-1,0),
-                                       new Vector2(1,0), new Vector2(-1,-1),
-                                       new Vector2(0,-1),new Vector2(1,-1)}
+        Vector2[] movementDirections ={new Vector2(0,1),  new Vector2(-1,0),
+                                       new Vector2(1,0),  new Vector2(0,-1),
+                                       new Vector2(-1,1)};
         List<Vector2> validMovementPositions=new List<Vector2>();
-        int actualMovementRange=baseMovementRange;
-        for(int x=(int) gridPosition.x;x<baseMovementRange;x++)
+        foreach (Vector2 direction in movementDirections)
         {
-            for(int y=(int) gridPosition.y;y<baseMovementRange;y++)
+            Vector2 currentPosition=gridPosition;
+            int movementRange=baseMovementRange;
+            while (movementRange>0)
             {
-                
-                Vector2 offsetPosition= new Vector2(x,y);
-                Vector2 testGridPosition= gridPosition+offsetPosition;
-                NodeType nodeTypeAtPosition= LevelGrid.Instance.GetNodeTypeAtPosition(testGridPosition);
-                int movementPenalty=(int)nodeTypeAtPosition;
-                actualMovementRange-=movementPenalty;
-                /*if(actualMovementRange<=0)
-                {
-                    continue;
-                }*/
-                if(!LevelGrid.Instance.CheckPositionValid(testGridPosition))
+                Vector2 testPosition=currentPosition+direction;
+                movementRange-=LevelGrid.Instance.GetNodeMovementCostAtPosition(testPosition);
+                currentPosition=testPosition;
+                int distanceToUnit=(int) Vector2.Distance(currentPosition,gridPosition);
+                if(!LevelGrid.Instance.CheckPositionValid(testPosition))
                 {
                     continue;
                 }
-                if(LevelGrid.Instance.HasAnyUnitAtGridNode(testGridPosition))
+                if(LevelGrid.Instance.HasAnyUnitAtGridNode(testPosition))
                 {
                     continue;
                 }
-
-                validMovementPositions.Add(testGridPosition);
-
-            
+                if(distanceToUnit>diagonalMovementRange && direction.magnitude>1)
+                {
+                    continue;
+                }
+                validMovementPositions.Add(testPosition);
             }
         }
         return validMovementPositions;
@@ -125,7 +122,7 @@ public class Unit : MonoBehaviour
     public List<Vector2> GetValidMovementPositionList()
     {
         gridPosition=new Vector2(transform.position.x,transform.position.y);
-        return GetValidMovementPositionList(gridPosition,baseMovementRange);
+        return GetValidMovementPositionList(gridPosition);
     }
 
 
@@ -141,6 +138,7 @@ public class Unit : MonoBehaviour
         captureAction=GetComponent<CaptureAction>();
         return captureAction.GetValidGridPositionList();
     }
+
     
     public BaseAction GetAction(string actionName)
     {
