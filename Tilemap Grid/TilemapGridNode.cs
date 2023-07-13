@@ -7,10 +7,15 @@ public class TilemapGridNode
 {
     private int xPosition;
     private int yPosition;
+    private int gCost;
+    private int hCost;
+    private int fCost;
+    private TilemapGridNode previousNode;
     private Vector2 nodePosition;
     private NodeType nodeType;
     private List<TilemapGridNode> nodeNeighbourList=new List<TilemapGridNode>();
     private Unit unit;
+    
     //Properties
     public Vector2 NodePosition {get{return nodePosition;}}
     public NodeType NodeType{get{return nodeType;}}
@@ -63,42 +68,47 @@ public class TilemapGridNode
 
     public int GetGCost()
     {
-        throw new NotImplementedException();
+        return gCost;
+    }
+
+    public int GetHCost()
+    {
+        return hCost;
     }
 
     public int GetFCost()
     {
-        throw new NotImplementedException();
+        return fCost;
     }
 
     public void SetGCost(int gCost)
     {
-        throw new NotImplementedException();
+        this.gCost=gCost;
     }
 
     public void SetHCost(int hCost)
     {
-        throw new NotImplementedException();
+        this.hCost=hCost;
     } 
 
     public int CalculateFCost()
     {
-        throw new NotImplementedException();
+        return fCost=gCost+hCost;
     }
 
     public TilemapGridNode GetPreviousNode()
     {
-        throw new NotImplementedException();
+        return previousNode;
     }
 
     public void SetPreviousNode(TilemapGridNode previousNode)
     {
-        throw new NotImplementedException();
+        this.previousNode=previousNode;
     }
 
     public void ResetPreviousNode()
     {
-        throw new NotImplementedException();
+        previousNode=null;
     }
 
     public bool IsAttackNode()

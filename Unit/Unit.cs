@@ -84,7 +84,7 @@ public class Unit : MonoBehaviour
 
     public List<Vector2> GetValidMovementPositionList(Vector2 position)
     {
-        Vector2[] movementDirections ={new Vector2(0,1),  new Vector2(-1,0),
+        /*Vector2[] movementDirections ={new Vector2(0,1),  new Vector2(-1,0),
                                        new Vector2(1,0),  new Vector2(0,-1),
                                        new Vector2(-1,1)};
         List<Vector2> validMovementPositions=new List<Vector2>();
@@ -112,6 +112,30 @@ public class Unit : MonoBehaviour
                 }
                 validMovementPositions.Add(testPosition);
             }
+        }*/
+        for(int x=-baseMovementRange;x<baseMovementRange;x++)
+        {
+            for(int y=-baseMovementRange;x<baseMovementRange;y++)
+            {
+                Vector2 testPosition= new Vector2(gridPosition.x+x,gridPosition.y+y);
+                if(!LevelGrid.Instance.CheckPositionValid(testPosition))
+                {
+                    continue;
+                }
+                if(LevelGrid.Instance.HasAnyUnitAtGridNode(testPosition))
+                {
+                    continue;
+                }
+                TilemapGridNode endNode= LevelGrid.Instance.GetNodeAtPosition(testPosition);
+                List<TilemapGridNode> pathToNode=Pathfinding.Instance.FindPath(this,endNode);
+                int totalMovementCost=Pathfinding.Instance.CalculateTotalMovementCostInPath(pathToNode);
+                if(totalMovementCost>baseMovementRange)
+                {
+                    continue;
+                }
+                validMovementPositions.Add(testPosition);
+                
+            }
         }
         return validMovementPositions;
 
@@ -125,7 +149,7 @@ public class Unit : MonoBehaviour
         return GetValidMovementPositionList(gridPosition);
     }
 
-
+ 
     public List<Vector2> GetValidAttackPositionList()
     {
        

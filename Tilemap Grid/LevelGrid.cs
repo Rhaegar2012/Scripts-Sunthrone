@@ -32,6 +32,16 @@ public class LevelGrid : SingletonMonobehaviour<LevelGrid>
     return levelGrid.TilemapWidth;
   }
 
+  public int GetTilemapOriginX()
+  {
+     return levelGrid.TilemapOriginX;
+  }
+
+  public int GetTilemapOriginY()
+  {
+     return levelGrid.TilemapOriginY;
+  }
+
   public float GetTilemapCellSize()
   {
     return (float)levelGrid.CellSize;

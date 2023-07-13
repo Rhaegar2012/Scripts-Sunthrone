@@ -87,7 +87,7 @@ public class MoveAction : BaseAction
             targetPosition=validGridPositions.Find(position=>Vector2.Distance(position,gridPosition)>=unit.GetMovementRange());
         }
         TilemapGridNode targetNode=LevelGrid.Instance.GetNodeAtPosition(targetPosition);
-        pathList= Pathfinding.Instance.FindPath(unit,GetValidGridPositionList(),targetNode);
+        pathList= Pathfinding.Instance.FindPath(unit,targetNode);
         OnAnyUnitMoved?.Invoke(this,EventArgs.Empty);
         ActionStart(onActionComplete);
         

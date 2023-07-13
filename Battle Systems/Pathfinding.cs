@@ -2,51 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pathfinding : MonoBehaviour
+public class Pathfinding : SingletonMonobehaviour<Pathfinding>
 {
-    //Singleton
-    public static Pathfinding Instance {get; private set;}
+
     //Fields
     private List<TilemapGridNode> openList;
     private List<TilemapGridNode> closedList;
     private int width;
     private int height;
+    private int xOrigin;
+    private int yOrigin;
     private const int BASE_MOVEMENT_COST=10;
     private int pathLength;
 
-    void Awake()
+    protected override void Awake()
     {
-        if(Instance!=null)
-        {
-            Debug.LogWarning("Pathfinding singleton instance already exists");
-            Destroy(gameObject);
-            return;
-        }
-        Instance=this;
+        base.Awake();    
     }
     void Start()
     {
         this.width=LevelGrid.Instance.GetTilemapWidth();
         this.height=LevelGrid.Instance.GetTilemapHeight();
+        this.xOrigin=LevelGrid.Instance.GetTilemapOriginX();
+        this.yOrigin=LevelGrid.Instance.GetTilemapOriginY();
     }
-    public List<TilemapGridNode> FindPath(Unit selectedUnit,List<Vector2> validGridPositionList, TilemapGridNode endNode)
+    public List<TilemapGridNode> FindPath(Unit selectedUnit, TilemapGridNode endNode)
     {
         int movementRange= selectedUnit.GetMovementRange();
         Vector2 startPosition=selectedUnit.GetUnitPosition();
         Vector2 endPosition= endNode.GetGridPosition();
         TilemapGridNode startNode=LevelGrid.Instance.GetNodeAtPosition(startPosition);
-        if(!validGridPositionList.Contains(endPosition))
-        {
-    
-            return null; 
-        }
         openList= new List<TilemapGridNode>();
         closedList=new List<TilemapGridNode>();
         openList.Add(startNode);
-        for(int x=0; x<width;x++)
+        for(int x=xOrigin; x<width-1;x++)
         {
-            for(int y=0;y<height;y++)
+            for(int y=yOrigin;y<height-1;y++)
             {
+                Debug.Log(y);
                 TilemapGridNode gridNode=LevelGrid.Instance.GetNodeAtPosition(new Vector2(x,y));
                 gridNode.SetGCost(int.MaxValue);
                 gridNode.SetHCost(0);
@@ -90,10 +83,7 @@ public class Pathfinding : MonoBehaviour
                         openList.Add(neighbor);
                     }
                 }
-
-
             }
-
         }
         //No Path found 
         pathLength=0;
@@ -152,6 +142,17 @@ public class Pathfinding : MonoBehaviour
         }
         pathList.Reverse();
         return pathList;
+    }
+
+    public int CalculateTotalMovementCostInPath(List<TilemapGridNode> path)
+    {
+        int totalMovementCost=0;
+        foreach(TilemapGridNode node in path)
+        {
+            totalMovementCost+=(int)node.NodeType;
+
+        }
+        return totalMovementCost;
     }
 
 }
