@@ -10,6 +10,7 @@ public class TilemapGridNode
     private int gCost;
     private int hCost;
     private int fCost;
+    private int movementCost;
     private TilemapGridNode previousNode;
     private Vector2 nodePosition;
     private NodeType nodeType;
@@ -94,6 +95,45 @@ public class TilemapGridNode
     public int CalculateFCost()
     {
         return fCost=gCost+hCost;
+    }
+
+    public int GetMovementCost()
+    {
+        switch(nodeType)
+        {
+            case NodeType.Road:
+            {
+                movementCost=0;
+                break;
+            }
+            case NodeType.River:
+            {
+                movementCost=2;
+                break;
+            }
+            case NodeType.Grassland:
+            {
+                movementCost=1;
+                break;
+            }
+            case NodeType.Mountain:
+            {
+                movementCost=3;
+                break;
+            }
+            case NodeType.Forest:            
+            {
+                movementCost=2;
+                break;
+            }
+            case NodeType.Base:
+            {
+                movementCost=1;
+                break;
+            }
+        }
+        return movementCost;
+
     }
 
     public TilemapGridNode GetPreviousNode()

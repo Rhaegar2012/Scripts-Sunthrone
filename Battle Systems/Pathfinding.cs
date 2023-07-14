@@ -14,6 +14,7 @@ public class Pathfinding : SingletonMonobehaviour<Pathfinding>
     private int yOrigin;
     private const int BASE_MOVEMENT_COST=10;
     private int pathLength;
+    [SerializeField] private GameObject pathTracker;
 
     protected override void Awake()
     {
@@ -35,11 +36,16 @@ public class Pathfinding : SingletonMonobehaviour<Pathfinding>
         openList= new List<TilemapGridNode>();
         closedList=new List<TilemapGridNode>();
         openList.Add(startNode);
-        for(int x=xOrigin; x<width-1;x++)
+        for(int x=xOrigin; x<width;x++)
         {
-            for(int y=yOrigin;y<height-1;y++)
+            for(int y=yOrigin;y<height;y++)
             {
-                Debug.Log(y);
+               
+                Vector2 testPosition= new Vector2(x,y);
+                if(!LevelGrid.Instance.CheckPositionValid(testPosition))
+                {
+                    continue;
+                }
                 TilemapGridNode gridNode=LevelGrid.Instance.GetNodeAtPosition(new Vector2(x,y));
                 gridNode.SetGCost(int.MaxValue);
                 gridNode.SetHCost(0);
@@ -52,6 +58,7 @@ public class Pathfinding : SingletonMonobehaviour<Pathfinding>
         startNode.CalculateFCost();
         while(openList.Count>0)
         {
+            
             TilemapGridNode currentNode=GetLowestFCostNode(openList);
             if(currentNode==endNode)
             {
@@ -114,10 +121,10 @@ public class Pathfinding : SingletonMonobehaviour<Pathfinding>
     private List<TilemapGridNode> GetNeighbors(Vector2 gridPosition)
     {
         List<TilemapGridNode> neighborList= new List<TilemapGridNode>();
-        List<Vector2> neighborPositions= new List<Vector2> {new Vector2(1,0),
-                                                            new Vector2(-1,0),
-                                                            new Vector2(0,1),
-                                                            new Vector2(0,-1)};
+        List<Vector2> neighborPositions= new List<Vector2> {new Vector2(1,0),new Vector2(-1,0),
+                                                            new Vector2(0,1),new Vector2(0,-1),
+                                                            new Vector2(-1,1),new Vector2(1,1),
+                                                            new Vector2(-1,-1),new Vector2(1,-1)};
         foreach(Vector2 offsetPosition in neighborPositions)
         {
             Vector2 testPosition=gridPosition+offsetPosition;
@@ -149,6 +156,7 @@ public class Pathfinding : SingletonMonobehaviour<Pathfinding>
         int totalMovementCost=0;
         foreach(TilemapGridNode node in path)
         {
+            int nodeMovementCost=node.GetMovementCost();
             totalMovementCost+=(int)node.NodeType;
 
         }

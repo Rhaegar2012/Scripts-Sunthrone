@@ -115,7 +115,7 @@ public class Unit : MonoBehaviour
         }*/
         for(int x=-baseMovementRange;x<baseMovementRange;x++)
         {
-            for(int y=-baseMovementRange;x<baseMovementRange;y++)
+            for(int y=-baseMovementRange;y<baseMovementRange;y++)
             {
                 Vector2 testPosition= new Vector2(gridPosition.x+x,gridPosition.y+y);
                 if(!LevelGrid.Instance.CheckPositionValid(testPosition))
@@ -127,7 +127,8 @@ public class Unit : MonoBehaviour
                     continue;
                 }
                 TilemapGridNode endNode= LevelGrid.Instance.GetNodeAtPosition(testPosition);
-                List<TilemapGridNode> pathToNode=Pathfinding.Instance.FindPath(this,endNode);
+                List<TilemapGridNode> pathToNode=new List<TilemapGridNode>();
+                pathToNode=Pathfinding.Instance.FindPath(this,endNode);
                 int totalMovementCost=Pathfinding.Instance.CalculateTotalMovementCostInPath(pathToNode);
                 if(totalMovementCost>baseMovementRange)
                 {
@@ -188,7 +189,7 @@ public class Unit : MonoBehaviour
 
     public List<NodeType> GetWalkableNodeTypeList()
     {
-        throw new NotImplementedException();
+        return walkableTiles;
     }
 
     public bool UnitCompletedAction()

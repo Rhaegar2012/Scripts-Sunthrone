@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-[System.Serializable]
 public enum Buildings
 {
         Barracks,
@@ -51,13 +47,13 @@ public enum UnitType
     Infantry
     //TODO    
 }
-
+[System.Serializable]
 public enum NodeType
 {
-   Grassland=1,
-   Forest=2,
-   Mountain=3,
-   River=2,
-   Road=1,
-   Base=1
+   Road,
+   River,
+   Grassland,
+   Mountain,
+   Forest,
+   Base
 }
