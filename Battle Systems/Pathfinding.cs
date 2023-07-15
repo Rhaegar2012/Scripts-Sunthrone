@@ -29,6 +29,7 @@ public class Pathfinding : SingletonMonobehaviour<Pathfinding>
     }
     public List<TilemapGridNode> FindPath(Unit selectedUnit, TilemapGridNode endNode)
     {
+        
         int movementRange= selectedUnit.GetMovementRange();
         Vector2 startPosition=selectedUnit.GetUnitPosition();
         Vector2 endPosition= endNode.GetGridPosition();
@@ -60,6 +61,8 @@ public class Pathfinding : SingletonMonobehaviour<Pathfinding>
         {
             
             TilemapGridNode currentNode=GetLowestFCostNode(openList);
+            //Instantiates tiles to visualize the search path of the pathfinding algorithm
+            //Instantiate(pathTracker,new Vector3(currentNode.NodePosition.x,currentNode.NodePosition.y,0f),Quaternion.identity);
             if(currentNode==endNode)
             {
                 pathLength=currentNode.CalculateFCost();
