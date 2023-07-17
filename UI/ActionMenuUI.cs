@@ -8,7 +8,7 @@ public class ActionMenuUI : MonoBehaviour
 {
     [SerializeField] GameObject actionMenuButtonPanel;
     [SerializeField] Vector2 menuOffset;
-
+    private bool isActive=false;
     void Start()
     {
         UnitActionSystem.Instance.OnActionPositionSelected+=UnitActionSystem_DisplayActionMenu;
@@ -16,8 +16,10 @@ public class ActionMenuUI : MonoBehaviour
 
     public void UnitActionSystem_DisplayActionMenu(object sender,EventArgs empty)
     {
-        actionMenuButtonPanel.SetActive(true);
+        isActive=!isActive;
+        actionMenuButtonPanel.SetActive(isActive);
         PositionActionMenuInWorldSpace();
+        
     }
 
     public void PositionActionMenuInWorldSpace()

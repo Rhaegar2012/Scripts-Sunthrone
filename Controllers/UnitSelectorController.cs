@@ -23,7 +23,7 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
         unitSelectorInputActions=new InputActions();
         unitSelectorInputActions.UnitSelector_Base.Enable();
         unitSelectorInputActions.UnitSelector_Base.UnitSelectorMovement.performed+=MoveSelector;
-        unitSelectorInputActions.UnitSelector_Base.UnitSelection.performed+=SelectUnit;
+        unitSelectorInputActions.UnitSelector_Base.UnitSelection.performed+=SelectionActionCalled;
         unitSelectorInputActions.UnitSelector_Base.Menu.performed+=OpenPauseMenu;
 
     }
@@ -52,9 +52,15 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
     }
 
 
-    public void SelectUnit (InputAction.CallbackContext context)
+    public void SelectionActionCalled(InputAction.CallbackContext context)
     {
-        SwitchSelectorStatus();   
+        SwitchSelectorStatus();
+    }
+
+
+    public void SwitchSelectorStatus()
+    {
+        selectionAttempt=!selectionAttempt;
     }
 
 
@@ -70,10 +76,7 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
         return LevelGrid.Instance.GetNodeAtPosition(gridPosition);
     }
 
-    public void SwitchSelectorStatus()
-    {
-        selectionAttempt=!selectionAttempt;
-    }
+   
 
     public void SetSelectorActive(bool active)
     {
