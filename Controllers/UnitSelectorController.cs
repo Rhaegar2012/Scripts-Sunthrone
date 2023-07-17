@@ -77,12 +77,12 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
 
     public void SetSelectorActive(bool active)
     {
-        throw new NotImplementedException();
+        gameObject.SetActive(active);
     }
 
     public Vector2 GetGridPosition()
     {
-        throw new NotImplementedException();
+        return gridPosition;
     }
 
     public Vector2 MakeSelection()

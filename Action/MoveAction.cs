@@ -29,6 +29,7 @@ public class MoveAction : BaseAction
         {
             return;
         }
+        Debug.Log("Movement Action has started");
         targetPosition=pathList[currentIndex].GetGridPosition();
         //Debug.Log($"Current Node movement:{targetPosition}");
         float distanceToTarget= Vector2.Distance(currentGridPosition,targetPosition);
@@ -58,27 +59,15 @@ public class MoveAction : BaseAction
     }
     public override List<Vector2> GetValidGridPositionList()
     {
-        int movementRange=unit.GetMovementRange();
-        Vector2 unitGridPosition=unit.GetUnitPosition();
-        List<Vector2> validGridPositionList= new List<Vector2>();
-        foreach(Vector2 position in unit.GetValidMovementPositionList())
-        {
-            TilemapGridNode testNode= LevelGrid.Instance.GetNodeAtPosition(position);
-            NodeType testNodeType= testNode.GetNodeType();
-            List<NodeType> walkableNodeTypes=unit.GetWalkableNodeTypeList();
-            if(!walkableNodeTypes.Contains(testNodeType))
-            {
-                continue;
-            }
-            validGridPositionList.Add(position);
-        }
-        return validGridPositionList;
+        List<Vector2> validMovementPositionList=unit.GetValidMovementPositionList();
+        return validMovementPositionList;
     }
     public override void TakeAction(Vector2 gridPosition, Action onActionComplete)
     {
         currentIndex=0;
         targetPosition=gridPosition;
-        List<Vector2> validGridPositions= GetValidGridPositionList();
+        List<Vector2> validGridPositions= unit.ValidMovementPositions;
+        Debug.Log($"Valid movement Positions count{validGridPositions.Count}");
         //If an attack position is outside of movement range allows enemy to move to the edge of 
         //the movement range to get closer for attack
         //(Enemy AI)

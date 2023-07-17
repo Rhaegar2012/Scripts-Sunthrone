@@ -39,7 +39,7 @@ public class Unit : MonoBehaviour
     public Sprite UnitSprite {get{return unitSprite;} set{unitSprite=value;}}
     public int UnitUpgradeCost {get{return unitUpgradeCost;} set{unitUpgradeCost=value;}}
     public int UnitExperience {get{return unitExperience;} set{unitExperience=value;}}
-
+    public List<Vector2> ValidMovementPositions {get{return validMovementPositions;}}
     void Awake()
     {
           
@@ -116,6 +116,7 @@ public class Unit : MonoBehaviour
 
     public List<Vector2> GetValidMovementPositionList()
     {
+        Debug.Log("Recalculating Positions");
         gridPosition=new Vector2(transform.position.x,transform.position.y);
         return GetValidMovementPositionList(gridPosition);
     }

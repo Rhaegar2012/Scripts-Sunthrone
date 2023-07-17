@@ -67,7 +67,8 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
 
         }
         Vector2 unitSelectorActionNodePosition= UnitSelectorController.Instance.GetGridPosition();
-        if(selectedUnit!=null && !baseAction.IsValidGridPositionList(unitSelectorActionNodePosition))
+        List<Vector2> validActionPositionList= selectedUnit.ValidMovementPositions;
+        if(selectedUnit!=null && validActionPositionList.Contains(unitSelectorActionNodePosition))
         {
             DeselectUnit();
             UnitSelectorController.Instance.SwitchSelectorStatus();
@@ -82,7 +83,8 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
         //if in range , then invoke OnActionPositionSelected to open player menu
         if(selectedUnit!=null)
         {
-            actionPosition=UnitSelectorController.Instance.GetGridPosition();
+            
+            actionPosition=UnitSelectorController.Instance.GetUnitSelectorGridPosition();
             int testDistance= Mathf.Abs((int)actionPosition.x)+Mathf.Abs((int)actionPosition.y);
             if(testDistance>selectedUnit.GetMovementRange())
             {
@@ -92,9 +94,6 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
             OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
             UnitSelectorController.Instance.SetSelectorActive(false);
             return true;
-        
-        
-
         }
         return false; 
 
@@ -102,24 +101,26 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
     //TODO Refactor this to recieve the action name instead of the button? is cleaner but is not very readable
     public void TryHandleSelectedAction(Button button)
     {
+        Debug.Log("Action button pressed");
         SetAction(button.name);
-        Vector2 unitSelectorActionNodePosition = UnitSelectorController.Instance.GetGridPosition();
+        Vector2 unitSelectorActionNodePosition = UnitSelectorController.Instance.GetUnitSelectorGridPosition();
+        Debug.Log($" Action Position {unitSelectorActionNodePosition}");
+        List<Vector2> validActionPositionList=selectedUnit.GetValidMovementPositionList();
         if(selectedUnit!=null)
         {
          
-            if(baseAction.IsValidGridPositionList(unitSelectorActionNodePosition))
+            if(validActionPositionList.Contains(unitSelectorActionNodePosition))
             {
-                
+                Debug.Log("Selector node cleared for valid position");
                 baseAction.TakeAction(unitSelectorActionNodePosition,ClearBusy);
                 OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
                 UnitSelectorController.Instance.SetSelectorActive(true);
-                SetSelectedUnit(null);
+                //SetSelectedUnit(null);
             }
         }
     }
     private void SetSelectedUnit(Unit unit)
     {
-        Debug.Log("unit selected");
         selectedUnit=unit;
         Debug.Log(selectedUnit.GetUnitPosition());
         if(selectedUnit!=null)
@@ -142,6 +143,7 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
     }
     private void DeselectUnit()
     {
+        Debug.Log("Unit deselected");
         selectedUnit=null;
         baseAction=null;
         OnDeselectedUnit?.Invoke(this,EventArgs.Empty);
