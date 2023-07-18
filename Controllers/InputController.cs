@@ -20,7 +20,6 @@ public class InputController : MonoBehaviour
     void Awake()
     {
         UIInputActions= new InputActions();
-        
         PlayerController.Instance.DisablePlayerControls();
         eventSystem=EventSystem.current;
         UIInputActions.UI_Base.Action.performed+=Action_Performed; 

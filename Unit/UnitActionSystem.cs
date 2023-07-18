@@ -11,6 +11,7 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
     public event EventHandler OnSelectedUnitChanged;
     public event EventHandler OnDeselectedUnit;
     public event EventHandler OnActionPositionSelected;
+    public event EventHandler OnActionTaken;
     //Fields
     private Unit selectedUnit;
     private BaseAction baseAction=null;
@@ -36,7 +37,6 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
         {
             return;
         }
-        //TryHandleSelectedAction();
 
     }
  
@@ -117,6 +117,7 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
                 baseAction.TakeAction(unitSelectorActionNodePosition,ClearBusy);
                 OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
                 UnitSelectorController.Instance.SetSelectorActive(true);
+                OnActionTaken?.Invoke(this,EventArgs.Empty);
                 
             }
         }

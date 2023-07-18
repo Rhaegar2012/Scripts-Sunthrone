@@ -92,6 +92,16 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
     {
         throw new NotImplementedException();
     }
+
+    public void DisableSelectorController()
+    {
+        unitSelectorInputActions.UnitSelector_Base.Disable();
+    }
+
+    public void EnableSelectorController()
+    {
+        unitSelectorInputActions.UnitSelector_Base.Enable();
+    }
     
 
 

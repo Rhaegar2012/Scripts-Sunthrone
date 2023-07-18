@@ -25,6 +25,8 @@ public class Unit : MonoBehaviour
     private AttackAction attackAction;
     private CaptureAction captureAction;
     private List<Vector2> validMovementPositions= new List<Vector2>();
+    private List<Vector2> validAttackPositions= new List<Vector2>();
+    private List<Vector2> validCapturePositions= new List<Vector2>();
     //Properties
     public string UnitName {get{return unitName;}set{unitName=value;}}
     public Vector2 GridPosition {get{return gridPosition;} set{gridPosition=value;}}
@@ -116,7 +118,6 @@ public class Unit : MonoBehaviour
 
     public List<Vector2> GetValidMovementPositionList()
     {
-        Debug.Log("Recalculating Positions");
         gridPosition=new Vector2(transform.position.x,transform.position.y);
         return GetValidMovementPositionList(gridPosition);
     }
@@ -126,13 +127,15 @@ public class Unit : MonoBehaviour
     {
        
         attackAction=GetComponent<AttackAction>();
-        return attackAction.GetValidGridPositionList();
+        validAttackPositions=attackAction.GetValidGridPositionList();
+        return validAttackPositions;
     }
 
     public List<Vector2> GetValidCapturePositionList()
     {
         captureAction=GetComponent<CaptureAction>();
-        return captureAction.GetValidGridPositionList();
+        validCapturePositions=captureAction.GetValidGridPositionList();
+        return validCapturePositions;
     }
 
     
