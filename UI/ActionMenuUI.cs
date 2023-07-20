@@ -12,6 +12,7 @@ public class ActionMenuUI : MonoBehaviour
     void Start()
     {
         UnitActionSystem.Instance.OnActionPositionSelected+=UnitActionSystem_DisplayActionMenu;
+        UnitActionMenuController.OnActionCalled+=UnitActionMenuController_OnActionPerformed;
     }
 
     public void UnitActionSystem_DisplayActionMenu(object sender,EventArgs empty)
@@ -21,6 +22,15 @@ public class ActionMenuUI : MonoBehaviour
         PositionActionMenuInWorldSpace();
         
     }
+
+    public void UnitActionMenuController_OnActionPerformed(object sender, EventArgs empty)
+    {
+        Debug.Log("Call close menu event");
+        isActive=false;
+        Debug.Log(isActive);
+        actionMenuButtonPanel.SetActive(isActive);
+    }
+
 
     public void PositionActionMenuInWorldSpace()
     {

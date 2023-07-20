@@ -29,7 +29,6 @@ public class MoveAction : BaseAction
         {
             return;
         }
-        Debug.Log("Movement Action has started");
         targetPosition=pathList[currentIndex].GetGridPosition();
         //Debug.Log($"Current Node movement:{targetPosition}");
         float distanceToTarget= Vector2.Distance(currentGridPosition,targetPosition);
