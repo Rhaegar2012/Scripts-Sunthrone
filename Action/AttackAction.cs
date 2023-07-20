@@ -11,6 +11,10 @@ public class AttackAction : BaseAction
     private int attackRange;
     private Vector2 attackNode;
     List<Unit> enemiesInRange=new List<Unit>();
+    //Event
+    public static event EventHandler<Unit> OnUnitDamaged;
+
+
     // Start is called before the first frame update
     protected override void Awake()
     {
@@ -35,10 +39,21 @@ public class AttackAction : BaseAction
             unit.SetCompletedAction(true);
             int damageAmount=CalculateDamage();
             //Debug.Log($"Damage inflicted {damageAmount}");
-            targetUnit.Damage(damageAmount);
+            //targetUnit.Damage(damageAmount);
+            targetUnit.DamageAmount=damageAmount;
+            OnUnitDamaged?.Invoke(this,targetUnit);
             ActionComplete();
         }
      
+
+    }
+
+    private int CalculateDamage()
+    {
+        float baseAttack=unit.GetAttackRating();
+        float baseDefense=targetUnit.GetDefenseRating();
+        int damageAmount=(int)(Mathf.Ceil(baseAttack-baseDefense));
+        return damageAmount;
 
     }
     public override string GetActionName()
@@ -52,7 +67,6 @@ public class AttackAction : BaseAction
     }
     public  List<Vector2> GetValidGridPositionList(Vector2 unitGridPosition)
     {
-        Debug.Log("Accessed attack action");
         List<Vector2> validGridPositionList=new List<Vector2>();
         List<Vector2> attackDirections= new List<Vector2>{new Vector2(1,0f),
                                                           new Vector2(-1,0f),
@@ -158,12 +172,5 @@ public class AttackAction : BaseAction
         }
       
     }
-    private int CalculateDamage()
-    {
-        float baseAttack=unit.GetAttackRating();
-        float baseDefense=targetUnit.GetDefenseRating();
-        int damageAmount=(int)(Mathf.Ceil(baseAttack-baseDefense));
-        return damageAmount;
-
-    }
+ 
 }

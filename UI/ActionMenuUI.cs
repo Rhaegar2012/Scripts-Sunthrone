@@ -25,9 +25,7 @@ public class ActionMenuUI : MonoBehaviour
 
     public void UnitActionMenuController_OnActionPerformed(object sender, EventArgs empty)
     {
-        Debug.Log("Call close menu event");
         isActive=false;
-        Debug.Log(isActive);
         actionMenuButtonPanel.SetActive(isActive);
     }
 

@@ -18,6 +18,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private int unitUpgradeCost;
     [SerializeField] private bool isEnemy;
     private int unitExperience;
+    private int damageAmount;
     private bool unitCompletedAction;
     private BaseAction[] actionList;
     private TilemapGridNode currentNode;
@@ -41,6 +42,7 @@ public class Unit : MonoBehaviour
     public Sprite UnitSprite {get{return unitSprite;} set{unitSprite=value;}}
     public int UnitUpgradeCost {get{return unitUpgradeCost;} set{unitUpgradeCost=value;}}
     public int UnitExperience {get{return unitExperience;} set{unitExperience=value;}}
+    public int DamageAmount {get{return damageAmount;} set{damageAmount=value;}}
     public List<Vector2> ValidMovementPositions {get{return validMovementPositions;}}
     void Awake()
     {
@@ -155,9 +157,13 @@ public class Unit : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    public void Damage(float damageAmount)
+    public void Damage(int damageAmount)
     {
-        throw new NotImplementedException();
+        healthPoints-= damageAmount;
+        if(healthPoints<0)
+        {
+            healthPoints=0;
+        }
     }
 
 
@@ -183,17 +189,17 @@ public class Unit : MonoBehaviour
 
     public float GetDefenseRating()
     {
-       throw new NotImplementedException();
+       return defense;
     }
 
     public float GetAttackRating()
     {
-        throw new NotImplementedException();
+        return attackPower;
     }
 
     public int GetHealth()
     {
-        throw new NotImplementedException();
+        return healthPoints;
     }
 
 

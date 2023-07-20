@@ -7,21 +7,25 @@ public class UnitHealthSystem : MonoBehaviour
 {
     //Events
     public static event EventHandler<Unit> OnAnyUnitDestroyed;
-    public event EventHandler OnDamaged;
+    public static event EventHandler<UnitHealthSystem> OnDamaged;
     //Fields
     private int healthPoints;
     private int totalHealth;
     private Unit unit;
     void Awake()
     {
+        //Subscribe to damage event from attack action
+        AttackAction.OnUnitDamaged+=AttackAction_OnUnitDamaged;
         unit= GetComponent<Unit>();
-        healthPoints=10;
+        healthPoints=unit.GetHealth();
         totalHealth=healthPoints;
     }
-    public void Damage(int damageAmount)
+
+
+    public void AttackAction_OnUnitDamaged(object sender, Unit unit)
     {
-        healthPoints-=damageAmount;
-        OnDamaged?.Invoke(this,EventArgs.Empty);
+        healthPoints-=unit.DamageAmount;
+        OnDamaged?.Invoke(this,this);
         if(healthPoints<=0)
         {
             Die();

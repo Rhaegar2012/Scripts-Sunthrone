@@ -43,8 +43,6 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
     private bool TryHandleUnitSelection()
     {
         TilemapGridNode selectorCurrentNode=UnitSelectorController.Instance.GetCurrentNode();
-        Debug.Log("Accessed Unit Selection");
-        Debug.Log(UnitSelectorController.Instance.SelectionAttempt);   
         if(selectorCurrentNode.HasAnyUnit())
         {
             Unit nodeUnit=selectorCurrentNode.GetUnit();        
@@ -83,7 +81,6 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
     {
         //verify if node is outside of unit movement range
         //if in range , then invoke OnActionPositionSelected to open player menu
-        Debug.Log("Access Action Menu");
         if(selectedUnit!=null)
         {
             
@@ -113,12 +110,10 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
          
             if(validActionPositionList.Contains(unitSelectorActionNodePosition))
             {
-                Debug.Log("Selector node cleared for valid position");
                 baseAction.TakeAction(unitSelectorActionNodePosition,ClearBusy);
                 OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
                 UnitSelectorController.Instance.SetSelectorActive(true);
-                OnActionTaken?.Invoke(this,EventArgs.Empty);
-                
+                OnActionTaken?.Invoke(this,EventArgs.Empty);   
             }
         }
     }
@@ -146,7 +141,6 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
     }
     private void DeselectUnit()
     {
-        Debug.Log("Unit deselected");
         selectedUnit=null;
         baseAction=null;
         OnDeselectedUnit?.Invoke(this,EventArgs.Empty);
