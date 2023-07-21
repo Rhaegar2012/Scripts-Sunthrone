@@ -33,12 +33,18 @@ public class AttackAction : BaseAction
         {
             return;
         }
+        if(targetUnit=null)
+        {
+            return;
+        }
+        Debug.Log($"Unit position {unit.GetUnitPosition()}");
+        Debug.Log($"Attack node {attackNode}");
         if(unit.GetUnitPosition()==attackNode)
         {
             //Debug.Log($"Unit {unit.GetUnitType()} attacks {targetUnit.GetUnitType()}");
             unit.SetCompletedAction(true);
             int damageAmount=CalculateDamage();
-            //Debug.Log($"Damage inflicted {damageAmount}");
+            Debug.Log($"Damage inflicted {damageAmount}");
             //targetUnit.Damage(damageAmount);
             targetUnit.DamageAmount=damageAmount;
             OnUnitDamaged?.Invoke(this,targetUnit);
@@ -131,7 +137,7 @@ public class AttackAction : BaseAction
         return enemiesInRange.Count;
     }
     
-    public bool EnemyUnitInAttackRange(Vector2 gridPosition)
+    /*public bool EnemyUnitInAttackRange(Vector2 gridPosition)
     {
         List<Vector2> attackDirections= new List<Vector2>{new Vector2(1,0f),
                                                           new Vector2(-1,0f),
@@ -158,19 +164,14 @@ public class AttackAction : BaseAction
         }
         return false;
 
-    }
+    }*/
 
     public override void TakeAction(Vector2 gridPosition, Action onActionComplete)
     {
         attackNode=gridPosition;
-        if(EnemyUnitInAttackRange(attackNode))
-        {
-
-            moveAction.TakeAction(attackNode,onActionComplete);
-            ActionStart(onActionComplete);
-
-        }
-      
+        Debug.Log("Activate attack action");
+        moveAction.TakeAction(attackNode,onActionComplete);
+        ActionStart(onActionComplete);
     }
  
 }

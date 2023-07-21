@@ -24,6 +24,8 @@ public class UnitHealthSystem : MonoBehaviour
 
     public void AttackAction_OnUnitDamaged(object sender, Unit unit)
     {
+        Debug.Log("Damage event triggered");
+        Debug.Log($"Damage {unit.DamageAmount}");
         healthPoints-=unit.DamageAmount;
         OnDamaged?.Invoke(this,this);
         if(healthPoints<=0)

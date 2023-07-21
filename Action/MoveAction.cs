@@ -47,6 +47,7 @@ public class MoveAction : BaseAction
         }
         if(currentIndex>=pathList.Count)
         {
+            unit.GridPosition=pathList[pathList.Count-1].GetGridPosition();
             unit.SetCompletedAction(true);
             ActionComplete();
         }
@@ -66,7 +67,6 @@ public class MoveAction : BaseAction
         currentIndex=0;
         targetPosition=gridPosition;
         List<Vector2> validGridPositions= unit.ValidMovementPositions;
-        Debug.Log($"Valid movement Positions count{validGridPositions.Count}");
         //If an attack position is outside of movement range allows enemy to move to the edge of 
         //the movement range to get closer for attack
         //(Enemy AI)

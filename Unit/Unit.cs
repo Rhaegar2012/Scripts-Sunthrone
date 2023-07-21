@@ -64,7 +64,6 @@ public class Unit : MonoBehaviour
     
     public void SetUnitNode(TilemapGridNode gridNode)
     {
-        Debug.Log(gridNode.GetGridPosition());
         currentNode=gridNode;
     }
 
