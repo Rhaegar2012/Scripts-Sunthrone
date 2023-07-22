@@ -28,6 +28,7 @@ public class Unit : MonoBehaviour
     private List<Vector2> validMovementPositions= new List<Vector2>();
     private List<Vector2> validAttackPositions= new List<Vector2>();
     private List<Vector2> validCapturePositions= new List<Vector2>();
+    private List<Vector2> validActionPositions= new List<Vector2>();
     //Properties
     public string UnitName {get{return unitName;}set{unitName=value;}}
     public Vector2 GridPosition {get{return gridPosition;} set{gridPosition=value;}}
@@ -44,6 +45,8 @@ public class Unit : MonoBehaviour
     public int UnitExperience {get{return unitExperience;} set{unitExperience=value;}}
     public int DamageAmount {get{return damageAmount;} set{damageAmount=value;}}
     public List<Vector2> ValidMovementPositions {get{return validMovementPositions;}}
+    public List<Vector2> ValidAttackPositions {get{return validAttackPositions;}}
+    public List<Vector2> ValidActionPositions {get{return validActionPositions;}}
     void Awake()
     {
           
@@ -82,6 +85,20 @@ public class Unit : MonoBehaviour
         return baseMovementRange;
     }
 
+    public void SetValidActionPositions()
+    {
+        foreach(Vector2 movementPosition in validMovementPositions)
+        {
+            validActionPositions.Add(movementPosition);
+        }
+
+        foreach(Vector2 attackPosition in validAttackPositions)
+        {
+            Debug.Log("attack positions added to list");
+            validActionPositions.Add(attackPosition);
+        }
+    }
+
 
     public List<Vector2> GetValidMovementPositionList(Vector2 position)
     {
@@ -111,6 +128,7 @@ public class Unit : MonoBehaviour
                 
             }
         }
+        SetValidActionPositions();
         return validMovementPositions;
 
 
@@ -129,6 +147,7 @@ public class Unit : MonoBehaviour
        
         attackAction=GetComponent<AttackAction>();
         validAttackPositions=attackAction.GetValidGridPositionList();
+        SetValidActionPositions();
         return validAttackPositions;
     }
 

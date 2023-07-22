@@ -8,8 +8,8 @@ public class AttackAction : BaseAction
     //Fields
     Unit targetUnit;
     private BaseAction moveAction;
-    private int attackRange;
-    private Vector2 attackNode;
+    private int movementRange;
+    private Vector2 attackPosition;
     List<Unit> enemiesInRange=new List<Unit>();
     //Event
     public static event EventHandler<Unit> OnUnitDamaged;
@@ -23,7 +23,7 @@ public class AttackAction : BaseAction
     }
     void Start()
     {
-        attackRange=unit.GetMovementRange()+1;  
+        movementRange=unit.GetMovementRange();  
     }
 
     // Update is called once per frame
@@ -38,8 +38,8 @@ public class AttackAction : BaseAction
             return;
         }
         Debug.Log($"Unit position {unit.GetUnitPosition()}");
-        Debug.Log($"Attack node {attackNode}");
-        if(unit.GetUnitPosition()==attackNode)
+        Debug.Log($"Attack node {attackPosition}");
+        if(unit.GetUnitPosition()==attackPosition)
         {
             //Debug.Log($"Unit {unit.GetUnitType()} attacks {targetUnit.GetUnitType()}");
             unit.SetCompletedAction(true);
@@ -74,22 +74,17 @@ public class AttackAction : BaseAction
     public  List<Vector2> GetValidGridPositionList(Vector2 unitGridPosition)
     {
         List<Vector2> validGridPositionList=new List<Vector2>();
-        List<Vector2> attackDirections= new List<Vector2>{new Vector2(1,0f),
+        /*List<Vector2> attackDirections= new List<Vector2>{new Vector2(1,0f),
                                                           new Vector2(-1,0f),
                                                           new Vector2(0f,1f),
-                                                          new Vector2(0f,-1f)};
-        for(int x=-attackRange;x<attackRange;x++)
+                                                          new Vector2(0f,-1f)};*/
+        for(int x=-movementRange;x<movementRange;x++)
         {
-            for(int y=-attackRange;y<attackRange;y++)
+            for(int y=-movementRange;y<movementRange;y++)
             {
                 Vector2 offsetPosition= new Vector2(x,y);
                 Vector2 testPosition= unitGridPosition+offsetPosition;
                 if(!LevelGrid.Instance.CheckPositionValid(testPosition))
-                {
-                    continue;
-                }
-                int testDistance= Mathf.Abs(x)+Mathf.Abs(y);
-                if(testDistance>unit.GetMovementRange())
                 {
                     continue;
                 }
@@ -102,8 +97,9 @@ public class AttackAction : BaseAction
                 {
                     continue;
                 }
-                enemiesInRange.Add(testUnit);
-                foreach(Vector2 direction in attackDirections)
+                validGridPositionList.Add(testPosition);
+                
+                /*foreach(Vector2 direction in attackDirections)
                 {
                     Vector2 attackPosition=testPosition+direction;
                     if(!LevelGrid.Instance.CheckPositionValid(attackPosition))
@@ -114,7 +110,7 @@ public class AttackAction : BaseAction
                     {
                         validGridPositionList.Add(attackPosition);
                     }
-                }
+                }*/
                 
             }
         }
@@ -137,41 +133,53 @@ public class AttackAction : BaseAction
         return enemiesInRange.Count;
     }
     
-    /*public bool EnemyUnitInAttackRange(Vector2 gridPosition)
+
+
+    public override void TakeAction(Vector2 gridPosition, Action onActionComplete)
+    {
+        targetUnit=LevelGrid.Instance.GetUnitAtGridNode(gridPosition);
+        attackPosition=FindAttackPosition(gridPosition);
+        Debug.Log("Activate attack action");
+        moveAction.TakeAction(attackPosition,onActionComplete);
+        ActionStart(onActionComplete);
+    }
+
+    private Vector2 FindAttackPosition(Vector2 attackNode)
     {
         List<Vector2> attackDirections= new List<Vector2>{new Vector2(1,0f),
                                                           new Vector2(-1,0f),
                                                           new Vector2(0f,1f),
                                                           new Vector2(0f,-1f)};
+        
+        float distance= float.MaxValue;
+        Vector2 unitPosition=unit.GetUnitPosition();
+        Vector2 attackPosition= new Vector2(0f,0f);
         foreach(Vector2 direction in attackDirections)
         {
-            Vector2 testPosition=gridPosition+direction;
+            Vector2 testPosition= attackNode+direction;
+            NodeType nodeType=LevelGrid.Instance.GetNodeType(testPosition);
             if(!LevelGrid.Instance.CheckPositionValid(testPosition))
             {
                 continue;
             }
-            if(!LevelGrid.Instance.HasAnyUnitAtGridNode(testPosition))
+            if(LevelGrid.Instance.HasAnyUnitAtGridNode(testPosition))
             {
                 continue;
             }
-            Unit testUnit= LevelGrid.Instance.GetUnitAtGridNode(testPosition);
-            if(testUnit.IsEnemy()==unit.IsEnemy())
+            if(!unit.ValidMovementPositions.Contains(testPosition))
             {
                 continue;
             }
-            targetUnit=testUnit;
-            return true;
+            float distanceToPosition=Vector2.Distance(testPosition,unitPosition);
+            if(distanceToPosition<distance)
+            {
+                attackPosition=testPosition;
+                distance=distanceToPosition;
+            }
+
         }
-        return false;
+        return attackPosition;
 
-    }*/
-
-    public override void TakeAction(Vector2 gridPosition, Action onActionComplete)
-    {
-        attackNode=gridPosition;
-        Debug.Log("Activate attack action");
-        moveAction.TakeAction(attackNode,onActionComplete);
-        ActionStart(onActionComplete);
     }
  
 }

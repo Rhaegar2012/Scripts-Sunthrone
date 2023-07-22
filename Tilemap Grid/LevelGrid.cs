@@ -163,9 +163,11 @@ public class LevelGrid : SingletonMonobehaviour<LevelGrid>
     throw new NotImplementedException();
   }
 
-  public NodeType GetNodeType()
+  public NodeType GetNodeType(Vector2 gridPosition)
   {
-    throw new NotImplementedException();
+    TilemapGridNode currentNode= GetNodeAtPosition(gridPosition);
+    NodeType nodeType= currentNode.GetNodeType();
+    return nodeType;
   }
 
   public Vector2 FindValidPosition(Vector2 originPosition)

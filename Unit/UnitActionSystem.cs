@@ -43,8 +43,9 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
     private bool TryHandleUnitSelection()
     {
         TilemapGridNode selectorCurrentNode=UnitSelectorController.Instance.GetCurrentNode();
-        if(selectorCurrentNode.HasAnyUnit())
+        if(selectorCurrentNode.HasAnyUnit() && selectedUnit==null)
         {
+            
             Unit nodeUnit=selectorCurrentNode.GetUnit();        
             //Unit already selected
             if(selectedUnit==nodeUnit)
@@ -59,6 +60,7 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
             //Unit is an enemy;
             if(nodeUnit.IsEnemy())
             {
+                Debug.Log("Enemy Detected");
                 return false;
             }
             SetSelectedUnit(nodeUnit);
@@ -67,10 +69,23 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
 
         }
         Vector2 unitSelectorActionNodePosition= UnitSelectorController.Instance.GetUnitSelectorGridPosition();
-        List<Vector2> validActionPositionList= selectedUnit.ValidMovementPositions;
-        if(selectedUnit!=null && !validActionPositionList.Contains(unitSelectorActionNodePosition))
+        if(selectedUnit!=null)
         {
-            DeselectUnit();
+            Debug.Log(selectedUnit.ValidAttackPositions.Count);
+            Debug.Log($"Unit selector position {unitSelectorActionNodePosition}");
+            foreach(Vector2 position in selectedUnit.ValidAttackPositions)
+            {
+                Debug.Log($"attack position {position}");
+            }
+            bool movementPositionFound=selectedUnit.ValidMovementPositions.Contains(unitSelectorActionNodePosition);
+            bool attackPositionFound=selectedUnit.ValidAttackPositions.Contains(unitSelectorActionNodePosition);
+    
+            Debug.Log($"attack position found: {attackPositionFound}");
+            if(!movementPositionFound && !attackPositionFound)
+            {
+                Debug.Log("Condition met");
+                DeselectUnit();
+            }
             
         }
        UnitSelectorController.Instance.SwitchSelectorStatus();
@@ -85,8 +100,9 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
         {
             
             actionPosition=UnitSelectorController.Instance.GetUnitSelectorGridPosition();
-            List<Vector2> validActionPositionList= selectedUnit.ValidMovementPositions;
-            if(!validActionPositionList.Contains(actionPosition))
+            bool movementPositionFound=selectedUnit.ValidMovementPositions.Contains(actionPosition);
+            bool attackPositionFound=selectedUnit.ValidAttackPositions.Contains(actionPosition);
+            if(!movementPositionFound && !attackPositionFound)
             {
                 DeselectUnit();
                 return true;
@@ -104,11 +120,12 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
         
         SetAction(button.name);
         Vector2 unitSelectorActionNodePosition = UnitSelectorController.Instance.GetUnitSelectorGridPosition();
-        List<Vector2> validActionPositionList=selectedUnit.GetValidMovementPositionList();
+        bool movementPositionFound=selectedUnit.ValidMovementPositions.Contains(unitSelectorActionNodePosition);
+        bool attackPositionFound=selectedUnit.ValidAttackPositions.Contains(unitSelectorActionNodePosition);
         if(selectedUnit!=null)
         {
          
-            if(validActionPositionList.Contains(unitSelectorActionNodePosition))
+            if(movementPositionFound||attackPositionFound)
             {
                 baseAction.TakeAction(unitSelectorActionNodePosition,ClearBusy);
                 OnActionPositionSelected?.Invoke(this,EventArgs.Empty);
@@ -141,6 +158,7 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
     }
     private void DeselectUnit()
     {
+        Debug.Log("Unit deselected");
         selectedUnit=null;
         baseAction=null;
         OnDeselectedUnit?.Invoke(this,EventArgs.Empty);
