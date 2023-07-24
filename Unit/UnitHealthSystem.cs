@@ -7,7 +7,7 @@ public class UnitHealthSystem : MonoBehaviour
 {
     //Events
     public static event EventHandler<Unit> OnAnyUnitDestroyed;
-    public static event EventHandler<UnitHealthSystem> OnDamaged;
+    public static event EventHandler OnDamaged;
     //Fields
     private int healthPoints;
     private int totalHealth;
@@ -15,24 +15,20 @@ public class UnitHealthSystem : MonoBehaviour
     void Awake()
     {
         //Subscribe to damage event from attack action
-        AttackAction.OnUnitDamaged+=AttackAction_OnUnitDamaged;
         unit= GetComponent<Unit>();
         healthPoints=unit.GetHealth();
         totalHealth=healthPoints;
     }
 
 
-    public void AttackAction_OnUnitDamaged(object sender, Unit unit)
+    public void TakeDamage(int damageAmount)
     {
-        Debug.Log("Damage event triggered");
-        Debug.Log($"Damage {unit.DamageAmount}");
         healthPoints-=unit.DamageAmount;
-        OnDamaged?.Invoke(this,this);
+        OnDamaged?.Invoke(this,EventArgs.Empty);
         if(healthPoints<=0)
         {
             Die();
-        }
-       
+        }  
     }
     public int GetHealth()
     {

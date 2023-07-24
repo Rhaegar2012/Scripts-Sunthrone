@@ -60,7 +60,6 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
             //Unit is an enemy;
             if(nodeUnit.IsEnemy())
             {
-                Debug.Log("Enemy Detected");
                 return false;
             }
             SetSelectedUnit(nodeUnit);
@@ -71,19 +70,12 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
         Vector2 unitSelectorActionNodePosition= UnitSelectorController.Instance.GetUnitSelectorGridPosition();
         if(selectedUnit!=null)
         {
-            Debug.Log(selectedUnit.ValidAttackPositions.Count);
-            Debug.Log($"Unit selector position {unitSelectorActionNodePosition}");
-            foreach(Vector2 position in selectedUnit.ValidAttackPositions)
-            {
-                Debug.Log($"attack position {position}");
-            }
+            
             bool movementPositionFound=selectedUnit.ValidMovementPositions.Contains(unitSelectorActionNodePosition);
             bool attackPositionFound=selectedUnit.ValidAttackPositions.Contains(unitSelectorActionNodePosition);
-    
-            Debug.Log($"attack position found: {attackPositionFound}");
             if(!movementPositionFound && !attackPositionFound)
             {
-                Debug.Log("Condition met");
+                
                 DeselectUnit();
             }
             
@@ -114,7 +106,7 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
         return false; 
 
     }
-    //TODO Refactor this to recieve the action name instead of the button? is cleaner but is not very readable
+    
     public void TryHandleSelectedAction(Button button)
     {
         
@@ -137,7 +129,6 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
     private void SetSelectedUnit(Unit unit)
     {
         selectedUnit=unit;
-        Debug.Log(selectedUnit.GetUnitPosition());
         if(selectedUnit!=null)
         {
             SetAction("Move");
@@ -158,7 +149,6 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
     }
     private void DeselectUnit()
     {
-        Debug.Log("Unit deselected");
         selectedUnit=null;
         baseAction=null;
         OnDeselectedUnit?.Invoke(this,EventArgs.Empty);

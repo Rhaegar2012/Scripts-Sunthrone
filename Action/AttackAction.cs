@@ -11,8 +11,7 @@ public class AttackAction : BaseAction
     private int movementRange;
     private Vector2 attackPosition;
     List<Unit> enemiesInRange=new List<Unit>();
-    //Event
-    public static event EventHandler<Unit> OnUnitDamaged;
+
 
 
     // Start is called before the first frame update
@@ -33,21 +32,13 @@ public class AttackAction : BaseAction
         {
             return;
         }
-        if(targetUnit=null)
-        {
-            return;
-        }
-        Debug.Log($"Unit position {unit.GetUnitPosition()}");
-        Debug.Log($"Attack node {attackPosition}");
         if(unit.GetUnitPosition()==attackPosition)
         {
-            //Debug.Log($"Unit {unit.GetUnitType()} attacks {targetUnit.GetUnitType()}");
+            
             unit.SetCompletedAction(true);
             int damageAmount=CalculateDamage();
-            Debug.Log($"Damage inflicted {damageAmount}");
-            //targetUnit.Damage(damageAmount);
             targetUnit.DamageAmount=damageAmount;
-            OnUnitDamaged?.Invoke(this,targetUnit);
+            targetUnit.TakeDamage();
             ActionComplete();
         }
      
@@ -74,10 +65,6 @@ public class AttackAction : BaseAction
     public  List<Vector2> GetValidGridPositionList(Vector2 unitGridPosition)
     {
         List<Vector2> validGridPositionList=new List<Vector2>();
-        /*List<Vector2> attackDirections= new List<Vector2>{new Vector2(1,0f),
-                                                          new Vector2(-1,0f),
-                                                          new Vector2(0f,1f),
-                                                          new Vector2(0f,-1f)};*/
         for(int x=-movementRange;x<movementRange;x++)
         {
             for(int y=-movementRange;y<movementRange;y++)
@@ -97,21 +84,7 @@ public class AttackAction : BaseAction
                 {
                     continue;
                 }
-                validGridPositionList.Add(testPosition);
-                
-                /*foreach(Vector2 direction in attackDirections)
-                {
-                    Vector2 attackPosition=testPosition+direction;
-                    if(!LevelGrid.Instance.CheckPositionValid(attackPosition))
-                    {
-                        continue;
-                    }
-                    if(!LevelGrid.Instance.HasAnyUnitAtGridNode(attackPosition))
-                    {
-                        validGridPositionList.Add(attackPosition);
-                    }
-                }*/
-                
+                validGridPositionList.Add(testPosition);              
             }
         }
         return validGridPositionList;
@@ -137,9 +110,9 @@ public class AttackAction : BaseAction
 
     public override void TakeAction(Vector2 gridPosition, Action onActionComplete)
     {
+
         targetUnit=LevelGrid.Instance.GetUnitAtGridNode(gridPosition);
         attackPosition=FindAttackPosition(gridPosition);
-        Debug.Log("Activate attack action");
         moveAction.TakeAction(attackPosition,onActionComplete);
         ActionStart(onActionComplete);
     }

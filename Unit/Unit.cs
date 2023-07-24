@@ -25,6 +25,7 @@ public class Unit : MonoBehaviour
     private Vector2 gridPosition;
     private AttackAction attackAction;
     private CaptureAction captureAction;
+    private UnitHealthSystem unitHealthSystem;
     private List<Vector2> validMovementPositions= new List<Vector2>();
     private List<Vector2> validAttackPositions= new List<Vector2>();
     private List<Vector2> validCapturePositions= new List<Vector2>();
@@ -54,6 +55,7 @@ public class Unit : MonoBehaviour
     void Start()
     {
         actionList=GetComponents<BaseAction>();
+        unitHealthSystem=GetComponent<UnitHealthSystem>();
     }
     public bool IsEnemy()
     {
@@ -94,7 +96,6 @@ public class Unit : MonoBehaviour
 
         foreach(Vector2 attackPosition in validAttackPositions)
         {
-            Debug.Log("attack positions added to list");
             validActionPositions.Add(attackPosition);
         }
     }
@@ -175,13 +176,9 @@ public class Unit : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    public void Damage(int damageAmount)
+    public void TakeDamage()
     {
-        healthPoints-= damageAmount;
-        if(healthPoints<0)
-        {
-            healthPoints=0;
-        }
+        unitHealthSystem.TakeDamage(damageAmount);
     }
 
 
