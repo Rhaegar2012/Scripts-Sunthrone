@@ -19,7 +19,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private bool isEnemy;
     private int unitExperience;
     private int damageAmount;
-    private bool unitCompletedAction;
+    private bool unitCompletedAction=false;
     private BaseAction[] actionList;
     private TilemapGridNode currentNode;
     private Vector2 gridPosition;

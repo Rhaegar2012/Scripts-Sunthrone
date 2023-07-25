@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,12 +9,19 @@ public class BattleManager : SingletonMonobehaviour<BattleManager>
     [SerializeField] private List<Unit> enemyUnitList;
     [SerializeField] private List<Vector2> enemyUnitPositionList;
     [SerializeField] private List<Vector2> playerUnitSpawnPointList;
-    private int numberOfPlayerUnits;
     private List<Unit> playerUnitList;
     private List<Unit> currentArmyList;
+    private int numberOfPlayerUnits;
+    private int numberOfEnemyUnits;
+    //Properties
+    public int NumberOfPlayerUnits {get{return playerUnitList.Count;}}
+    public int NumberOfEnemyUnits {get{return enemyUnitList.Count;}}
+    //Events
+    public event EventHandler OnArmyUpdate; 
     // Start is called before the first frame update
     void Start()
     {
+        UnitHealthSystem.OnAnyUnitDestroyed+=UnitHealthSystem_OnAnyUnitDestroyed;
         numberOfPlayerUnits=battleInformation.GetNumberOfPlayerUnits();
         playerUnitList=battleInformation.GetPlayerUnitList();
         currentArmyList=playerUnitList;
@@ -112,6 +120,24 @@ public class BattleManager : SingletonMonobehaviour<BattleManager>
     public List<Unit> GetEnemyUnitList()
     {
         return enemyUnitList;
+    }
+
+    public void UnitHealthSystem_OnAnyUnitDestroyed(object sender , Unit unit)
+    {
+        if(unit.IsEnemy())
+        {
+            enemyUnitList.Remove(unit);
+        }
+        else
+        {
+            playerUnitList.Remove(unit);
+        }
+        OnArmyUpdate?.Invoke(this,EventArgs.Empty);
+    }
+
+    public bool CheckBattleEndingConditions()
+    {
+        throw new NotImplementedException();
     }
 
 
