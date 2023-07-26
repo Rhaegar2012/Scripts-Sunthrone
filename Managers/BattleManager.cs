@@ -9,8 +9,8 @@ public class BattleManager : SingletonMonobehaviour<BattleManager>
     [SerializeField] private List<Unit> enemyUnitList;
     [SerializeField] private List<Vector2> enemyUnitPositionList;
     [SerializeField] private List<Vector2> playerUnitSpawnPointList;
-    private List<Unit> playerUnitList;
-    private List<Unit> currentArmyList;
+    private List<Unit> playerUnitList= new List<Unit>();
+    private List<Unit> currentArmyList=new List<Unit>();
     private int numberOfPlayerUnits;
     private int numberOfEnemyUnits;
     //Properties
@@ -24,7 +24,7 @@ public class BattleManager : SingletonMonobehaviour<BattleManager>
         UnitHealthSystem.OnAnyUnitDestroyed+=UnitHealthSystem_OnAnyUnitDestroyed;
         numberOfPlayerUnits=battleInformation.GetNumberOfPlayerUnits();
         playerUnitList=battleInformation.GetPlayerUnitList();
-        currentArmyList=playerUnitList;
+        OnArmyUpdate?.Invoke(this,EventArgs.Empty);
         PlacePlayerUnits();
         PlaceEnemyUnits();
         
@@ -59,7 +59,11 @@ public class BattleManager : SingletonMonobehaviour<BattleManager>
             newUnit.CurrentNode=unitNode;
             newUnit.GridPosition=newUnit.CurrentNode.GetGridPosition();
             LevelGrid.Instance.SetUnitAtGridNode(playerUnitSpawnPointList[i],newUnit);
+            currentArmyList.Add(newUnit);
         }
+        //Replace playerUnitList with currentArmyList so now the player list does not reference the units
+        //from the scriptable object but, instead, the isntantiated units
+        playerUnitList=currentArmyList;
 
     }
 
@@ -101,6 +105,7 @@ public class BattleManager : SingletonMonobehaviour<BattleManager>
 
     public void SwitchTurn()
     {
+        Debug.Log("Turn Switched");
         TurnSystem.Instance.NextTurn();
         SetCurrentArmy();
     }

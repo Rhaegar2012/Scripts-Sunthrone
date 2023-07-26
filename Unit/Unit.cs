@@ -168,7 +168,7 @@ public class Unit : MonoBehaviour
 
     public BaseAction[] GetActionArray()
     {
-        throw new NotImplementedException();
+        return actionList;
     }
 
     public void SetWalkableNodeTypes()

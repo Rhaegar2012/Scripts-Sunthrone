@@ -38,8 +38,8 @@ public class BattleInformationUI : MonoBehaviour
 
     public void UpdateArmySizeTexts()
     {
-        enemyUnitsCounterText.text=BattleManager.Instance.NumberOfEnemyUnits.ToString();
-        playerUnitsCounterText.text=BattleManager.Instance.NumberOfPlayerUnits.ToString();
+        enemyUnitsCounterText.text=$"Enemy Units: {BattleManager.Instance.NumberOfEnemyUnits.ToString()}";
+        playerUnitsCounterText.text=$"Player Units: {BattleManager.Instance.NumberOfPlayerUnits.ToString()}";
 
     }
 
