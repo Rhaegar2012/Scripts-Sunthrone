@@ -148,9 +148,17 @@ public class LevelGrid : SingletonMonobehaviour<LevelGrid>
     throw new NotImplementedException();
   }
 
-  public void RemoveUnitAtGridNode()
+  public void RemoveUnitAtGridNode(Vector2 position)
   {
-    throw new NotImplementedException();
+    if(levelGrid.IsPositionValid(position))
+    {
+       return;
+    }
+    TilemapGridNode node= GetNodeAtPosition(position);
+    if(node.Unit!=null)
+    {
+      node.Unit=null;
+    }
   }
 
   public void RemoveTargetAtGridNode()

@@ -29,8 +29,11 @@ public class MoveAction : BaseAction
         {
             return;
         }
+        if(unit.IsEnemy())
+        {
+            Debug.Log("Enemy unit moving");
+        }
         targetPosition=pathList[currentIndex].GetGridPosition();
-        //Debug.Log($"Current Node movement:{targetPosition}");
         float distanceToTarget= Vector2.Distance(currentGridPosition,targetPosition);
         Vector2 moveDirection=(targetPosition-currentGridPosition).normalized;
         if(distanceToTarget>stoppingDistance)
@@ -47,7 +50,18 @@ public class MoveAction : BaseAction
         }
         if(currentIndex>=pathList.Count)
         {
-            unit.GridPosition=pathList[pathList.Count-1].GetGridPosition();
+            Vector2 finalGridPosition=pathList[pathList.Count-1].GetGridPosition();
+            //Update unit and Level Grid nodes and positions
+            TilemapGridNode finalNode=LevelGrid.Instance.GetNodeAtPosition(finalGridPosition);
+            LevelGrid.Instance.RemoveUnitAtGridNode(unit.GridPosition);
+            unit.GridPosition=finalGridPosition;
+            unit.SetUnitNode(finalNode);
+            LevelGrid.Instance.SetUnitAtGridNode(finalGridPosition,unit);
+            if(unit.IsEnemy())
+            {
+                Debug.Log($"Final enemy position {unit.GridPosition}");
+            }
+            //Complete action
             unit.SetCompletedAction(true);
             ActionComplete();
         }
@@ -64,6 +78,10 @@ public class MoveAction : BaseAction
     }
     public override void TakeAction(Vector2 gridPosition, Action onActionComplete)
     {
+        if(unit.IsEnemy())
+        {
+            Debug.Log("Enemy moving");
+        }
         currentIndex=0;
         targetPosition=gridPosition;
         List<Vector2> validGridPositions= unit.ValidMovementPositions;
@@ -74,10 +92,22 @@ public class MoveAction : BaseAction
         {
             targetPosition=validGridPositions.Find(position=>Vector2.Distance(position,gridPosition)>=unit.GetMovementRange());
         }
+
         TilemapGridNode targetNode=LevelGrid.Instance.GetNodeAtPosition(targetPosition);
         pathList= Pathfinding.Instance.FindPath(unit,targetNode);
+        if(unit.IsEnemy())
+        {
+            foreach(TilemapGridNode node in pathList)
+            {
+                Debug.Log($"Path position for enemy {node.NodePosition}");
+            }
+        }
         OnAnyUnitMoved?.Invoke(this,EventArgs.Empty);
         ActionStart(onActionComplete);
+        if(unit.IsEnemy())
+        {
+            Debug.Log(isActive);
+        }
         
     }
     public override EnemyAIAction GetEnemyAIAction(Vector2 gridPosition)
