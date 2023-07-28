@@ -29,10 +29,7 @@ public abstract class BaseAction : MonoBehaviour
     }
     protected void ActionStart(Action onActionComplete)
     {
-        if(unit.IsEnemy())
-        {
-            Debug.Log("Action Start");
-        }
+        
         isActive=true;
         this.onActionComplete=onActionComplete;
         //TODO OnAnyActionStarted Invoke

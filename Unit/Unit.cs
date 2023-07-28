@@ -109,6 +109,7 @@ public class Unit : MonoBehaviour
             for(int y=-baseMovementRange;y<baseMovementRange;y++)
             {
                 Vector2 testPosition= new Vector2(gridPosition.x+x,gridPosition.y+y);
+                NodeType testNodeType=LevelGrid.Instance.GetNodeTypeAtPosition(testPosition);
                 if(!LevelGrid.Instance.CheckPositionValid(testPosition))
                 {
                     continue;
@@ -117,9 +118,18 @@ public class Unit : MonoBehaviour
                 {
                     continue;
                 }
+                if(!walkableTiles.Contains(testNodeType))
+                {
+                    continue;
+                }
                 TilemapGridNode endNode= LevelGrid.Instance.GetNodeAtPosition(testPosition);
                 List<TilemapGridNode> pathToNode=new List<TilemapGridNode>();
                 pathToNode=Pathfinding.Instance.FindPath(this,endNode);
+                if(pathToNode==null)
+                {
+                    Debug.Log(unitName);
+                    Debug.Log($"test position {testPosition}");
+                }
                 int totalMovementCost=Pathfinding.Instance.CalculateTotalMovementCostInPath(pathToNode);
                 if(totalMovementCost>baseMovementRange)
                 {

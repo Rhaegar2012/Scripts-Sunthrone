@@ -120,6 +120,10 @@ public class BattleManager : SingletonMonobehaviour<BattleManager>
         {
             currentArmyList=enemyUnitList;
         }
+        foreach(Unit unit in currentArmyList)
+        {
+            unit.SetCompletedAction(false);
+        }
     }
 
     public List<Unit> GetEnemyUnitList()

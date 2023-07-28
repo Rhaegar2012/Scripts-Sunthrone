@@ -82,9 +82,7 @@ public class EnemyAI : MonoBehaviour
     }
     private bool TryTakeEnemyAIAction(Unit enemyUnit, Action onEnemyAIActionComplete)
     {
-       Debug.Log("TryTakeEnemyAIAction"); 
-       Debug.Log($"Enemy Unit {enemyUnit}");
-       
+
        BaseAction bestBaseAction=null;
        EnemyAIAction bestEnemyAIAction=null;
        foreach(BaseAction baseAction in enemyUnit.GetActionArray())
@@ -103,8 +101,6 @@ public class EnemyAI : MonoBehaviour
                     bestBaseAction=baseAction;
                 }
             }
-            Debug.Log($"Best Enemy Action {bestBaseAction.GetActionName()}");
-            Debug.Log($"Action position {bestEnemyAIAction.gridPosition}");
        }
        if(bestEnemyAIAction!=null)
        {

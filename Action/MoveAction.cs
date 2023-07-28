@@ -29,10 +29,6 @@ public class MoveAction : BaseAction
         {
             return;
         }
-        if(unit.IsEnemy())
-        {
-            Debug.Log("Enemy unit moving");
-        }
         targetPosition=pathList[currentIndex].GetGridPosition();
         float distanceToTarget= Vector2.Distance(currentGridPosition,targetPosition);
         Vector2 moveDirection=(targetPosition-currentGridPosition).normalized;
@@ -57,10 +53,6 @@ public class MoveAction : BaseAction
             unit.GridPosition=finalGridPosition;
             unit.SetUnitNode(finalNode);
             LevelGrid.Instance.SetUnitAtGridNode(finalGridPosition,unit);
-            if(unit.IsEnemy())
-            {
-                Debug.Log($"Final enemy position {unit.GridPosition}");
-            }
             //Complete action
             unit.SetCompletedAction(true);
             ActionComplete();
@@ -78,10 +70,7 @@ public class MoveAction : BaseAction
     }
     public override void TakeAction(Vector2 gridPosition, Action onActionComplete)
     {
-        if(unit.IsEnemy())
-        {
-            Debug.Log("Enemy moving");
-        }
+        
         currentIndex=0;
         targetPosition=gridPosition;
         List<Vector2> validGridPositions= unit.ValidMovementPositions;
@@ -95,19 +84,8 @@ public class MoveAction : BaseAction
 
         TilemapGridNode targetNode=LevelGrid.Instance.GetNodeAtPosition(targetPosition);
         pathList= Pathfinding.Instance.FindPath(unit,targetNode);
-        if(unit.IsEnemy())
-        {
-            foreach(TilemapGridNode node in pathList)
-            {
-                Debug.Log($"Path position for enemy {node.NodePosition}");
-            }
-        }
         OnAnyUnitMoved?.Invoke(this,EventArgs.Empty);
         ActionStart(onActionComplete);
-        if(unit.IsEnemy())
-        {
-            Debug.Log(isActive);
-        }
         
     }
     public override EnemyAIAction GetEnemyAIAction(Vector2 gridPosition)
