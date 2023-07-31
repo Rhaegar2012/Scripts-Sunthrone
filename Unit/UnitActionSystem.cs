@@ -22,6 +22,12 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
         base.Awake();
     }
 
+    void Start()
+    {
+        TurnSystem.Instance.OnTurnChanged+=TurnSystem_OnTurnChanged;
+        BaseAction.OnActionCompleted+=BaseAction_OnActionCompleted;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -147,6 +153,17 @@ public class UnitActionSystem : SingletonMonobehaviour<UnitActionSystem>
     {
         this.isBusy=false;
     }
+
+    public void TurnSystem_OnTurnChanged(object sender, EventArgs empty)
+    {
+        DeselectUnit();
+    }
+
+    public void BaseAction_OnActionCompleted(object sender, EventArgs empty)
+    {
+        DeselectUnit();
+    }
+
     private void DeselectUnit()
     {
         selectedUnit=null;

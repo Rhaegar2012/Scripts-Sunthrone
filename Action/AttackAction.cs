@@ -110,8 +110,11 @@ public class AttackAction : BaseAction
 
     public override void TakeAction(Vector2 gridPosition, Action onActionComplete)
     {
-       
-        targetUnit=LevelGrid.Instance.GetUnitAtGridNode(gridPosition);
+        Unit testUnit=LevelGrid.Instance.GetUnitAtGridNode(gridPosition);
+        if(testUnit.IsEnemy()!=unit.IsEnemy())
+        {
+            targetUnit=testUnit;
+        }
         attackPosition=FindAttackPosition(gridPosition);
         moveAction.TakeAction(attackPosition,onActionComplete);
         ActionStart(onActionComplete);

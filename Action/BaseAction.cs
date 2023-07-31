@@ -11,7 +11,7 @@ public abstract class BaseAction : MonoBehaviour
     //Action Delegate
     protected Action onActionComplete;
     public  EventHandler OnActionStarted;
-    public  EventHandler OnActionCompleted;
+    public static event EventHandler OnActionCompleted;
     protected virtual void Awake()
     {
         unit=GetComponent<Unit>();

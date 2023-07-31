@@ -13,6 +13,7 @@ public class BattleManager : SingletonMonobehaviour<BattleManager>
     private List<Unit> currentArmyList=new List<Unit>();
     private int numberOfPlayerUnits;
     private int numberOfEnemyUnits;
+    private bool isBattleFinished;
     //Properties
     public int NumberOfPlayerUnits {get{return playerUnitList.Count;}}
     public int NumberOfEnemyUnits {get{return enemyUnitList.Count;}}
@@ -34,6 +35,10 @@ public class BattleManager : SingletonMonobehaviour<BattleManager>
     // Switch turn if all the units in the current army have completed their actions
     void Update()
     {
+        if(CheckBattleEndingConditions())
+        {
+            return;
+        }
         foreach(Unit unit in currentArmyList)
         {
             if(!unit.UnitCompletedAction())
@@ -105,7 +110,6 @@ public class BattleManager : SingletonMonobehaviour<BattleManager>
 
     public void SwitchTurn()
     {
-        Debug.Log("Turn Switched");
         TurnSystem.Instance.NextTurn();
         SetCurrentArmy();
     }
@@ -146,7 +150,21 @@ public class BattleManager : SingletonMonobehaviour<BattleManager>
 
     public bool CheckBattleEndingConditions()
     {
-        throw new NotImplementedException();
+        //Debug.Log(currentArmyList.Count);
+        if(currentArmyList.Count<=0)
+        {
+            if(playerUnitList.Count<=0)
+            {
+                Debug.Log("You are defeated!");
+            }
+            if(enemyUnitList.Count<=0)
+            {
+                Debug.Log("Victory!");
+            }
+            return true;
+        }
+        return false;
+
     }
 
 

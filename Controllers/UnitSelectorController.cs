@@ -25,6 +25,7 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
         unitSelectorInputActions.UnitSelector_Base.UnitSelectorMovement.performed+=MoveSelector;
         unitSelectorInputActions.UnitSelector_Base.UnitSelection.performed+=SelectionActionCalled;
         unitSelectorInputActions.UnitSelector_Base.Menu.performed+=OpenPauseMenu;
+    
 
     }
 
@@ -102,6 +103,8 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
     {
         unitSelectorInputActions.UnitSelector_Base.Enable();
     }
+
+
     
 
 

@@ -54,6 +54,7 @@ public class CommanderNPC : MonoBehaviour
     //Menu Button methods 
     public void ActivateBattleMenu(string battleName)
     {
+        Debug.Log("Call Battle Menu open method");
         battleInformationMenu.SetActive(true);
         DisplayBattleInformation(battleName);
     }
