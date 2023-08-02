@@ -47,7 +47,7 @@ public class SceneItemManager : SingletonMonobehaviour<SceneItemManager>,ISaveab
     }
 
     public void OnSceneLoaded_RestoreSceneState(object sender, EventArgs empty)
-    {
+    { 
         gridActiveInScene=!gridActiveInScene;
         if(sceneGrid!=null)
         {

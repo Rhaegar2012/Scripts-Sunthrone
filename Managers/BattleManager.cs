@@ -9,6 +9,7 @@ public class BattleManager : SingletonMonobehaviour<BattleManager>
     [SerializeField] private List<Unit> enemyUnitList;
     [SerializeField] private List<Vector2> enemyUnitPositionList;
     [SerializeField] private List<Vector2> playerUnitSpawnPointList;
+    [SerializeField] private string defaultScene;
     private List<Unit> playerUnitList= new List<Unit>();
     private List<Unit> currentArmyList=new List<Unit>();
     private int numberOfPlayerUnits;
@@ -18,7 +19,8 @@ public class BattleManager : SingletonMonobehaviour<BattleManager>
     public int NumberOfPlayerUnits {get{return playerUnitList.Count;}}
     public int NumberOfEnemyUnits {get{return enemyUnitList.Count;}}
     //Events
-    public event EventHandler OnArmyUpdate; 
+    public event EventHandler OnArmyUpdate;
+    public event EventHandler<string> OnBattleFinished;
     // Start is called before the first frame update
     void Start()
     {
@@ -151,20 +153,32 @@ public class BattleManager : SingletonMonobehaviour<BattleManager>
     public bool CheckBattleEndingConditions()
     {
         //Debug.Log(currentArmyList.Count);
+        string message="";
         if(currentArmyList.Count<=0)
         {
             if(playerUnitList.Count<=0)
             {
-                Debug.Log("You are defeated!");
+                message="You are defeated!";
             }
             if(enemyUnitList.Count<=0)
             {
-                Debug.Log("Victory!");
+                message="Victory!";
             }
+            OnBattleFinished?.Invoke(this,message);
             return true;
         }
         return false;
 
+    }
+
+    public void ExitBattleScene()
+    {
+        if(GameManager.Instance!=null && LevelManager.Instance!=null)
+        {
+            GameManager.Instance.EnableBaseManagementFeatures();
+            LevelManager.Instance.LoadScene(defaultScene);
+        }
+        
     }
 
 

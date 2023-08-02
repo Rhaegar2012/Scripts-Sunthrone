@@ -22,6 +22,15 @@ public class LevelManager : SingletonMonobehaviour<LevelManager>
         DontDestroyOnLoad(gameObject);
     }
 
+    public void LoadScene(string sceneToLoad, bool isBattleScene)
+    {
+        LoadScene(sceneToLoad);
+        if(isBattleScene)
+        {
+            GameManager.Instance.SetUpBattleScene();
+        }
+    }
+
     public void LoadScene(string sceneToLoad)
     {
         SceneManager.LoadScene(sceneToLoad);
@@ -29,5 +38,7 @@ public class LevelManager : SingletonMonobehaviour<LevelManager>
         currentSceneName=sceneToLoad;
         onSceneLoaded?.Invoke(this,EventArgs.Empty);
     }
+
+    
 
 }

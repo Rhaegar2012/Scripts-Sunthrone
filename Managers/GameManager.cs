@@ -15,11 +15,15 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     [SerializeField] private GameObject pauseMenu;
     [Header("Battle Info")]
     [SerializeField] private List<SO_BattleInfo> battleInformation;
+    
+
 
     //Private
     private int playerExperience;
     private GameObject pauseMenuInstance;
     private PlayerRank playerRank=PlayerRank.Lieutenant;
+    private PlayerController playerInstance;
+    private SceneItemManager baseExteriorGrid;
 
     //Properties
     public int Credits  {get{return credits;}set{credits=value;}}
@@ -46,6 +50,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         pauseMenuInstance=Instantiate(pauseMenu,transform);
         pauseMenuInstance.SetActive(false);
         PlayerController.Instance.EnablePlayerControls();
+        playerInstance=FindObjectOfType<PlayerController>();
+        baseExteriorGrid=FindObjectOfType<SceneItemManager>();
     }
     // Start is called before the first frame update
     void Start()
@@ -78,13 +84,21 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         
     }
 
+    public void SetUpBattleScene()
+    {
+        DisableBaseManagementFeatures();
+
+    }
+
     public void DisableBaseManagementFeatures()
     {
-        //TODO
+        playerInstance.gameObject.SetActive(false);
+        baseExteriorGrid.gameObject.SetActive(false);
     }
     public void EnableBaseManagementFeatures()
     {
-        //TODO
+        playerInstance.gameObject.SetActive(true);
+        baseExteriorGrid.gameObject.SetActive(true);
     }
 
    

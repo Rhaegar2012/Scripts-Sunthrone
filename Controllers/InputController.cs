@@ -47,7 +47,7 @@ public class InputController : MonoBehaviour
 
     public void Action_Performed(InputAction.CallbackContext context)
     {
-        
+        Debug.Log("Call Action Performed");   
         currentSelected=eventSystem.currentSelectedGameObject;
         if(currentSelected!=null)
         {

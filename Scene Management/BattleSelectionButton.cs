@@ -6,7 +6,6 @@ public class BattleSelectionButton : MonoBehaviour
 {
    public void BattleSelected (string battleName)
    {
-      Debug.Log("Event accessed");
-      LevelManager.Instance.LoadScene(battleName);
+      LevelManager.Instance.LoadScene(battleName,true);
    }
 }

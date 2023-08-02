@@ -10,11 +10,15 @@ public class BattleInformationUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI turnText;
     [SerializeField] private TextMeshProUGUI enemyUnitsCounterText;
     [SerializeField] private TextMeshProUGUI playerUnitsCounterText;
+    [SerializeField] private TextMeshProUGUI popUpMessageText;
+    [SerializeField] private GameObject popUpMessage;
+
 
     void Start()
     {
         TurnSystem.Instance.OnTurnChanged+=TurnSystem_OnTurnChanged;
         BattleManager.Instance.OnArmyUpdate+=BattleManager_OnArmyUpdate;
+        BattleManager.Instance.OnBattleFinished+=BattleManager_OnBattleFinished;
         UpdateArmySizeTexts();
     }
 
@@ -41,6 +45,12 @@ public class BattleInformationUI : MonoBehaviour
         enemyUnitsCounterText.text=$"Enemy Units: {BattleManager.Instance.NumberOfEnemyUnits.ToString()}";
         playerUnitsCounterText.text=$"Player Units: {BattleManager.Instance.NumberOfPlayerUnits.ToString()}";
 
+    }
+
+    public void BattleManager_OnBattleFinished(object sender,string message)
+    {
+        popUpMessage.SetActive(true);
+        popUpMessageText.text=message;
     }
 
 
