@@ -40,7 +40,6 @@ public class CommanderNPC : MonoBehaviour
     {
         BattleInformationMenu battleInformation=battleInformationMenu.GetComponent<BattleInformationMenu>();
         SO_BattleInfo battleData=FindBattleData(selectedBattle);
-        battleInformation.UpdateBattleInformation(battleData);
     }
 
     //Finds battle information from battle information list for an specific marker

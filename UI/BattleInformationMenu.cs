@@ -6,19 +6,53 @@ using TMPro;
 
 public class BattleInformationMenu : MonoBehaviour
 {
-    [SerializeField] private Image battleImage;
-    [SerializeField] private TextMeshProUGUI influenceRewardText;
-    [SerializeField] private TextMeshProUGUI suppliesRewardText;
-    [SerializeField] private TextMeshProUGUI creditsRewardText;
+    [SerializeField] private TextMeshProUGUI battleDeploymentCostText;
+    [SerializeField] private TextMeshProUGUI battleDeploymentLimitText;
     [SerializeField] private TextMeshProUGUI battleNameText;
-    
+    [SerializeField] private TextMeshProUGUI battleCreditRewardText;
+    [SerializeField] private TextMeshProUGUI battleInfluenceRewardText;
+    [SerializeField] private TextMeshProUGUI battleSupplyRewardText;
+    private SO_BattleInfo battleInformation;
 
-    public void UpdateBattleInformation(SO_BattleInfo battleInformation)
+
+    void OnEnable()
     {
-        influenceRewardText.text=$"x{battleInformation.InfluenceReward.ToString()}";
-        suppliesRewardText.text=$"x{battleInformation.SupplyReward.ToString()}";
-        creditsRewardText.text=$"x{battleInformation.CreditReward.ToString()}";
+        UpdateBattleInformation();
+        DisplayArmyUnits();
+    }
+
+    //Method to be called from battle markers in campaign menu
+    public void SetBattleInfo(SO_BattleInfo battleInfo)
+    {
+        battleInformation=battleInfo;
+    }
+
+    public void UpdateBattleInformation()
+    {
+        battleDeploymentLimitText.text=battleInformation.UnitSupplyLimitForBattle.ToString();
         battleNameText.text=battleInformation.BattleName;
-        battleImage.sprite=battleInformation.BattleEnvironmentSprite;
-    } 
+        battleCreditRewardText.text=battleInformation.CreditReward.ToString();
+        battleInfluenceRewardText.text=battleInformation.InfluenceReward.ToString();
+        battleSupplyRewardText.text=battleInformation.SupplyReward.ToString();
+
+    }
+
+    private void DisplayArmyUnits()
+    {
+        //TODO
+    }
+
+    public void StartBattle()
+    {
+        if(LevelManager.Instance!=null)
+        {
+            LevelManager.Instance.LoadScene(battleNameText.text);
+        }
+
+    }
+
+    public void BackToSelectionMenu()
+    {
+        gameObject.SetActive(false);
+    }
 }

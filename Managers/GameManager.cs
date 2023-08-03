@@ -15,6 +15,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     [SerializeField] private GameObject pauseMenu;
     [Header("Battle Info")]
     [SerializeField] private List<SO_BattleInfo> battleInformation;
+    [Header("Base grid Info")]
+    [SerializeField] private GameObject baseTilemapGrid;
     
 
 
@@ -99,6 +101,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         playerInstance.gameObject.SetActive(true);
         baseExteriorGrid.gameObject.SetActive(true);
+        baseTilemapGrid.SetActive(true);
     }
 
    
