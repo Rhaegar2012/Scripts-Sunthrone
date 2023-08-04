@@ -17,7 +17,7 @@ public class SO_BattleInfo : ScriptableObject
     [SerializeField] public int UnitSupplyLimitForBattle;
     [SerializeField] public bool IsBattleCompleted;
     [SerializeField] List<Unit> PlayerUnits;
-    public int TotalDeploymentCost=0;
+    [SerializeField] public int TotalDeploymentCost=0;
     
 
     public List<Unit> GetPlayerUnitList()
@@ -29,7 +29,7 @@ public class SO_BattleInfo : ScriptableObject
     {
         return PlayerUnits.Count;
     }
-
+    //TODO Review method for deprecation or removal
     public void DeployUnitToBattle()
     {
         Unit selectedUnit= ArmyManager.Instance.SelectedUnit;
