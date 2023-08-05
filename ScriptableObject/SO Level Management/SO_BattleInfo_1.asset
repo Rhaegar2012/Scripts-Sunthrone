@@ -18,7 +18,7 @@ MonoBehaviour:
   SupplyReward: 100
   InfluenceReward: 100
   awardedMedal: 0
-  UnitSupplyLimitForBattle: 0
+  UnitSupplyLimitForBattle: 500
   IsBattleCompleted: 0
   PlayerUnits:
   - {fileID: 2121447118200773286, guid: 137ed587bc5ab164cbdebe851498122d, type: 3}

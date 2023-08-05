@@ -70,9 +70,15 @@ public class BattleInformationMenu : MonoBehaviour
         }
         if(LevelManager.Instance!=null)
         {
+            DeploySelectedUnits();
             LevelManager.Instance.LoadScene(battleNameText.text);
         }
 
+    }
+
+    public void DeploySelectedUnits()
+    {
+        battleInformation.PlayerUnits=deployedUnitsList;
     }
 
     public void BackToSelectionMenu()

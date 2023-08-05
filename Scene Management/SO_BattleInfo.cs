@@ -16,7 +16,7 @@ public class SO_BattleInfo : ScriptableObject
     [Header("Battle Configuration")]
     [SerializeField] public int UnitSupplyLimitForBattle;
     [SerializeField] public bool IsBattleCompleted;
-    [SerializeField] List<Unit> PlayerUnits;
+    [SerializeField] public List<Unit> PlayerUnits;
     [SerializeField] public int TotalDeploymentCost=0;
     
 
