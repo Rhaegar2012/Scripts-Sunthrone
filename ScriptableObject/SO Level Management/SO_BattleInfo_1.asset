@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8302b142540c7d49a677e67cbf5e6c6, type: 3}
   m_Name: SO_BattleInfo_1
   m_EditorClassIdentifier: 
-  BattleName: Campaign Battle 1
+  BattleName: Testing Battle Scene
   BattleEnvironmentSprite: {fileID: 0}
   CreditReward: 100
   SupplyReward: 100
@@ -21,8 +21,5 @@ MonoBehaviour:
   UnitSupplyLimitForBattle: 500
   IsBattleCompleted: 0
   PlayerUnits:
-  - {fileID: 2121447118200773286, guid: 137ed587bc5ab164cbdebe851498122d, type: 3}
-  - {fileID: 7306726621110108047, guid: 329babfe6fb46eb4e8ec312c82866e46, type: 3}
   - {fileID: 6334534099556318564, guid: c706aaa45de6edf429acf98a0db03ed0, type: 3}
-  - {fileID: 6516591232557864532, guid: 69131f97055d90045b065a1e5d4ecbc3, type: 3}
   TotalDeploymentCost: 0

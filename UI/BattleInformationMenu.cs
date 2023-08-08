@@ -29,7 +29,6 @@ public class BattleInformationMenu : MonoBehaviour
     {
         UpdateBattleInformation();
         DisplayArmyUnits();
-        totalDeploymentCost=0;
     }
 
     //Method to be called from battle markers in campaign menu
@@ -41,11 +40,11 @@ public class BattleInformationMenu : MonoBehaviour
     public void UpdateBattleInformation()
     {
         maxDeploymentCost=battleInformation.UnitSupplyLimitForBattle;
-        battleDeploymentLimitText.text=battleInformation.UnitSupplyLimitForBattle.ToString();
+        battleDeploymentLimitText.text=$"/:{battleInformation.UnitSupplyLimitForBattle.ToString()}";
         battleNameText.text=battleInformation.BattleName;
-        battleCreditRewardText.text=battleInformation.CreditReward.ToString();
-        battleInfluenceRewardText.text=battleInformation.InfluenceReward.ToString();
-        battleSupplyRewardText.text=battleInformation.SupplyReward.ToString();
+        battleCreditRewardText.text=$"Credits:{battleInformation.CreditReward.ToString()}";
+        battleInfluenceRewardText.text=$"Influence:{battleInformation.InfluenceReward.ToString()}";
+        battleSupplyRewardText.text=$"Supplies:{battleInformation.SupplyReward.ToString()}";
 
 
     }
@@ -71,6 +70,7 @@ public class BattleInformationMenu : MonoBehaviour
         if(LevelManager.Instance!=null)
         {
             DeploySelectedUnits();
+            GameManager.Instance.DisableBaseManagementFeatures();
             LevelManager.Instance.LoadScene(battleNameText.text);
         }
 
@@ -100,10 +100,19 @@ public class BattleInformationMenu : MonoBehaviour
 
     public void UpdateTotalDeploymentCost()
     {
+        totalDeploymentCost=0;
         foreach(Unit unit in deployedUnitsList)
         {
             totalDeploymentCost+=unit.UnitSupplyCost;
         }
-        battleDeploymentCostText.text=totalDeploymentCost.ToString();
+        battleDeploymentCostText.text=$"Supplies:{totalDeploymentCost.ToString()}";
+        if(totalDeploymentCost>maxDeploymentCost)
+        {
+            battleDeploymentCostText.color=Color.red;
+        }
+        else
+        {
+            battleDeploymentCostText.color=Color.white;
+        }
     }
 }

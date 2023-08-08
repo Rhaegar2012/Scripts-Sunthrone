@@ -31,7 +31,11 @@ public class CameraController : SingletonMonobehaviour<CameraController>
     {
         sceneCamera=FindObjectOfType<CinemachineVirtualCamera>();
         player=FindObjectOfType<PlayerController>();
-        sceneCamera.Follow=player.transform;
+        if(player!=null)
+        {
+            sceneCamera.Follow=player.transform;
+        }
+        
 
     }
 
