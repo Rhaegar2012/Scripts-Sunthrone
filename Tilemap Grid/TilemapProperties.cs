@@ -7,7 +7,6 @@ using UnityEngine.Tilemaps;
 [System.Serializable]
 public class TilemapProperties : MonoBehaviour
 {
-#if UNITY_EDITOR
    [SerializeField] private Tilemap tilemap;
    [SerializeField] private NodeType tilemapType;
    [SerializeField] private SO_TilemapGridData tilemapGridData;
@@ -36,7 +35,7 @@ public class TilemapProperties : MonoBehaviour
 
    public void UpdateTilemapProperties(int numberOfTilemaps)
    {
-       //Debug.Log("Call to Update Tilemap Properties Method");
+
        //Verifies if the nodeProperties list has already been populated for single layer tilemaps
        if(tilemapGridData.nodeProperties.Count>0 && numberOfTilemaps==1)
        {
@@ -69,5 +68,4 @@ public class TilemapProperties : MonoBehaviour
        }
 
    }
-#endif
 }

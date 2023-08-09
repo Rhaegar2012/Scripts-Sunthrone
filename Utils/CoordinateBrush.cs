@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.Tilemaps;
@@ -87,4 +87,4 @@ namespace UnityEditor
             Handles.Label(grid.CellToWorld(new Vector3Int(position.x, position.y, coordinateBrush.z)), labelText, myStyle);
         }
     }
-}
+}*/

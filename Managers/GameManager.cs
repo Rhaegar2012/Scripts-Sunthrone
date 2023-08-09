@@ -94,6 +94,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     public void DisableBaseManagementFeatures()
     {
+        PlayerController.Instance.DisablePlayerControls();
         playerInstance.gameObject.SetActive(false);
         baseExteriorGrid.gameObject.SetActive(false);
     }
@@ -102,6 +103,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         playerInstance.gameObject.SetActive(true);
         baseExteriorGrid.gameObject.SetActive(true);
         baseTilemapGrid.SetActive(true);
+        PlayerController.Instance.EnablePlayerControls();
     }
 
    

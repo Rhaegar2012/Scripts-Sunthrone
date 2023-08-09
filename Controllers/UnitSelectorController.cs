@@ -29,6 +29,15 @@ public class UnitSelectorController : SingletonMonobehaviour<UnitSelectorControl
 
     }
 
+    void OnDestroy()
+    {
+        
+        unitSelectorInputActions.UnitSelector_Base.Enable();
+        unitSelectorInputActions.UnitSelector_Base.UnitSelectorMovement.performed-=MoveSelector;
+        unitSelectorInputActions.UnitSelector_Base.UnitSelection.performed-=SelectionActionCalled;
+        unitSelectorInputActions.UnitSelector_Base.Menu.performed-=OpenPauseMenu;
+    }
+
     
 
     public void MoveSelector(InputAction.CallbackContext context)
